@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "775266312218",
+    "project_id": "neverabbdd",
+    "storage_bucket": "neverabbdd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775266312218:android:b6c3139551d0c8e3b2b1a3",
+        "android_client_info": {
+          "package_name": "com.example.nevera_andreaalejandra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775266312218-o9prinetotkmlhfd8v2d78s6t7stvhkd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nevera_andreaalejandra",
+            "certificate_hash": "056be6663bc83624fd27cffae2e41f40c7d8c9df"
+          }
+        },
+        {
+          "client_id": "775266312218-332c32os8rn1rs1ap23t31f709cgf0ua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwYiwPqHUIM5lGo3bgALItt8oQ9LJrUrg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "775266312218-332c32os8rn1rs1ap23t31f709cgf0ua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
