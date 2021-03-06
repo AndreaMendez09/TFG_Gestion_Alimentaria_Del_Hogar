@@ -17,7 +17,7 @@
         android:layout_height="70dp"
         android:layout_gravity="end|bottom"
         android:layout_margin="20dp"
-        android:src="@android:drawable/ic_menu_info_details" />
+        android:src="@android:drawable/ic_menu_more" />
 
     <LinearLayout
         android:orientation="vertical"

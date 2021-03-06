@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_mail"
+            android:icon="@android:drawable/ic_dialog_email"
+            android:title="Nevera" />
+        <item android:id="@+id/menu_alert"
+            android:icon="@android:drawable/ic_dialog_alert"
+            android:title="Congelador" />
+        <item
+            android:id="@+id/menu_info"
+            android:icon="@android:drawable/ic_dialog_info"
+            android:title="Lista de la compra" />
+    </group>
+
+</menu>
