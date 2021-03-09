@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.nevera_andreaalejandra.Fragments.Congelador_Fragment;
 import com.example.nevera_andreaalejandra.Fragments.Listas_Fragment;
+import com.example.nevera_andreaalejandra.Fragments.Nevera_Fragment;
 import com.example.nevera_andreaalejandra.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -67,7 +69,15 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment = null;
             //Obtenemos la posicion del menu
             switch (item.getItemId()) {
-                case R.id.menu_mail: //Si coincide con el menumail es el fragment de Email
+                case R.id.menu_nevera: //Si coincide con el menumail es el fragment de Email
+                    fragment = new Nevera_Fragment();
+                    fragmentTransaction = true;
+                    break;
+                case R.id.menu_congelador: //Si coincide con el menumail es el fragment de Email
+                    fragment = new Congelador_Fragment();
+                    fragmentTransaction = true;
+                    break;
+                case R.id.menu_lista: //Si coincide con el menumail es el fragment de Email
                     fragment = new Listas_Fragment();
                     fragmentTransaction = true;
                     break;
