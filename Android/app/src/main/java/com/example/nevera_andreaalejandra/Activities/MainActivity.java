@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = new Emails_Fragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
         navigationView.setCheckedItem(R.id.menu_mail);*/
-        changeFragment(new Listas_Fragment(), navigationView.getMenu().getItem(0));
+        changeFragment(new Nevera_Fragment(), navigationView.getMenu().getItem(0));
     }
 
     //Método para cambiar de fragment
