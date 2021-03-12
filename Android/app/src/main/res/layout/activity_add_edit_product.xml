@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.AddEditProductActivity"
+    android:orientation="vertical"
+    android:background="#F4EDED">
+
+    <!--Este campo es el que se llena cuando pulsamos el ojito al lado de la imagen
+    <ImageView
+        android:id="@+id/imagenPreview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        tools:ignore="MissingConstraints"
+        android:src="@android:drawable/ic_menu_save"
+        />-->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"><!-- Para ponerlo en el centro son esas dos lineas -->
+
+            <TextView
+                android:id="@+id/TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre:"
+                android:textSize="8pt"
+                android:textColor="@color/black"/>
+
+            <EditText
+                android:id="@+id/ENombreProducto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre del producto"
+                android:layout_below="@+id/TextView"
+                android:backgroundTint="@color/teal_200"/>
+
+            <TextView
+                android:id="@+id/TextView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cantidad:"
+                android:layout_marginTop="20dp"
+                android:textSize="8pt"
+                android:textColor="@color/black"
+                android:layout_below="@+id/ENombreProducto"/>
+
+            <EditText
+                android:id="@+id/ECantidadProducto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cantidad del producto"
+                android:layout_below="@+id/TextView2"
+                android:backgroundTint="@color/teal_200"
+                />
+
+            <TextView
+                android:id="@+id/TextView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Precio:"
+                android:layout_marginTop="20dp"
+                android:textSize="8pt"
+                android:textColor="@color/black"
+                android:layout_below="@+id/ECantidadProducto"/>
+
+            <EditText
+                android:id="@+id/EPrecioProducto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Precio del producto"
+                android:layout_below="@+id/TextView3"
+                android:backgroundTint="@color/teal_200"
+                />
+
+            <TextView
+                android:id="@+id/TextView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fecha de caducidad:"
+                android:layout_marginTop="20dp"
+                android:textSize="8pt"
+                android:textColor="@color/black"
+                android:layout_below="@+id/EPrecioProducto"/>
+
+            <EditText
+                android:id="@+id/ECalendarioProducto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Pulse aquí para seleccionar una fecha"
+                android:inputType="none"
+                android:focusable="false"
+                android:clickable="true"
+                android:maxLines="1"
+                android:layout_below="@+id/TextView5"
+                android:backgroundTint="@color/teal_200"
+                />
+
+            <TextView
+                android:id="@+id/TextView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tipo:"
+                android:layout_marginTop="20dp"
+                android:textSize="8pt"
+                android:textColor="@color/black"
+                android:layout_below="@+id/ECalendarioProducto"/>
+           <!-- <ImageButton
+                android:id="@+id/selectTipo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignTop="@+id/TextView4"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="10dp"
+                android:clickable="true"
+                android:gravity="right"
+                android:background="@android:color/transparent"
+                android:src="@android:drawable/ic_menu_view" />-->
+            <Spinner
+                android:id="@+id/planets_spinner"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_alignTop="@+id/TextView4"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="75dp"
+                android:layout_marginTop="-14dp"
+                android:clickable="true"
+                android:entries="@array/TiposProducto"
+                android:gravity="right" />
+
+
+        </RelativeLayout>
+        <!-- Creamos el boton flotante para guardar-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Guardar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="20dp"
+            android:clickable="true"
+            android:src="@android:drawable/ic_menu_save" />
+
+    </FrameLayout>
+
+
+</LinearLayout>

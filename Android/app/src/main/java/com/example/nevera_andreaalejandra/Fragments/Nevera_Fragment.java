@@ -2,6 +2,7 @@ package com.example.nevera_andreaalejandra.Fragments;
 
 import
         android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.nevera_andreaalejandra.Activities.AddEditProductActivity;
 import com.example.nevera_andreaalejandra.Adapters.AdapterProducto;
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
@@ -90,8 +92,15 @@ public class Nevera_Fragment extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Es necesario un nuevo nombre para el tablero", Toast.LENGTH_LONG).show();
-                showAlertForCreatingBoard("Añadir nuevo producto", "Escribir el nombre del producto");
+                /*Toast.makeText(getContext(), "Es necesario un nuevo nombre para el tablero", Toast.LENGTH_LONG).show();
+                showAlertForCreatingBoard("Añadir nuevo producto", "Escribir el nombre del producto");*/
+                //Con intent pasamos informacion al otro activity que vayamos a cambiar
+                Intent intent = new Intent(getActivity(), AddEditProductActivity.class);//Establecemos primero donde estamos y luego donde vamos
+
+                //En este caso como hemos pulsado en el más, pasaremos la opcion de añadir
+                intent.putExtra("añadir", IdProducto); //Para detectar en el AddEdit si es un añadir o un editar
+
+                startActivity(intent);//Iniciamos el intent
             }
         });
         return view;
@@ -165,14 +174,17 @@ public class Nevera_Fragment extends Fragment {
         builder.setView(viewInflated);
 
         final EditText input = (EditText) viewInflated.findViewById(R.id.editText_dialog);
-
+        final EditText input2 = (EditText) viewInflated.findViewById(R.id.cantidad_dialog);
+        final EditText input3 = (EditText) viewInflated.findViewById(R.id.precio_dialog);
 
         builder.setPositiveButton("Añadir", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String productName = input.getText().toString().trim();
+                int productCantidad = Integer.parseInt(input2.getText().toString().trim());
+                double productPrecio = Double.parseDouble(input3.getText().toString().trim());
                 if (productName.length() > 0)
-                    createNewBoard(productName);
+                    createNewBoard(productName,productPrecio,productCantidad);
                 else
                     Toast.makeText(getContext(), "Es necesario un nuevo nombre para el tablero", Toast.LENGTH_LONG).show();
 
@@ -183,8 +195,8 @@ public class Nevera_Fragment extends Fragment {
         dialog.show();
     }
 
-    private void createNewBoard(String productName) {
-        ProductoModelo producto = new ProductoModelo(productName);
+    private void createNewBoard(String productName, double precio, int cantidad) {
+        ProductoModelo producto = new ProductoModelo(productName,cantidad, precio);
         mDataBase.child("Producto").push().setValue(producto).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
