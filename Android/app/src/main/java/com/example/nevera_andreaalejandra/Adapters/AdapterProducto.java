@@ -59,8 +59,8 @@ public class AdapterProducto extends BaseAdapter {
 
         ProductoModelo currentProduct = getItem(position);
         holder.nombre.setText(currentProduct.getNombre());
-        holder.precio.setText((int) currentProduct.getPrecio());
-        holder.cantidad.setText(currentProduct.getCantidad());
+        holder.precio.setText(currentProduct.getPrecio() + "");
+        holder.cantidad.setText(currentProduct.getCantidad() + "");
 
 
         return convertView;

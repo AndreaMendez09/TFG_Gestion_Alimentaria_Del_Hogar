@@ -90,6 +90,7 @@ public class Nevera_Fragment extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getContext(), "Es necesario un nuevo nombre para el tablero", Toast.LENGTH_LONG).show();
                 showAlertForCreatingBoard("Añadir nuevo producto", "Escribir el nombre del producto");
             }
         });
@@ -103,17 +104,17 @@ public class Nevera_Fragment extends Fragment {
                 if (snapshot.exists()) {
                     lista_productos.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) { //Añadimos los campos a las variables creadas anteriormente
-                        NombreProducto = ds.child("Nombre").getValue().toString(); //Lo que hay entre parentesis es el nombre de como lo guarda la base de datos
-                        TipoProducto = ds.child("Tipo").getValue().toString();
-                        UbicacionProducto = ds.child("Ubicacion").getValue().toString();
-                        PrecioProducto = Double.valueOf(ds.child("Precio").getValue().toString());
-                        CantidadProducto = Integer.parseInt(ds.child("Cantidad").getValue().toString());
+                        NombreProducto = ds.child("nombre").getValue().toString(); //Lo que hay entre parentesis es el nombre de como lo guarda la base de datos
+                        //TipoProducto = ds.child("tipo").getValue().toString();
+                        //UbicacionProducto = ds.child("ubicacion").getValue().toString();
+                        PrecioProducto = Double.valueOf(ds.child("precio").getValue().toString());
+                        CantidadProducto = Integer.parseInt(ds.child("cantidad").getValue().toString());
 
                         //Creamos la fecha
-                        String date = ds.child("Fecha").child("date").getValue().toString();
-                        String month = ds.child("Fecha").child("month").getValue().toString();
+                        /*String date = ds.child("fecha").child("date").getValue().toString();
+                        String month = ds.child("fecha").child("month").getValue().toString();
                         int monthInt = Integer.parseInt(month)+1;
-                        String year = ds.child("Fecha").child("year").getValue().toString();
+                        String year = ds.child("fecha").child("year").getValue().toString();
                         int yearInt = (Integer.parseInt(year)+1900);
                         String fecha=null;
                         if(Integer.parseInt(month)<10){
@@ -127,7 +128,7 @@ public class Nevera_Fragment extends Fragment {
                             FechaProducto=new SimpleDateFormat("dd/MM/yyyy").parse(fecha);
                         } catch (ParseException e) {
                             e.printStackTrace();
-                        }
+                        }*/
 
                         //Vinculamos el id
                         IdProducto = ds.getKey();
