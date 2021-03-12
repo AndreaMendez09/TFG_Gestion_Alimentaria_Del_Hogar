@@ -3,6 +3,7 @@ package com.example.nevera_andreaalejandra.Models;
 import java.util.Date;
 
 public class ProductoModelo {
+    private String id;
     private int cantidad;
     private String tipo;
     private String nombre;
@@ -16,11 +17,17 @@ public class ProductoModelo {
     }
 
     //Creamos el constructor solo con los not null
-    public ProductoModelo(int cantidad, String tipo, String nombre, String ubicacion) {
+    public ProductoModelo(String id, int cantidad, String tipo, String nombre, String ubicacion) {
+        this.id = id;
         this.cantidad = cantidad;
         this.tipo = tipo;
         this.nombre = nombre;
         this.ubicacion = ubicacion;
+    }
+
+    public ProductoModelo(String nombre) {
+        this.nombre = nombre;
+
     }
 
     //Creamos los getters y setters
