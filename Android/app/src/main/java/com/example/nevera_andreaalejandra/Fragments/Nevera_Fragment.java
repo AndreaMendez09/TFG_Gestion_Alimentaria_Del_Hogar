@@ -87,7 +87,7 @@ public class Nevera_Fragment extends Fragment {
         mDataBase = FirebaseDatabase.getInstance().getReference();
         lista_productos = new ArrayList<ProductoModelo>();
         listView = (ListView) view.findViewById(R.id.item_product_nevera);
-        readBoard();
+        leerProductos();
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +106,7 @@ public class Nevera_Fragment extends Fragment {
         return view;
     }
     // CRUD Actions
-    private void readBoard() {
+    private void leerProductos() {
         mDataBase.child("Producto").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -196,7 +196,7 @@ public class Nevera_Fragment extends Fragment {
     }
 
     private void createNewBoard(String productName, double precio, int cantidad) {
-        ProductoModelo producto = new ProductoModelo(productName,cantidad, precio);
+        ProductoModelo producto = new ProductoModelo(productName,cantidad, precio,"nevera");
         mDataBase.child("Producto").push().setValue(producto).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

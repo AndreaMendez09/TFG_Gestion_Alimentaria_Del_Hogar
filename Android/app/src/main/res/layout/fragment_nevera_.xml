@@ -38,7 +38,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="20dp"
-            android:dividerHeight="15.0sp" />
+            android:dividerHeight="15.0sp"
+            android:divider="#00FFFFFF"/>
 
     </LinearLayout>
 </FrameLayout>

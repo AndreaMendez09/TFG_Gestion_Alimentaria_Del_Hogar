@@ -25,10 +25,11 @@ public class ProductoModelo {
         this.ubicacion = ubicacion;
     }
 
-    public ProductoModelo(String nombre, int cantidad, double precio) {
+    public ProductoModelo(String nombre, int cantidad, double precio, String ubicacion) {
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.precio = precio;
+        this.ubicacion = ubicacion;
     }
 
     //Creamos los getters y setters

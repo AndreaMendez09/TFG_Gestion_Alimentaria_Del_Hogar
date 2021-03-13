@@ -127,7 +127,7 @@
                 android:background="@android:color/transparent"
                 android:src="@android:drawable/ic_menu_view" />-->
             <Spinner
-                android:id="@+id/planets_spinner"
+                android:id="@+id/ETipoProducto"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_alignTop="@+id/TextView4"
