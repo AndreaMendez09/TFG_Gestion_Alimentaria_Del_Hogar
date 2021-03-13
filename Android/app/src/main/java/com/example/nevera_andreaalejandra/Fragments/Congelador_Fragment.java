@@ -153,7 +153,7 @@ public class Congelador_Fragment extends Fragment {
         });
     }
 
-    private void createNewBoard(String productName, double precio, int cantidad) {
+    /*private void createNewBoard(String productName, double precio, int cantidad) {
         ProductoModelo producto = new ProductoModelo(productName,cantidad, precio, "congelador");
         mDataBase.child("Producto").push().setValue(producto).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -165,5 +165,5 @@ public class Congelador_Fragment extends Fragment {
                 }
             }
         });
-    }
+    }*/
 }

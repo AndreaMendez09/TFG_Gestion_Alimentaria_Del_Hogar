@@ -163,7 +163,7 @@ public class Nevera_Fragment extends Fragment {
         });
     }
 
-    private void showAlertForCreatingBoard(String title, String message) {
+    /*private void showAlertForCreatingBoard(String title, String message) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -193,9 +193,9 @@ public class Nevera_Fragment extends Fragment {
 
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
+    }*/
 
-    private void createNewBoard(String productName, double precio, int cantidad) {
+    /*private void createNewBoard(String productName, double precio, int cantidad) {
         ProductoModelo producto = new ProductoModelo(productName,cantidad, precio,"nevera");
         mDataBase.child("Producto").push().setValue(producto).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -207,5 +207,5 @@ public class Nevera_Fragment extends Fragment {
                 }
             }
         });
-    }
+    }*/
 }
