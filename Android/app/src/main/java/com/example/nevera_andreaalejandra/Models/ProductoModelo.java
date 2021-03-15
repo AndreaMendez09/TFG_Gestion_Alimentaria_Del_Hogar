@@ -7,7 +7,7 @@ public class ProductoModelo {
     private int cantidad;
     private String tipo;
     private String nombre;
-    private Date fecha;
+    private String fecha;
     private double precio;
     private String ubicacion;
 
@@ -25,12 +25,13 @@ public class ProductoModelo {
         this.ubicacion = ubicacion;
     }
 
-    public ProductoModelo(String nombre, int cantidad, double precio, String ubicacion, String tipo) {
+    public ProductoModelo(String nombre, int cantidad, double precio, String ubicacion, String tipo, String fecha) {
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.precio = precio;
         this.ubicacion = ubicacion;
         this.tipo = tipo;
+        this.fecha = fecha;
     }
 
     //Creamos los getters y setters
@@ -58,11 +59,11 @@ public class ProductoModelo {
         this.nombre = nombre;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

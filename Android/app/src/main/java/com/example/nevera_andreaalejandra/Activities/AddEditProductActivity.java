@@ -2,15 +2,20 @@ package com.example.nevera_andreaalejandra.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.nevera_andreaalejandra.Fragments.Nevera_Fragment;
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -69,6 +74,8 @@ public class AddEditProductActivity extends AppCompatActivity {
                 añadirProducto();
             }
         });
+
+        setToolbar();
         
         
 
@@ -76,13 +83,36 @@ public class AddEditProductActivity extends AppCompatActivity {
 
     private void añadirProducto() {
         String productName = nombre.getText().toString().trim();
-        //Date productFecha = calendario.getText().toString().trim();
+        String productFecha = calendario.getText().toString();
         int productCantidad = Integer.parseInt(cantidad.getText().toString().trim());
-        double productPrecio = Double.parseDouble(precio.getText().toString().trim());
+        double productPrecio = 0.0; //TODO Esto da error, no se porque
+        if (!(precio.getText().toString().trim().isEmpty())){
+            productPrecio = Double.parseDouble(precio.getText().toString().trim());
+        }
         String productTipo = tipo.getSelectedItem().toString();
 
+        //Vamos a comprobar si los campos que son obligatorios, estan rellenos
+        //En este caso nombre y cantidad, porque tipo siempre tiene uno
+        boolean isAble = true;
+        if (productName.isEmpty()) {
+            nombre.setError("El nombre es obligatorio");
+            isAble = false;
+        }
+        if (cantidad.getText().toString().isEmpty()) {
+            cantidad.setError("La cantidad es obligatoria");
+            isAble = false;
+        }
+
+        if (isAble) {
+            addBBDD(productName, productFecha, productCantidad, productPrecio, productTipo);
+        }else {
+            Toast.makeText(AddEditProductActivity.this, "Rellena los campos necesarios", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void addBBDD(String productName, String productFecha, int productCantidad, double productPrecio, String productTipo) {
         //TODO La ubicación vamos a tener que pasarla por el intent, igual que si es añadir o editar
-        ProductoModelo producto = new ProductoModelo(productName,productCantidad, productPrecio,"nevera", productTipo);
+        ProductoModelo producto = new ProductoModelo(productName,productCantidad, productPrecio,"nevera", productTipo, productFecha);
         mDataBase.child("Producto").push().setValue(producto).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -93,6 +123,15 @@ public class AddEditProductActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //Para volver al fragment donde nos encontramos
+        Intent intent = new Intent(this, MainActivity.class);//Establecemos primero donde estamos y luego donde vamos
+
+        //TODO AQUI DEPENDERA DE LO QUE PASEMOS POR EL INTENT IR A UN FRAGMENT U A OTRO
+        //En este caso como hemos pulsado en el más, pasaremos la opcion de añadir
+        intent.putExtra("Tipo", "nevera"); //Para detectar en el AddEdit si es un añadir o un editar
+
+        startActivity(intent);//Iniciamos el intent
 
     }
 
@@ -110,5 +149,15 @@ public class AddEditProductActivity extends AppCompatActivity {
         },  year, month, day);
         SeleccionarFecha.show();
 
+
     }
+
+    //Para poner la imagen en el toolbar
+    private void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar); //He cambiado esto, porque ponia que el otro era para versiones de 30, y esta es la 26
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_undo); //Esto de aqui pone la imagen
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
 }

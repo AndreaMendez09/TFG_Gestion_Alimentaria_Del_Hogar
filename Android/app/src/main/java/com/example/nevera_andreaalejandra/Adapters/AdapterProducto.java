@@ -51,6 +51,7 @@ public class AdapterProducto extends BaseAdapter {
             holder.nombre = (TextView) convertView.findViewById(R.id.nameProduct);
             holder.precio = (TextView) convertView.findViewById(R.id.priceProduct);
             holder.cantidad = (TextView) convertView.findViewById(R.id.cantidadProduct);
+            //holder.fecha = (TextView) convertView.findViewById(R.id.ECalendarioProducto);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -61,7 +62,7 @@ public class AdapterProducto extends BaseAdapter {
         holder.nombre.setText(currentProduct.getNombre());
         holder.precio.setText(currentProduct.getPrecio() + "");
         holder.cantidad.setText(currentProduct.getCantidad() + "");
-
+        //holder.fecha.setText(currentProduct.getFecha() + "");
 
         return convertView;
     }
@@ -70,6 +71,6 @@ public class AdapterProducto extends BaseAdapter {
         private TextView nombre;
         private TextView precio;
         private TextView cantidad;
-        //private TextView fecha;
+        private TextView fecha;
     }
 }
