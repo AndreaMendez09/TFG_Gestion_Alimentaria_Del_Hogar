@@ -3,21 +3,44 @@ package com.example.nevera_andreaalejandra.Fragments.Login;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nevera_andreaalejandra.Activities.MainActivity;
 import com.example.nevera_andreaalejandra.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.StorageReference;
 
 
 public class LoginFragment extends Fragment {
     //Botones para relacionarlos con xml
     private Button login_login;
+    private EditText correo_login, pass_login;
+    private Button recordarPass;
+    private ImageButton irAtras;
+
+    //Para la BBDD
+    private DatabaseReference mDataBase;
+    private FirebaseAuth mAuth;
+    private StorageReference mStorage;
+
+    //
 
     public LoginFragment() {
         // Required empty public constructor
@@ -36,12 +59,34 @@ public class LoginFragment extends Fragment {
 
         //Relacionamos con el xml
         login_login = (Button) view.findViewById(R.id.buttonLogin_login);
-        
+        correo_login = (EditText) view.findViewById(R.id.mail_login);
+        pass_login = (EditText) view.findViewById(R.id.password_login);
+        recordarPass = (Button) view.findViewById(R.id.textPassRecover);
+        irAtras = (ImageButton) view.findViewById(R.id.irAtras);
+
+        //Para inicializar la instancia de autenticación
+        mAuth = FirebaseAuth.getInstance();
+
+        //Eventos on click
         login_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeToActivity();
+                LoginUser();
                 //Toast.makeText(getActivity(),"Text!",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        recordarPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFragment(new RecuperarFragment());
+            }
+        });
+
+        irAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFragment(new HomeFragment());
             }
         });
 
@@ -52,5 +97,53 @@ public class LoginFragment extends Fragment {
     private void changeToActivity() {
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
+    }
+
+    //Método para cambiar de fragment
+    private void changeFragment(Fragment fragment) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame_login, fragment, "NewFragmentTag");
+        ft.commit();
+    }
+
+    private void LoginUser() {
+        //Obtenemos lo que ha escrito el usuario
+        String email = correo_login.getText().toString();
+        String pass = pass_login.getText().toString();
+        if(login(email,pass)) {
+            mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(getActivity(),new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) { //Si el usuario y contraseña son correctos, se carga el UserActivity.
+                        // Sign in success, update UI with the signed-in user's information
+                        Toast.makeText(getContext(), "Bienvenido", Toast.LENGTH_SHORT).show();
+                        changeToActivity();
+                    } else {
+                        Toast.makeText(getContext(), "Error, compruebe el usuario o contraseña", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    }
+
+    private boolean login(String email, String password) {
+        if (!isValidEmail(email)) {
+            Toast.makeText(getContext(), "Email no válido,", Toast.LENGTH_LONG).show();
+            correo_login.setError("El correo es incorrecto");
+            return false;
+        } else if (!isValidPassword(password)) {
+            Toast.makeText(getContext(), "Password incorrecta", Toast.LENGTH_LONG).show();
+            pass_login.setError("La contraseña no coincide");
+            return false;
+        } else {
+            return true;
+        }
+    }
+    private boolean isValidEmail(String email) {
+        return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private boolean isValidPassword(String password) {
+        return password.length() >= 4;
     }
 }

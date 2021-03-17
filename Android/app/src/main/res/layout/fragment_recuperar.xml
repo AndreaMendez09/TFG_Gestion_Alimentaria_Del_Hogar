@@ -6,10 +6,17 @@
     tools:context=".Fragments.Login.LoginFragment"
     android:background="@drawable/fondo_login">
 
+    <ImageButton
+        android:id="@+id/irAtras"
+        android:layout_width="30pt"
+        android:layout_height="30pt"
+        android:src="@drawable/ic_undo"
+        android:background="#00FFFFFF"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¿Problemas para iniciar sesion"
+        android:text="¿Problemas para iniciar sesion?"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="120dp"

@@ -5,7 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.Login.RegisterFragment"
     android:background="@drawable/fondo_login">
-
+    <ImageButton
+        android:id="@+id/irAtras"
+        android:layout_width="30pt"
+        android:layout_height="30pt"
+        android:src="@drawable/ic_undo"
+        android:background="#00FFFFFF"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -13,6 +18,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
         android:textSize="40dp"
         android:textStyle="bold"
         android:textColor="#000000"
@@ -24,6 +30,7 @@
         android:orientation="vertical"
         android:layout_gravity="center"
         android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="50dp">
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,7 +65,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nombre"
+                android:text="Apellido"
                 android:fontFamily="sans-serif-light"
                 android:textSize="25dp"
                 android:layout_marginTop="10dp" />

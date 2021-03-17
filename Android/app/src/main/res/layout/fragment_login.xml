@@ -5,7 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.Login.LoginFragment"
     android:background="@drawable/fondo_login">
-
+    <ImageButton
+        android:id="@+id/irAtras"
+        android:layout_width="30pt"
+        android:layout_height="30pt"
+        android:src="@drawable/ic_undo"
+        android:background="#00FFFFFF"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -85,14 +90,16 @@
         android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
-        <TextView
+        <Button
+            android:id="@+id/textPassRecover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="¿Has olvidado tu contraseña?"
             android:textColor="#FFFFFF"
+            android:background="#00FFFFFF"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="10dp"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:clickable="true"/>
 
         <Button

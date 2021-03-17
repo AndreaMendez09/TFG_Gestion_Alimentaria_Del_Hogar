@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.nevera_andreaalejandra.Activities.AddEditProductActivity;
@@ -27,6 +28,7 @@ public class RegisterFragment extends Fragment {
     //Elementos en el fragment
     private EditText nombre_edit, apellido_edit, mail_edit, pass_edit;
     private Button btnregister;
+    private ImageButton irAtras;
 
     //Para la BBDD
     private DatabaseReference mDataBase;
@@ -59,6 +61,7 @@ public class RegisterFragment extends Fragment {
         apellido_edit = (EditText) view.findViewById(R.id.surname_register);
         mail_edit = (EditText) view.findViewById(R.id.mail_register);
         pass_edit = (EditText) view.findViewById(R.id.password_register);
+        irAtras = (ImageButton) view.findViewById(R.id.irAtras);
 
         //Para inicializar la instancia de autenticación
         mAuth = FirebaseAuth.getInstance();
@@ -68,6 +71,13 @@ public class RegisterFragment extends Fragment {
         btnregister.setOnClickListener(v -> {
             Toast.makeText(getContext(), "Boton", Toast.LENGTH_SHORT).show();
             addUser();
+        });
+
+        irAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFragment(new HomeFragment());
+            }
         });
 
         // Inflate the layout for this fragment
@@ -129,5 +139,12 @@ public class RegisterFragment extends Fragment {
         }).addOnFailureListener(e -> {
             Toast.makeText(getContext(), "COMPRUEBE SI LOS DATOS SON CORRECTOS", Toast.LENGTH_SHORT).show();
         });
+    }
+
+    //Método para cambiar de fragment
+    private void changeFragment(Fragment fragment) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame_login, fragment, "NewFragmentTag");
+        ft.commit();
     }
 }
