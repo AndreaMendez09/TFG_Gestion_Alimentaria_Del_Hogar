@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:text="Mi nevera:"
+            android:fontFamily="sans-serif-light"
             android:textColor="#000000"
             android:textSize="36sp" />
 
