@@ -28,6 +28,7 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
     private OnButtonClickListener buttonClickListener;
     private Context context;
     private int layout;
+    private String tipoproducto;
     private List<ProductoModelo> list;
 
     public AdapterProducto(Context context, int layout, List<ProductoModelo> list) {
@@ -78,10 +79,52 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
             cantidad = (TextView) itemView.findViewById(R.id.cantidadProduct);
             imagenItem = (ImageView) itemView.findViewById(R.id.imageProduct);
             btnDelete = (ImageButton) itemView.findViewById(R.id.imageDelete);
+
         }
 
         public void bind(final ProductoModelo product, final OnItemClickListener itemListener, final OnButtonClickListener btnListener) {
             nombre.setText(product.getNombre());
+            tipoproducto= product.getTipo();
+
+            switch (tipoproducto= product.getTipo()){
+                case "Vegetales":
+                    imagenItem.setImageResource(R.drawable.ic_carrot_solid);
+                    break;
+                case "Pescado":
+                    imagenItem.setImageResource(R.drawable.ic_fish_solid);
+                    break;
+                case "Lacteos":
+                    imagenItem.setImageResource(R.drawable.ic_cheese_solid);
+                    break;
+                case "Dulces":
+                    imagenItem.setImageResource(R.drawable.ic_cookie_bite_solid);
+                    break;
+                case "Carne":
+                    imagenItem.setImageResource(R.drawable.ic_drumstick_bite_solid);
+                    break;
+                case "Fruta":
+                    imagenItem.setImageResource(R.drawable.ic_apple_alt_solid);
+                    break;
+                case "Legumbres":
+                    imagenItem.setImageResource(R.drawable.ic_lemon_solid);
+                    break;
+                case "Carbohidratos":
+                    imagenItem.setImageResource(R.drawable.ic_bread_slice_solid);
+                    break;
+                case "Conservas":
+                    imagenItem.setImageResource(R.drawable.ic_lemon_solid);
+                    break;
+                case "Bebidas":
+                    imagenItem.setImageResource(R.drawable.ic_coffee_solid);
+                    break;
+                case "Otros":
+                    imagenItem.setImageResource(R.drawable.ic_lemon_solid);
+                    break;
+                default:
+                    System.out.println("No se encuentra");
+            }
+
+
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
