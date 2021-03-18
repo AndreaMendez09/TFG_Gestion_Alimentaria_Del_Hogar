@@ -15,6 +15,8 @@ import com.example.nevera_andreaalejandra.R;
 import java.util.List;
 
 public class AdapterProducto extends BaseAdapter {
+    private  OnItemClickListener itemClickListener;
+    private OnButtonClickListener btnClickListener;
     private Context context;
     private int layout;
     private List<ProductoModelo> list;
@@ -23,6 +25,13 @@ public class AdapterProducto extends BaseAdapter {
         this.context = context;
         this.layout = layout;
         this.list = list;
+    }
+    public AdapterProducto(List<ProductoModelo> list, int layout,OnItemClickListener itemListener, OnButtonClickListener btnListener ) {
+
+        this.layout = layout;
+        this.list = list;
+        this.itemClickListener = itemListener;
+        this.btnClickListener = btnListener;
     }
 
     @Override
@@ -72,5 +81,12 @@ public class AdapterProducto extends BaseAdapter {
         private TextView precio;
         private TextView cantidad;
         private TextView fecha;
+    }
+    public interface OnItemClickListener {
+        void onItemClick(ProductoModelo productoModelo, int position);
+    }
+
+    public interface OnButtonClickListener {
+        void onButtonClick(ProductoModelo productoModelo, int position);
     }
 }

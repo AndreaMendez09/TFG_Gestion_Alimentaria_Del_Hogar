@@ -44,6 +44,8 @@ public class Nevera_Fragment extends Fragment {
 
     //Creamos el adapter
     private AdapterProducto adapterProducto;
+    private AdapterProducto adapterEliminar;
+
 
     //Creamos nuestra lista para guardar los productos
     private List<ProductoModelo> lista_productos;
@@ -148,9 +150,30 @@ public class Nevera_Fragment extends Fragment {
                             lista_productos.add(product);
                         }
                     }
+                    adapterEliminar = new AdapterProducto(lista_productos, R.layout.item_product, new AdapterProducto.OnItemClickListener() {
+                        //Este click es al darle a la ciudad
+                        @Override
+                        public void onItemClick(ProductoModelo productoModelo, int position) {
+                            Intent intent = new Intent(getContext(), AddEditProductActivity.class);
+                            ProductoModelo productoModelo1 = lista_productos.get(position);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("objeto", productoModelo1);
+                            intent.putExtras(bundle);
 
+                            startActivity(intent);
+                        }
+                        //Este boton es al clickar en el boton eliminar que tiene cada cardview de ciudad
+                    }, new AdapterProducto.OnButtonClickListener() {
+                        @Override
+                        public void onButtonClick(ProductoModelo productoModelo, int position) {
+                            //Aqui va el boton de eliminar del cardview
+                            //Mostramos un dialogo emergente para comprobar si estas seguro de que quieres borrarlo
+                            //TODO no tengo ni idea si esto esta bien
+                            //showAlertForErasingCity(city.getName(),city.getDescription(),city);
+                            deleteCity(productoModelo);
+                        }
 
-
+                    });
                 }
                 adapterProducto = new AdapterProducto(getContext(), R.layout.item_product,lista_productos);
                 listView.setAdapter(adapterProducto);
@@ -161,6 +184,35 @@ public class Nevera_Fragment extends Fragment {
 
             }
         });
+    }
+    private void deleteCity(final ProductoModelo productoModelo) {
+
+        //creamos el alertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("¿Seguro que quiere eliminar?")//es como la partesita de arriba
+                .setTitle("Aviso")//es el texto
+                .setCancelable(false)//es para que no se salga  si oprime cualquier cosa
+                .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface builder, int id) {
+                        //Comprobamos si exite el producto
+                        if(lista_productos.size()==1){
+                            lista_productos.clear();//La limpiamos
+                        }
+                        mDataBase.child(productoModelo.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    //Creamos un toast, para informar de que se ha eliminado
+                                    Toast.makeText(getContext(), "Se ha eliminado satisfactoriamente", Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+                        });
+                    }
+                });
+        builder.setNegativeButton("Cancelar", null).show();
+
+
     }
 
     /*private void showAlertForCreatingBoard(String title, String message) {

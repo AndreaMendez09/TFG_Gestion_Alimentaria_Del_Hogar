@@ -1,8 +1,9 @@
 package com.example.nevera_andreaalejandra.Models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ProductoModelo {
+public class ProductoModelo implements Serializable {
     private String id;
     private int cantidad;
     private String tipo;
@@ -61,6 +62,10 @@ public class ProductoModelo {
 
     public String getFecha() {
         return fecha;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public void setFecha(String fecha) {
