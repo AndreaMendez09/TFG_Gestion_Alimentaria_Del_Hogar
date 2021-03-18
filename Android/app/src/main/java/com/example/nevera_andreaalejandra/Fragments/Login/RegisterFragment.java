@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nevera_andreaalejandra.Activities.AddEditProductActivity;
@@ -29,6 +31,11 @@ public class RegisterFragment extends Fragment {
     private EditText nombre_edit, apellido_edit, mail_edit, pass_edit;
     private Button btnregister;
     private ImageButton irAtras;
+    private LinearLayout caja_nombre, caja_apellido, caja_mail, caja_pass;
+    private TextView texto_register;
+
+    //Para el color
+    private float alpha = 0;
 
     //Para la BBDD
     private DatabaseReference mDataBase;
@@ -63,6 +70,14 @@ public class RegisterFragment extends Fragment {
         pass_edit = (EditText) view.findViewById(R.id.password_register);
         irAtras = (ImageButton) view.findViewById(R.id.irAtras);
 
+        //Para las animaciones
+        caja_nombre = (LinearLayout) view.findViewById(R.id.caja_nombre);
+        caja_apellido = (LinearLayout) view.findViewById(R.id.caja_apellido);
+        caja_mail = (LinearLayout) view.findViewById(R.id.caja_mail);
+        caja_pass = (LinearLayout) view.findViewById(R.id.caja_pass);
+        texto_register = (TextView) view.findViewById(R.id.texto_register);
+
+
         //Para inicializar la instancia de autenticación
         mAuth = FirebaseAuth.getInstance();
         mDataBase = FirebaseDatabase.getInstance().getReference();
@@ -80,8 +95,35 @@ public class RegisterFragment extends Fragment {
             }
         });
 
+        //Llamamos a las animaciones
+        movimiento();
+
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void movimiento() {
+        texto_register.setTranslationY(300);
+        caja_nombre.setTranslationY(300);
+        caja_apellido.setTranslationY(300);
+        caja_mail.setTranslationY(300);
+        caja_pass.setTranslationY(300);
+        btnregister.setTranslationY(300);
+
+
+        texto_register.setAlpha(alpha);
+        caja_nombre.setAlpha(alpha);
+        caja_apellido.setAlpha(alpha);
+        caja_mail.setAlpha(alpha);
+        caja_pass.setAlpha(alpha);
+        btnregister.setAlpha(alpha);
+
+        texto_register.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
+        caja_nombre.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(600).start();
+        caja_apellido.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(800).start();
+        caja_mail.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1000).start();
+        caja_pass.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1200).start();
+        btnregister.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1400).start();
     }
 
     //Creamos un método para registrar al usuario
@@ -117,7 +159,7 @@ public class RegisterFragment extends Fragment {
                 //Creamos un usario
                 UsuarioModelo user = new UsuarioModelo(id, nombre, apellido, pass, mail);
 
-                mDataBase.child("Usuario").push().setValue(user).addOnCompleteListener(task1 -> {
+                mDataBase.child("Usuario").child(id).setValue(user).addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()) {
                         Toast.makeText(getContext(), "Usuario registrado", Toast.LENGTH_SHORT).show();
                         //Nos movemos al fragment de login

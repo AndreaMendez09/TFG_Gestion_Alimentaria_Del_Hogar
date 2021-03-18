@@ -34,7 +34,7 @@
             android:textSize="36sp" />
 
         <ListView
-            android:id="@+id/item_product"
+            android:id="@+id/item_product_congelador"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="20dp"

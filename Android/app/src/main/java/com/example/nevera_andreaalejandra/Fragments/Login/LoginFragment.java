@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,11 @@ public class LoginFragment extends Fragment {
     private EditText correo_login, pass_login;
     private Button recordarPass;
     private ImageButton irAtras;
+    private LinearLayout caja_mail, caja_pass, caja_abajo;
+    private TextView texto_login;
+
+    //Para el color
+    private float alpha = 0;
 
     //Para la BBDD
     private DatabaseReference mDataBase;
@@ -63,6 +69,10 @@ public class LoginFragment extends Fragment {
         pass_login = (EditText) view.findViewById(R.id.password_login);
         recordarPass = (Button) view.findViewById(R.id.textPassRecover);
         irAtras = (ImageButton) view.findViewById(R.id.irAtras);
+        caja_mail = (LinearLayout) view.findViewById(R.id.caja_mail);
+        caja_pass = (LinearLayout) view.findViewById(R.id.caja_password);
+        caja_abajo = (LinearLayout) view.findViewById(R.id.caja_abajo);
+        texto_login = (TextView) view.findViewById(R.id.texto_login);
 
         //Para inicializar la instancia de autenticación
         mAuth = FirebaseAuth.getInstance();
@@ -90,8 +100,28 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        //Método para las transicciones
+        movimiento();
+
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void movimiento() {
+        texto_login.setTranslationY(300);
+        caja_mail.setTranslationY(300);
+        caja_pass.setTranslationY(300);
+        caja_abajo.setTranslationY(300);
+
+        texto_login.setAlpha(alpha);
+        caja_mail.setAlpha(alpha);
+        caja_pass.setAlpha(alpha);
+        caja_abajo.setAlpha(alpha);
+
+        texto_login.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
+        caja_mail.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(600).start();
+        caja_pass.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(800).start();
+        caja_abajo.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1000).start();
     }
 
     private void changeToActivity() {

@@ -114,8 +114,8 @@ public class Nevera_Fragment extends Fragment {
                     lista_productos.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) { //Añadimos los campos a las variables creadas anteriormente
                         NombreProducto = ds.child("nombre").getValue().toString(); //Lo que hay entre parentesis es el nombre de como lo guarda la base de datos
-                        //TipoProducto = ds.child("tipo").getValue().toString();
-                        //UbicacionProducto = ds.child("ubicacion").getValue().toString();
+                        TipoProducto = ds.child("tipo").getValue().toString();
+                        UbicacionProducto = ds.child("ubicacion").getValue().toString();
                         PrecioProducto = Double.valueOf(ds.child("precio").getValue().toString());
                         CantidadProducto = Integer.parseInt(ds.child("cantidad").getValue().toString());
 
@@ -142,16 +142,15 @@ public class Nevera_Fragment extends Fragment {
                         //Vinculamos el id
                         IdProducto = ds.getKey();
 
-
-                        ProductoModelo product = new ProductoModelo(IdProducto, CantidadProducto, TipoProducto,NombreProducto, UbicacionProducto);
-                        lista_productos.add(product);
+                        if (UbicacionProducto.equals("nevera")) {
+                            ProductoModelo product = new ProductoModelo(IdProducto, CantidadProducto, TipoProducto, NombreProducto, UbicacionProducto);
+                            lista_productos.add(product);
+                        }
                     }
 
 
 
                 }
-                // Observa como pasamos el activity, con this. Podríamos declarar
-                // Activity o Context en el constructor y funcionaría pasando el mismo valor, this
                 adapterProducto = new AdapterProducto(getContext(), R.layout.item_product,lista_productos);
                 listView.setAdapter(adapterProducto);
             }

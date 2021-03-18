@@ -75,7 +75,7 @@ public class Congelador_Fragment extends Fragment {
         //DB Firebase
         mDataBase = FirebaseDatabase.getInstance().getReference();
         lista_productos = new ArrayList<ProductoModelo>();
-        listView = (ListView) view.findViewById(R.id.item_product_nevera);
+        listView = (ListView) view.findViewById(R.id.item_product_congelador);
         leerProductos();
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +105,7 @@ public class Congelador_Fragment extends Fragment {
                     for (DataSnapshot ds : snapshot.getChildren()) { //Añadimos los campos a las variables creadas anteriormente
                         NombreProducto = ds.child("nombre").getValue().toString(); //Lo que hay entre parentesis es el nombre de como lo guarda la base de datos
                         //TipoProducto = ds.child("tipo").getValue().toString();
-                        //UbicacionProducto = ds.child("ubicacion").getValue().toString();
+                        UbicacionProducto = ds.child("ubicacion").getValue().toString();
                         PrecioProducto = Double.valueOf(ds.child("precio").getValue().toString());
                         CantidadProducto = Integer.parseInt(ds.child("cantidad").getValue().toString());
 
@@ -132,9 +132,10 @@ public class Congelador_Fragment extends Fragment {
                         //Vinculamos el id
                         IdProducto = ds.getKey();
 
-
-                        ProductoModelo product = new ProductoModelo(IdProducto, CantidadProducto, TipoProducto,NombreProducto, UbicacionProducto);
-                        lista_productos.add(product);
+                        if (UbicacionProducto.equals("congelador")) {
+                            ProductoModelo product = new ProductoModelo(IdProducto, CantidadProducto, TipoProducto, NombreProducto, UbicacionProducto);
+                            lista_productos.add(product);
+                        }
                     }
 
 
