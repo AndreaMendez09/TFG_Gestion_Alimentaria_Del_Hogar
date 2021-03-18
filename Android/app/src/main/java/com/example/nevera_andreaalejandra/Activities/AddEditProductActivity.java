@@ -120,7 +120,7 @@ public class AddEditProductActivity extends AppCompatActivity {
         if (extras != null) {
             ubicacion = extras.getString("ubicacion");
         }
-        Toast.makeText(AddEditProductActivity.this, ubicacion + "hola", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(AddEditProductActivity.this, ubicacion + "hola", Toast.LENGTH_SHORT).show();
         ProductoModelo producto = new ProductoModelo(productName,productCantidad, productPrecio,ubicacion, productTipo, productFecha);
         mDataBase.child("Producto").push().setValue(producto).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

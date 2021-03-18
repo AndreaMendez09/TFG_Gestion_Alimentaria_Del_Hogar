@@ -7,7 +7,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -184,6 +186,9 @@ public class Nevera_Fragment extends Fragment {
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setAdapter(adapterEliminar);
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+                dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
+                recyclerView.addItemDecoration(dividerItemDecoration);
             }
 
             @Override

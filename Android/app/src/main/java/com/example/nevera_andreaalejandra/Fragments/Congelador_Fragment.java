@@ -1,10 +1,15 @@
 package com.example.nevera_andreaalejandra.Fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -54,6 +59,7 @@ public class Congelador_Fragment extends Fragment {
 
     //Para el list view
     private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     public Congelador_Fragment() {
         // Required empty public constructor
@@ -71,13 +77,25 @@ public class Congelador_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_congelador_, container, false);
-        add = view.findViewById(R.id.FABAddList);
+
 
         //DB Firebase
         mDataBase = FirebaseDatabase.getInstance().getReference();
+
+        //Creamos la lista
         lista_productos = new ArrayList<ProductoModelo>();
+
+
+
+        //Enlazamos con el xml
+        add = view.findViewById(R.id.FABAddList);
         recyclerView = (RecyclerView) view.findViewById(R.id.item_product_congelador);
+        mLayoutManager = new LinearLayoutManager(getContext());
+
         leerProductos();
+
+        //Para que se visualize
+        registerForContextMenu(recyclerView);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,14 +157,39 @@ public class Congelador_Fragment extends Fragment {
                             lista_productos.add(product);
                         }
                     }
+                    adapterProducto = new AdapterProducto(lista_productos, R.layout.item_product, new AdapterProducto.OnItemClickListener() {
+                        //Este click es al darle a la ciudad
+                        @Override
+                        public void onItemClick(ProductoModelo productoModelo, int position) {
+                            Intent intent = new Intent(getContext(), AddEditProductActivity.class);
+                            ProductoModelo productoModelo1 = lista_productos.get(position);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("objeto", productoModelo1);
+                            intent.putExtras(bundle);
 
+                            startActivity(intent);
+                        }
+                        //Este boton es al clickar en el boton eliminar que tiene cada cardview de ciudad
+                    }, new AdapterProducto.OnButtonClickListener() {
+                        @Override
+                        public void onButtonClick(ProductoModelo productoModelo, int position) {
+                            //Aqui va el boton de eliminar del cardview
+                            //Mostramos un dialogo emergente para comprobar si estas seguro de que quieres borrarlo
+                            //TODO no tengo ni idea si esto esta bien
+                            //showAlertForErasingCity(city.getName(),city.getDescription(),city);
+                            deleteProduct(productoModelo);
+                        }
+
+                    });
 
 
                 }
-                // Observa como pasamos el activity, con this. Podríamos declarar
-                // Activity o Context en el constructor y funcionaría pasando el mismo valor, this
-                adapterProducto = new AdapterProducto(getContext(), R.layout.item_product,lista_productos);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setAdapter(adapterProducto);
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+                dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
+                recyclerView.addItemDecoration(dividerItemDecoration);
             }
 
             @Override
@@ -154,6 +197,36 @@ public class Congelador_Fragment extends Fragment {
 
             }
         });
+    }
+
+    private void deleteProduct(final ProductoModelo productoModelo) {
+
+        //creamos el alertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("¿Seguro que quiere eliminar?")//es como la partesita de arriba
+                .setTitle("Aviso")//es el texto
+                .setCancelable(false)//es para que no se salga  si oprime cualquier cosa
+                .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface builder, int id) {
+                        //Comprobamos si exite el producto
+                        if(lista_productos.size()==1){
+                            lista_productos.clear();//La limpiamos
+                        }
+                        mDataBase.child(productoModelo.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    //Creamos un toast, para informar de que se ha eliminado
+                                    Toast.makeText(getContext(), "Se ha eliminado satisfactoriamente", Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+                        });
+                    }
+                });
+        builder.setNegativeButton("Cancelar", null).show();
+
+
     }
 
     /*private void createNewBoard(String productName, double precio, int cantidad) {
