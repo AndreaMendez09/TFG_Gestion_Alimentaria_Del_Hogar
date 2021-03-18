@@ -8,13 +8,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.nevera_andreaalejandra.Activities.AddEditProductActivity;
@@ -30,9 +29,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -63,7 +59,8 @@ public class Nevera_Fragment extends Fragment {
     private Date FechaProducto = new Date();
 
     //Para el list view
-    private ListView listView;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     public Nevera_Fragment() {
         // Required empty public constructor
@@ -83,13 +80,20 @@ public class Nevera_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_nevera_, container, false);
-        add = view.findViewById(R.id.FABAddList);
 
         //DB Firebase
         mDataBase = FirebaseDatabase.getInstance().getReference();
+
+        //Enlazar con el xml
+        add = view.findViewById(R.id.FABAddList);
         lista_productos = new ArrayList<ProductoModelo>();
-        listView = (ListView) view.findViewById(R.id.item_product_nevera);
+        recyclerView = (RecyclerView) view.findViewById(R.id.item_product_nevera);
+        mLayoutManager = new LinearLayoutManager(getContext());
+
         leerProductos();
+
+        //Para que se visualize
+        registerForContextMenu(recyclerView);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,13 +174,16 @@ public class Nevera_Fragment extends Fragment {
                             //Mostramos un dialogo emergente para comprobar si estas seguro de que quieres borrarlo
                             //TODO no tengo ni idea si esto esta bien
                             //showAlertForErasingCity(city.getName(),city.getDescription(),city);
-                            deleteCity(productoModelo);
+                            deleteProduct(productoModelo);
                         }
 
                     });
+
+
                 }
-                adapterProducto = new AdapterProducto(getContext(), R.layout.item_product,lista_productos);
-                listView.setAdapter(adapterProducto);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(mLayoutManager);
+                recyclerView.setAdapter(adapterEliminar);
             }
 
             @Override
@@ -185,7 +192,7 @@ public class Nevera_Fragment extends Fragment {
             }
         });
     }
-    private void deleteCity(final ProductoModelo productoModelo) {
+    private void deleteProduct(final ProductoModelo productoModelo) {
 
         //creamos el alertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

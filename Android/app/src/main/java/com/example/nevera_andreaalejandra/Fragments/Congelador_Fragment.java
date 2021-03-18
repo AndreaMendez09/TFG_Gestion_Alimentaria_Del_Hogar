@@ -5,11 +5,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+
 import android.widget.Toast;
 
 import com.example.nevera_andreaalejandra.Activities.AddEditProductActivity;
@@ -52,7 +53,7 @@ public class Congelador_Fragment extends Fragment {
     private Date FechaProducto = new Date();
 
     //Para el list view
-    private ListView listView;
+    private RecyclerView recyclerView;
 
     public Congelador_Fragment() {
         // Required empty public constructor
@@ -75,7 +76,7 @@ public class Congelador_Fragment extends Fragment {
         //DB Firebase
         mDataBase = FirebaseDatabase.getInstance().getReference();
         lista_productos = new ArrayList<ProductoModelo>();
-        listView = (ListView) view.findViewById(R.id.item_product_congelador);
+        recyclerView = (RecyclerView) view.findViewById(R.id.item_product_congelador);
         leerProductos();
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +146,7 @@ public class Congelador_Fragment extends Fragment {
                 // Observa como pasamos el activity, con this. Podríamos declarar
                 // Activity o Context en el constructor y funcionaría pasando el mismo valor, this
                 adapterProducto = new AdapterProducto(getContext(), R.layout.item_product,lista_productos);
-                listView.setAdapter(adapterProducto);
+                recyclerView.setAdapter(adapterProducto);
             }
 
             @Override
