@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;
@@ -60,6 +61,7 @@ public class AdapterProducto extends BaseAdapter {
             holder.nombre = (TextView) convertView.findViewById(R.id.nameProduct);
             holder.precio = (TextView) convertView.findViewById(R.id.priceProduct);
             holder.cantidad = (TextView) convertView.findViewById(R.id.cantidadProduct);
+            holder.btnDelete = (ImageButton) convertView.findViewById(R.id.imageDelete);
             //holder.fecha = (TextView) convertView.findViewById(R.id.ECalendarioProducto);
             convertView.setTag(holder);
         } else {
@@ -73,6 +75,13 @@ public class AdapterProducto extends BaseAdapter {
         holder.cantidad.setText(currentProduct.getCantidad() + "");
         //holder.fecha.setText(currentProduct.getFecha() + "");
 
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnClickListener.onButtonClick(currentProduct, position);
+            }
+        });
+
         return convertView;
     }
 
@@ -81,6 +90,7 @@ public class AdapterProducto extends BaseAdapter {
         private TextView precio;
         private TextView cantidad;
         private TextView fecha;
+        private ImageButton btnDelete;
     }
     public interface OnItemClickListener {
         void onItemClick(ProductoModelo productoModelo, int position);
