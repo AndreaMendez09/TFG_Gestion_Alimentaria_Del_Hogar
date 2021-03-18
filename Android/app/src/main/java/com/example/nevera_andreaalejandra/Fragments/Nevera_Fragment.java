@@ -99,6 +99,7 @@ public class Nevera_Fragment extends Fragment {
 
                 //En este caso como hemos pulsado en el más, pasaremos la opcion de añadir
                 intent.putExtra("añadir", IdProducto); //Para detectar en el AddEdit si es un añadir o un editar
+                intent.putExtra("ubicacion", "nevera"); //Para detectar en el AddEdit si es de congelador o de nevera
 
                 startActivity(intent);//Iniciamos el intent
             }

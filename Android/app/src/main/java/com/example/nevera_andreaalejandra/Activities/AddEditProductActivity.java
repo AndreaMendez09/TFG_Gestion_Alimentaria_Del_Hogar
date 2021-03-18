@@ -44,6 +44,10 @@ public class AddEditProductActivity extends AppCompatActivity {
     //Para realizar la conexon con la firebase
     private DatabaseReference mDataBase;
 
+    //Para obtener los datos
+    private Bundle extras;
+    private String ubicacion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +116,12 @@ public class AddEditProductActivity extends AppCompatActivity {
 
     private void addBBDD(String productName, String productFecha, int productCantidad, double productPrecio, String productTipo) {
         //TODO La ubicación vamos a tener que pasarla por el intent, igual que si es añadir o editar
-        ProductoModelo producto = new ProductoModelo(productName,productCantidad, productPrecio,"nevera", productTipo, productFecha);
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            ubicacion = extras.getString("ubicacion");
+        }
+        Toast.makeText(AddEditProductActivity.this, ubicacion + "hola", Toast.LENGTH_SHORT).show();
+        ProductoModelo producto = new ProductoModelo(productName,productCantidad, productPrecio,ubicacion, productTipo, productFecha);
         mDataBase.child("Producto").push().setValue(producto).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -129,7 +138,7 @@ public class AddEditProductActivity extends AppCompatActivity {
 
         //TODO AQUI DEPENDERA DE LO QUE PASEMOS POR EL INTENT IR A UN FRAGMENT U A OTRO
         //En este caso como hemos pulsado en el más, pasaremos la opcion de añadir
-        intent.putExtra("Tipo", "nevera"); //Para detectar en el AddEdit si es un añadir o un editar
+        //intent.putExtra("Tipo", "nevera"); //Para detectar en el AddEdit si es un añadir o un editar
 
         startActivity(intent);//Iniciamos el intent
 
