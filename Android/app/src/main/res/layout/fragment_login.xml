@@ -40,7 +40,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mail"
+                android:text="Correo"
                 android:fontFamily="sans-serif-light"
                 android:textSize="25dp"
                 android:layout_marginTop="10dp" />
@@ -68,7 +68,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Password"
+            android:text="Contraseña"
             android:fontFamily="sans-serif-light"
             android:textSize="25dp" />
 
