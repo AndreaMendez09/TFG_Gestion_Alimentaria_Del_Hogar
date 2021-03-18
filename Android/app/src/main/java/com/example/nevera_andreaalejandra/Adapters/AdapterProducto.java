@@ -84,9 +84,8 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
 
         public void bind(final ProductoModelo product, final OnItemClickListener itemListener, final OnButtonClickListener btnListener) {
             nombre.setText(product.getNombre());
-            tipoproducto= product.getTipo();
-
-            switch (tipoproducto= product.getTipo()){
+            tipoproducto = product.getTipo();
+            switch (tipoproducto){
                 case "Vegetales":
                     imagenItem.setImageResource(R.drawable.ic_carrot_solid);
                     break;

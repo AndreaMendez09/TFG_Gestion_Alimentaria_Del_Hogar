@@ -124,7 +124,7 @@ public class Congelador_Fragment extends Fragment {
                     lista_productos.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) { //Añadimos los campos a las variables creadas anteriormente
                         NombreProducto = ds.child("nombre").getValue().toString(); //Lo que hay entre parentesis es el nombre de como lo guarda la base de datos
-                        //TipoProducto = ds.child("tipo").getValue().toString();
+                        TipoProducto = ds.child("tipo").getValue().toString();
                         UbicacionProducto = ds.child("ubicacion").getValue().toString();
                         PrecioProducto = Double.valueOf(ds.child("precio").getValue().toString());
                         CantidadProducto = Integer.parseInt(ds.child("cantidad").getValue().toString());
