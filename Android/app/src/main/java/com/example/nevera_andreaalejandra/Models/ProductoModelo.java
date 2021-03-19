@@ -35,6 +35,15 @@ public class ProductoModelo implements Serializable {
         this.fecha = fecha;
     }
 
+    //Para cuando sea editar
+    public ProductoModelo(String nombre, int cantidad, double precio, String tipo, String fecha) {
+        this.nombre = nombre;
+        this.cantidad = cantidad;
+        this.precio = precio;
+        this.tipo = tipo;
+        this.fecha = fecha;
+    }
+
     //Creamos los getters y setters
     public int getCantidad() {
         return cantidad;
