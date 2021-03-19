@@ -13,11 +13,12 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/FABAddList"
-        android:layout_width="80dp"
-        android:layout_height="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="20dp"
-        android:src="@android:drawable/ic_menu_more" />
+        app:fabSize="auto"
+        android:src="@drawable/ic_add" />
 
     <LinearLayout
         android:orientation="vertical"

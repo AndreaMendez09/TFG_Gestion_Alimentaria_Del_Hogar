@@ -129,7 +129,7 @@ public class Nevera_Fragment extends Fragment {
                     add.show();
             }
         });
-        
+
         return view;
     }
     // CRUD Actions
