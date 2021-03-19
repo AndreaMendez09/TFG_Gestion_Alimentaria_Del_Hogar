@@ -1,5 +1,6 @@
 package com.example.nevera_andreaalejandra.Fragments;
 
+import android.content.Context;
 import
         android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
 import com.example.nevera_andreaalejandra.Activities.AddEditProductActivity;
@@ -112,6 +115,21 @@ public class Nevera_Fragment extends Fragment {
                 startActivity(intent);//Iniciamos el intent
             }
         });
+
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                if(lista_productos.size()<=2)
+                    add.show();
+                if (dy > 0)
+                    add.hide();
+                else if (dy < 0)
+                    add.show();
+            }
+        });
+        
         return view;
     }
     // CRUD Actions
@@ -186,9 +204,19 @@ public class Nevera_Fragment extends Fragment {
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setAdapter(adapterEliminar);
+
+                //Ponemos el espacio entre los items
                 DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
                 dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
                 recyclerView.addItemDecoration(dividerItemDecoration);
+
+                //Ponemos la animacion
+                Context context = recyclerView.getContext();
+                LayoutAnimationController layoutAnimationController = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_caer);
+                recyclerView.setLayoutAnimation(layoutAnimationController);
+                recyclerView.getAdapter().notifyDataSetChanged();
+                recyclerView.scheduleLayoutAnimation();
+
             }
 
             @Override
