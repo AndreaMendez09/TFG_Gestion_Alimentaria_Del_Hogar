@@ -109,7 +109,7 @@ public class Nevera_Fragment extends Fragment {
                 Intent intent = new Intent(getActivity(), AddEditProductActivity.class);//Establecemos primero donde estamos y luego donde vamos
 
                 //En este caso como hemos pulsado en el más, pasaremos la opcion de añadir
-                intent.putExtra("añadir", IdProducto); //Para detectar en el AddEdit si es un añadir o un editar
+                intent.putExtra("añadir", true); //Para detectar en el AddEdit si es un añadir o un editar
                 intent.putExtra("ubicacion", "nevera"); //Para detectar en el AddEdit si es de congelador o de nevera
 
                 startActivity(intent);//Iniciamos el intent
@@ -179,6 +179,7 @@ public class Nevera_Fragment extends Fragment {
                         @Override
                         public void onItemClick(ProductoModelo productoModelo, int position) {
                             Intent intent = new Intent(getContext(), AddEditProductActivity.class);
+                            intent.putExtra("añadir", false);
                             ProductoModelo productoModelo1 = lista_productos.get(position);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("objeto", productoModelo1);

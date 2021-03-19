@@ -87,4 +87,10 @@ public class ProductoModelo implements Serializable {
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
 }
