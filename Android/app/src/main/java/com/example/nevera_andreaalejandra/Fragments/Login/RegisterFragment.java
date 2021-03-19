@@ -157,7 +157,7 @@ public class RegisterFragment extends Fragment {
                 String id = mAuth.getCurrentUser().getUid();
 
                 //Creamos un usario
-                UsuarioModelo user = new UsuarioModelo(id, nombre, apellido, pass, mail);
+                UsuarioModelo user = new UsuarioModelo(id, nombre, apellido, mail);
 
                 mDataBase.child("Usuario").child(id).setValue(user).addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()) {
