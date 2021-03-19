@@ -55,7 +55,9 @@
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp" />
+                android:paddingRight="15dp"
+                android:drawableStart="@drawable/custom_mail_icon"
+                android:drawablePadding="10dp" />
 
 
         </LinearLayout>
