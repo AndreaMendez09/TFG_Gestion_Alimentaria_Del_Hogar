@@ -247,7 +247,7 @@ public class Congelador_Fragment extends Fragment {
                         if(lista_productos.size()==1){
                             lista_productos.clear();//La limpiamos
                         }
-                        mDataBase.child(productoModelo.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        mDataBase.child("Producto").child(productoModelo.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
