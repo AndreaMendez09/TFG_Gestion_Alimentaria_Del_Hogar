@@ -23,6 +23,7 @@ import com.example.nevera_andreaalejandra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -48,6 +49,7 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
 
     //Para realizar la conexon con la firebase
     private DatabaseReference mDataBase;
+    private FirebaseAuth mAuth;
 
     //Para obtener los datos
     private Bundle extras;
@@ -61,6 +63,7 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
 
         //DB Firebase
         mDataBase = FirebaseDatabase.getInstance().getReference().child("Producto");
+        mAuth = FirebaseAuth.getInstance();
 
         //Vinculamos con el XML
         add = findViewById(R.id.Guardar);
@@ -212,9 +215,15 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
         extras = getIntent().getExtras();
         if (extras != null) {
             ubicacion = extras.getString("ubicacion");
-        }
-        ProductoModelo producto = new ProductoModelo(productName,productCantidad, productPrecio,ubicacion, productTipo, productFecha);
-        mDataBase.push().setValue(producto).addOnCompleteListener(new OnCompleteListener<Void>() {
+        }        //Para inicializar la instancia de autenticación
+
+        //Obtenemos el id del usuario conectado
+        String ID_user = mAuth.getCurrentUser().getUid();
+        Toast.makeText(AddEditProductActivity.this, "El usuario: " + ID_user, Toast.LENGTH_SHORT).show();
+        //IdProducto = ds.getKey();
+
+        ProductoModelo product = new ProductoModelo(productName,productCantidad, productPrecio,ubicacion, productTipo, productFecha, ID_user);
+        mDataBase.push().setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
@@ -229,12 +238,14 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
     }
 
     private void changeActivity() {
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            ubicacion = extras.getString("ubicacion");
+        }
 
         //Para volver al fragment donde nos encontramos
         Intent intent = new Intent(this, MainActivity.class);//Establecemos primero donde estamos y luego donde vamos
-        //TODO AQUI DEPENDERA DE LO QUE PASEMOS POR EL INTENT IR A UN FRAGMENT U A OTRO
-        //En este caso como hemos pulsado en el más, pasaremos la opcion de añadir
-        //intent.putExtra("Tipo", "nevera"); //Para detectar en el AddEdit si es un añadir o un editar
+        intent.putExtra("fragment", ubicacion); //Para detectar en el AddEdit si es un añadir o un editar
         startActivity(intent);//Iniciamos el intent
     }
 

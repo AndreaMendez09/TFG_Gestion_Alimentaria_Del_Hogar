@@ -4,7 +4,8 @@
     android:id="@+id/item_product"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="@drawable/round_corners_item">
+    android:background="@drawable/round_corners_item"
+    android:layout_marginBottom="16dp">
 
     <ImageView
         android:id="@+id/imageProduct"
@@ -54,7 +55,7 @@
         android:layout_height="36dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="25dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
         android:clickable="true"
         android:gravity="right"

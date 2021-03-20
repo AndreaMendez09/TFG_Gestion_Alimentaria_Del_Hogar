@@ -9,21 +9,43 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.nevera_andreaalejandra.Fragments.Congelador_Fragment;
 import com.example.nevera_andreaalejandra.Fragments.Listas_Fragment;
 import com.example.nevera_andreaalejandra.Fragments.Nevera_Fragment;
 import com.example.nevera_andreaalejandra.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    //private FirebaseUser mFirebaseUser;
+    //private FirebaseAuth mFirebaseAuth;
+
+    //Para la BBDD
+    private FirebaseAuth mAuth;
+
+    private Bundle extras;
+    private String fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setToolbar();
+
+        /*//BBDD
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        String ID_user = mFirebaseUser.getUid();
+        Toast.makeText(MainActivity.this, "El usuario: " + ID_user, Toast.LENGTH_SHORT).show();*/
+
+        //Para inicializar la instancia de autenticación
+        /*mAuth = FirebaseAuth.getInstance();
+        String ID_user = mAuth.getCurrentUser().getUid();
+        Toast.makeText(MainActivity.this, "El usuario: " + ID_user, Toast.LENGTH_SHORT).show();*/
 
         //Relacionamos con el xml
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -34,6 +56,15 @@ public class MainActivity extends AppCompatActivity {
         //Dependiendo de lo que seleccionemos en el menu, iremos a un fragment u a otro
         navigationView.setNavigationItemSelectedListener(new OyenteNav());
 
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            fragment = extras.getString("fragment");
+            if (fragment.equals("nevera")) {
+                changeFragment(new Nevera_Fragment(), navigationView.getMenu().getItem(0));
+            } else if (fragment.equals("congelador")) {
+                changeFragment(new Congelador_Fragment(), navigationView.getMenu().getItem(1));
+            }
+        }
 
     }
 

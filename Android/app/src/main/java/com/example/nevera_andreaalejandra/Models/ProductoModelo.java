@@ -11,31 +11,37 @@ public class ProductoModelo implements Serializable {
     private String fecha;
     private double precio;
     private String ubicacion;
+    private String usuario;
 
     //Creamos el constructor vacio
     public ProductoModelo() {
 
     }
 
-    //Creamos el constructor solo con los not null
-    public ProductoModelo(String id, int cantidad, String tipo, String nombre, String ubicacion) {
+    //Para añadir
+    public ProductoModelo(String id, String nombre, int cantidad, double precio,String ubicacion, String tipo, String fecha, String UID_usuario) {
         this.id = id;
-        this.cantidad = cantidad;
-        this.tipo = tipo;
-        this.nombre = nombre;
-        this.ubicacion = ubicacion;
-    }
-
-    public ProductoModelo(String nombre, int cantidad, double precio, String ubicacion, String tipo, String fecha) {
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.precio = precio;
-        this.ubicacion = ubicacion;
         this.tipo = tipo;
         this.fecha = fecha;
+        this.usuario = UID_usuario;
+        this.ubicacion = ubicacion;
     }
 
-    //Para cuando sea editar
+    //Para addEdit
+    public ProductoModelo( String nombre, int cantidad, double precio,String ubicacion, String tipo, String fecha, String UID_usuario) {
+        this.nombre = nombre;
+        this.cantidad = cantidad;
+        this.precio = precio;
+        this.tipo = tipo;
+        this.fecha = fecha;
+        this.usuario = UID_usuario;
+        this.ubicacion = ubicacion;
+    }
+
+    //Para cuando sea editar, porque no debe tener ni id, ni ubicacion, ni usuario
     public ProductoModelo(String nombre, int cantidad, double precio, String tipo, String fecha) {
         this.nombre = nombre;
         this.cantidad = cantidad;
@@ -45,6 +51,16 @@ public class ProductoModelo implements Serializable {
     }
 
     //Creamos los getters y setters
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public int getCantidad() {
         return cantidad;
     }
@@ -73,10 +89,6 @@ public class ProductoModelo implements Serializable {
         return fecha;
     }
 
-    public String getId() {
-        return id;
-    }
-
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
@@ -97,9 +109,11 @@ public class ProductoModelo implements Serializable {
         this.ubicacion = ubicacion;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getUID_usuario() {
+        return usuario;
     }
 
-
+    public void setUID_usuario(String UID_usuario) {
+        this.usuario = UID_usuario;
+    }
 }

@@ -28,6 +28,7 @@ import com.example.nevera_andreaalejandra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,7 +45,6 @@ public class Nevera_Fragment extends Fragment {
     private FloatingActionButton add;
 
     //Creamos el adapter
-    private AdapterProducto adapterProducto;
     private AdapterProducto adapterEliminar;
 
 
@@ -53,6 +53,7 @@ public class Nevera_Fragment extends Fragment {
 
     //Para realizar la conexon con la firebase
     private DatabaseReference mDataBase;
+    private FirebaseAuth mAuth;
 
     //Los datos para vincularlos con la base de datos
     private String IdProducto;
@@ -62,6 +63,8 @@ public class Nevera_Fragment extends Fragment {
     private Double PrecioProducto;
     private int CantidadProducto;
     private Date FechaProducto = new Date();
+    private String DateProducto;
+    private String UID_usuario;
 
     //Para el list view
     private RecyclerView recyclerView;
@@ -88,6 +91,8 @@ public class Nevera_Fragment extends Fragment {
 
         //DB Firebase
         mDataBase = FirebaseDatabase.getInstance().getReference();
+        //Para inicializar la instancia de autenticación
+        mAuth = FirebaseAuth.getInstance();
 
         //Enlazar con el xml
         add = view.findViewById(R.id.FABAddList);
@@ -145,6 +150,8 @@ public class Nevera_Fragment extends Fragment {
                         UbicacionProducto = ds.child("ubicacion").getValue().toString();
                         PrecioProducto = Double.valueOf(ds.child("precio").getValue().toString());
                         CantidadProducto = Integer.parseInt(ds.child("cantidad").getValue().toString());
+                        UID_usuario = ds.child("uid_usuario").getValue().toString();
+                        DateProducto = ds.child("fecha").getValue().toString();
 
                         //Creamos la fecha
                         /*String date = ds.child("fecha").child("date").getValue().toString();
@@ -169,9 +176,15 @@ public class Nevera_Fragment extends Fragment {
                         //Vinculamos el id
                         IdProducto = ds.getKey();
 
+                        //Comprobamos el usuario que esta conectado
+                        String id = mAuth.getCurrentUser().getUid();
+
+
                         if (UbicacionProducto.equals("nevera")) {
-                            ProductoModelo product = new ProductoModelo(IdProducto, CantidadProducto, TipoProducto, NombreProducto, UbicacionProducto);
-                            lista_productos.add(product);
+                            if (UID_usuario.equals(id)) {
+                                ProductoModelo product = new ProductoModelo(IdProducto,NombreProducto, CantidadProducto, PrecioProducto,UbicacionProducto ,TipoProducto,DateProducto,UID_usuario);
+                                lista_productos.add(product);
+                            }
                         }
                     }
                     adapterEliminar = new AdapterProducto(lista_productos, R.layout.item_product, new AdapterProducto.OnItemClickListener() {
@@ -207,9 +220,9 @@ public class Nevera_Fragment extends Fragment {
                 recyclerView.setAdapter(adapterEliminar);
 
                 //Ponemos el espacio entre los items
-                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+                /*DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
                 dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
-                recyclerView.addItemDecoration(dividerItemDecoration);
+                recyclerView.addItemDecoration(dividerItemDecoration);*/
 
                 //Ponemos la animacion
                 Context context = recyclerView.getContext();
@@ -239,7 +252,9 @@ public class Nevera_Fragment extends Fragment {
                         if(lista_productos.size()==1){
                             lista_productos.clear();//La limpiamos
                         }
-                        mDataBase.child(productoModelo.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        Toast.makeText(getContext(), productoModelo.getId(), Toast.LENGTH_SHORT).show();
+
+                        mDataBase.child("Producto").child(productoModelo.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){

@@ -28,6 +28,7 @@ import com.example.nevera_andreaalejandra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,6 +51,7 @@ public class Congelador_Fragment extends Fragment {
 
     //Para realizar la conexon con la firebase
     private DatabaseReference mDataBase;
+    private FirebaseAuth mAuth;
 
     //Los datos para vincularlos con la base de datos
     private String IdProducto;
@@ -59,6 +61,8 @@ public class Congelador_Fragment extends Fragment {
     private Double PrecioProducto;
     private int CantidadProducto;
     private Date FechaProducto = new Date();
+    private String UID_usuario;
+    private String  DateProducto;
 
     //Para el list view
     private RecyclerView recyclerView;
@@ -84,6 +88,8 @@ public class Congelador_Fragment extends Fragment {
 
         //DB Firebase
         mDataBase = FirebaseDatabase.getInstance().getReference();
+        //Para inicializar la instancia de autenticación
+        mAuth = FirebaseAuth.getInstance();
 
         //Creamos la lista
         lista_productos = new ArrayList<ProductoModelo>();
@@ -144,6 +150,8 @@ public class Congelador_Fragment extends Fragment {
                         UbicacionProducto = ds.child("ubicacion").getValue().toString();
                         PrecioProducto = Double.valueOf(ds.child("precio").getValue().toString());
                         CantidadProducto = Integer.parseInt(ds.child("cantidad").getValue().toString());
+                        UID_usuario = ds.child("uid_usuario").getValue().toString();
+                        DateProducto = ds.child("fecha").getValue().toString();
 
                         //Creamos la fecha
                         /*String date = ds.child("fecha").child("date").getValue().toString();
@@ -168,9 +176,14 @@ public class Congelador_Fragment extends Fragment {
                         //Vinculamos el id
                         IdProducto = ds.getKey();
 
+                        //Comprobamos el usuario que esta conectado
+                        String id = mAuth.getCurrentUser().getUid();
+
                         if (UbicacionProducto.equals("congelador")) {
-                            ProductoModelo product = new ProductoModelo(IdProducto, CantidadProducto, TipoProducto, NombreProducto, UbicacionProducto);
-                            lista_productos.add(product);
+                            if (UID_usuario.equals(id)) {
+                                ProductoModelo product = new ProductoModelo(IdProducto,NombreProducto, CantidadProducto, PrecioProducto,UbicacionProducto ,TipoProducto,DateProducto,UID_usuario);
+                                lista_productos.add(product);
+                            }
                         }
                     }
                     adapterProducto = new AdapterProducto(lista_productos, R.layout.item_product, new AdapterProducto.OnItemClickListener() {
@@ -191,9 +204,6 @@ public class Congelador_Fragment extends Fragment {
                         @Override
                         public void onButtonClick(ProductoModelo productoModelo, int position) {
                             //Aqui va el boton de eliminar del cardview
-                            //Mostramos un dialogo emergente para comprobar si estas seguro de que quieres borrarlo
-                            //TODO no tengo ni idea si esto esta bien
-                            //showAlertForErasingCity(city.getName(),city.getDescription(),city);
                             deleteProduct(productoModelo);
                         }
 
@@ -204,9 +214,10 @@ public class Congelador_Fragment extends Fragment {
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setAdapter(adapterProducto);
-                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+
+                /*DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
                 dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
-                recyclerView.addItemDecoration(dividerItemDecoration);
+                recyclerView.addItemDecoration(dividerItemDecoration);*/
 
                 //Ponemos la animacion
                 Context context = recyclerView.getContext();

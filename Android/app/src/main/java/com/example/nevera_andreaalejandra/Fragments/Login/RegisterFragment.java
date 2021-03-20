@@ -155,6 +155,7 @@ public class RegisterFragment extends Fragment {
             if (task.isSuccessful()) {
                 //GUARDAMOS LA ID DEL USUARIO CREADO
                 String id = mAuth.getCurrentUser().getUid();
+                //Toast.makeText(getContext(), "Usuario:" + id, Toast.LENGTH_SHORT).show();
 
                 //Creamos un usario
                 UsuarioModelo user = new UsuarioModelo(id, nombre, apellido, mail);

@@ -42,11 +42,7 @@ public class LoginFragment extends Fragment {
     private float alpha = 0;
 
     //Para la BBDD
-    private DatabaseReference mDataBase;
     private FirebaseAuth mAuth;
-    private StorageReference mStorage;
-
-    //
 
     public LoginFragment() {
         // Required empty public constructor
@@ -145,8 +141,8 @@ public class LoginFragment extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) { //Si el usuario y contraseña son correctos, se carga el UserActivity.
-                        // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(getContext(), "Bienvenido", Toast.LENGTH_SHORT).show();
+                        String id = mAuth.getCurrentUser().getUid();
+                        Toast.makeText(getContext(), "Bienvenido" + id, Toast.LENGTH_SHORT).show();
                         changeToActivity();
                     } else {
                         Toast.makeText(getContext(), "Error, compruebe el usuario o contraseña", Toast.LENGTH_SHORT).show();
