@@ -93,10 +93,10 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
                     imagenItem.setImageResource(R.drawable.ic_fish_solid);
                     break;
                 case "Lacteos":
-                    imagenItem.setImageResource(R.drawable.ic_cheese_solid);
+                    imagenItem.setImageResource(R.drawable.ic_milk);
                     break;
                 case "Dulces":
-                    imagenItem.setImageResource(R.drawable.ic_cookie_bite_solid);
+                    imagenItem.setImageResource(R.drawable.ic_candy);
                     break;
                 case "Carne":
                     imagenItem.setImageResource(R.drawable.ic_drumstick_bite_solid);
@@ -105,19 +105,19 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
                     imagenItem.setImageResource(R.drawable.ic_apple_alt_solid);
                     break;
                 case "Legumbres":
-                    imagenItem.setImageResource(R.drawable.ic_lemon_solid);
+                    imagenItem.setImageResource(R.drawable.ic_beans);
                     break;
                 case "Carbohidratos":
                     imagenItem.setImageResource(R.drawable.ic_bread_slice_solid);
                     break;
                 case "Conservas":
-                    imagenItem.setImageResource(R.drawable.ic_lemon_solid);
+                    imagenItem.setImageResource(R.drawable.ic_conservas);
                     break;
                 case "Bebidas":
                     imagenItem.setImageResource(R.drawable.ic_coffee_solid);
                     break;
                 case "Otros":
-                    imagenItem.setImageResource(R.drawable.ic_lemon_solid);
+                    imagenItem.setImageResource(R.drawable.ic_groceries);
                     break;
                 default:
                     System.out.println("No se encuentra");

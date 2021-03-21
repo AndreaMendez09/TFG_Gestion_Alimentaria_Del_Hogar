@@ -4,14 +4,14 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_nevera"
-            android:icon="@android:drawable/ic_dialog_email"
+            android:icon="@drawable/ic_fridge"
             android:title="Nevera" />
         <item android:id="@+id/menu_congelador"
-            android:icon="@android:drawable/ic_dialog_alert"
+            android:icon="@drawable/ic_snowflake"
             android:title="Congelador" />
         <item
             android:id="@+id/menu_lista"
-            android:icon="@android:drawable/ic_dialog_info"
+            android:icon="@drawable/ic_shopping_basket_solid"
             android:title="Lista de la compra" />
     </group>
 

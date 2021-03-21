@@ -228,7 +228,7 @@ public class Nevera_Fragment extends Fragment {
                 Context context = recyclerView.getContext();
                 LayoutAnimationController layoutAnimationController = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_caer);
                 recyclerView.setLayoutAnimation(layoutAnimationController);
-                recyclerView.getAdapter().notifyDataSetChanged();
+                //recyclerView.getAdapter().notifyDataSetChanged();
                 recyclerView.scheduleLayoutAnimation();
 
             }
