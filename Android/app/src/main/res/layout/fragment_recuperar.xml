@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,78 +11,79 @@
         android:id="@+id/irAtras"
         android:layout_width="30pt"
         android:layout_height="30pt"
+        android:background="#00FFFFFF"
         android:src="@drawable/ic_undo"
-        android:background="#00FFFFFF"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="¿Problemas para iniciar sesion?"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="120dp"
+        android:textAlignment="center"
+        android:textColor="#000000"
         android:textSize="40dp"
         android:textStyle="bold"
-        android:textColor="#000000"
-        android:textAlignment="center"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/irAtras" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ingrese su correo para enviar un link para la recuperacion de su contraseña"
-                android:fontFamily="sans-serif-light"
-                android:textSize="18dp"
-                android:layout_marginTop="10dp" />
-
-            <EditText
-                android:id="@+id/recuperar_mail_login"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edittext_bg"
-                android:fontFamily="sans-serif-light"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:drawableStart="@drawable/custom_mail_icon"
-                android:drawablePadding="10dp" />
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
-        android:layout_marginBottom="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="20dp">
+
         <Button
             android:id="@+id/buttonEnviarRecuperar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
-            android:text="Enviar"
             android:background="@drawable/button_style1"
             android:clickable="true"
-            />
+            android:text="Enviar" />
 
     </LinearLayout>
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.20">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Ingrese su correo para enviar un link para la recuperacion de su contraseña"
+            android:textSize="18dp" />
+
+        <EditText
+            android:id="@+id/recuperar_mail_login"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_bg"
+            android:drawableStart="@drawable/custom_mail_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif-light"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,39 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.Login.RegisterFragment"
     android:background="@drawable/fondo_login">
+
     <ImageButton
         android:id="@+id/irAtras"
         android:layout_width="30pt"
         android:layout_height="30pt"
+        android:background="#00FFFFFF"
         android:src="@drawable/ic_undo"
-        android:background="#00FFFFFF"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/texto_register"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="¿Eres nuevo por aquí? Registrate"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
+        android:textAlignment="center"
+        android:textColor="#000000"
         android:textSize="40dp"
         android:textStyle="bold"
-        android:textColor="#000000"
-        android:textAlignment="center"/>
+        app:layout_constraintTop_toBottomOf="@+id/irAtras" />
 
     <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="center"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="50dp">
+        android:orientation="vertical"
+        android:layout_margin="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
+        app:layout_constraintTop_toBottomOf="@+id/texto_register"
+        tools:layout_editor_absoluteX="50dp">
+
         <LinearLayout
             android:id="@+id/caja_nombre"
             android:layout_width="match_parent"
@@ -43,25 +47,26 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nombre"
+                android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif-light"
-                android:textSize="25dp"
-                android:layout_marginTop="10dp" />
+                android:text="Nombre"
+                android:textSize="25dp" />
 
             <EditText
                 android:id="@+id/name_register"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:fontFamily="sans-serif-light"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
                 android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_bg"
+                android:drawableStart="@drawable/custom_person_icon"
+                android:drawablePadding="10dp"
+                android:fontFamily="sans-serif-light"
                 android:inputType="text"
                 android:maxLines="1"
-                android:drawableStart="@drawable/custom_person_icon"
-                android:background="@drawable/edittext_bg"
-                android:drawablePadding="10dp"/>
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/caja_apellido"
             android:layout_width="match_parent"
@@ -71,25 +76,26 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Apellido"
+                android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif-light"
-                android:textSize="25dp"
-                android:layout_marginTop="10dp" />
+                android:text="Apellido"
+                android:textSize="25dp" />
 
             <EditText
                 android:id="@+id/surname_register"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:fontFamily="sans-serif-light"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
                 android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_bg"
+                android:drawableStart="@drawable/custom_person_icon"
+                android:drawablePadding="10dp"
+                android:fontFamily="sans-serif-light"
                 android:inputType="text"
                 android:maxLines="1"
-                android:drawableStart="@drawable/custom_person_icon"
-                android:background="@drawable/edittext_bg"
-                android:drawablePadding="10dp"/>
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/caja_mail"
             android:layout_width="match_parent"
@@ -108,58 +114,58 @@
                 android:id="@+id/mail_register"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:fontFamily="sans-serif-light"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
                 android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_bg"
+                android:drawableStart="@drawable/custom_mail_icon"
+                android:drawablePadding="10dp"
+                android:fontFamily="sans-serif-light"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:drawableStart="@drawable/custom_mail_icon"
-                android:background="@drawable/edittext_bg"
-                android:drawablePadding="10dp"/>
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/caja_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp">
+
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Contraseña"
                 android:fontFamily="sans-serif-light"
+                android:text="Contraseña"
+                android:layout_marginTop="10dp"
                 android:textSize="25dp" />
 
             <EditText
                 android:id="@+id/password_register"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:textSize="15sp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_bg"
+                android:drawableStart="@drawable/custom_pass_icon"
+                android:drawablePadding="10dp"
                 android:fontFamily="sans-serif-light"
                 android:inputType="textPassword"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:layout_marginTop="5dp"
-                android:drawableStart="@drawable/custom_pass_icon"
-                android:background="@drawable/edittext_bg"
-                android:drawablePadding="10dp"/>
+                android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
+
     <Button
         android:id="@+id/buttonRegister"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:text="Registrarse"
+        android:layout_gravity="center|bottom"
         android:background="@drawable/button_style1"
         android:clickable="true"
-        android:layout_gravity="center|bottom"
-        android:layout_marginBottom="20dp"
-        />
+        android:text="Registrarse"
+        android:layout_margin="30dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

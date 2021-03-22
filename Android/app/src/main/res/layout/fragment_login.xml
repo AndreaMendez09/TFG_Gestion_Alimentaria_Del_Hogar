@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.Login.LoginFragment"
     android:background="@drawable/fondo_login">
+
     <ImageButton
         android:id="@+id/irAtras"
         android:layout_width="30pt"
         android:layout_height="30pt"
+        android:background="#00FFFFFF"
         android:src="@drawable/ic_undo"
-        android:background="#00FFFFFF"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/texto_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bienvenido/a a la app de tu nevera"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="100dp"
+        android:textAlignment="center"
+        android:textColor="#000000"
         android:textSize="40dp"
         android:textStyle="bold"
-        android:textColor="#000000"
-        android:textAlignment="center"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/irAtras" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="center"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp">
+        android:layout_margin="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/caja_abajo"
+        app:layout_constraintTop_toBottomOf="@+id/texto_login">
+
         <LinearLayout
             android:id="@+id/caja_mail"
             android:layout_width="match_parent"
@@ -41,42 +46,41 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Correo"
+                android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif-light"
-                android:textSize="25dp"
-                android:layout_marginTop="10dp" />
+                android:text="Correo"
+                android:textSize="25dp" />
 
             <EditText
                 android:id="@+id/mail_login"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:fontFamily="sans-serif-light"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
                 android:layout_marginTop="5dp"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
+                android:background="@drawable/edittext_bg"
                 android:drawableStart="@drawable/custom_mail_icon"
                 android:drawablePadding="10dp"
-                android:background="@drawable/edittext_bg"/>
+                android:fontFamily="sans-serif-light"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
         </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/caja_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/caja_password"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Contraseña"
-            android:fontFamily="sans-serif-light"
-            android:textSize="25dp" />
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
 
-        <!--<com.google.android.material.textfield.TextInputLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="Contraseña"
+                android:textSize="25dp" />
+
+            <!--<com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:boxBackgroundMode="none"
@@ -91,21 +95,21 @@
 
         </com.google.android.material.textfield.TextInputLayout>-->
 
-        <EditText
-            android:id="@+id/password_login"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="5dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:background="@drawable/edittext_bg"
-            android:drawableStart="@drawable/custom_pass_icon"
-            android:drawablePadding="10dp"
-            android:fontFamily="sans-serif-light"
-            android:inputType="textPassword"
-            android:maxLines="1" />
+            <EditText
+                android:id="@+id/password_login"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_bg"
+                android:drawableStart="@drawable/custom_pass_icon"
+                android:drawablePadding="10dp"
+                android:fontFamily="sans-serif-light"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
 
-    </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -113,20 +117,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
-        android:layout_marginBottom="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="30dp">
 
         <Button
             android:id="@+id/textPassRecover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="¿Has olvidado tu contraseña?"
-            android:textColor="#FFFFFF"
-            android:background="#00FFFFFF"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="10dp"
-            android:textSize="18dp"
-            android:clickable="true"/>
+            android:background="#00FFFFFF"
+            android:clickable="true"
+            android:text="¿Has olvidado tu contraseña?"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp" />
 
         <Button
             android:id="@+id/buttonLogin_login"
@@ -134,12 +139,11 @@
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
-            android:text="Log in"
             android:background="@drawable/button_style1"
             android:clickable="true"
-            />
+            android:text="Log in" />
 
 
     </LinearLayout>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

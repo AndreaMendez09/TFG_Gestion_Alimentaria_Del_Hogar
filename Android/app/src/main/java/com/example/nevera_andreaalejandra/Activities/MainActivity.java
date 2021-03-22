@@ -7,8 +7,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.nevera_andreaalejandra.Fragments.Congelador_Fragment;
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     //private FirebaseUser mFirebaseUser;
     //private FirebaseAuth mFirebaseAuth;
+    private LinearLayout logout;
 
     //Para la BBDD
     private FirebaseAuth mAuth;
@@ -37,10 +41,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setToolbar();
 
-        /*//BBDD
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        String ID_user = mFirebaseUser.getUid();
-        Toast.makeText(MainActivity.this, "El usuario: " + ID_user, Toast.LENGTH_SHORT).show();*/
+        //BBDD
+        mAuth = FirebaseAuth.getInstance();
 
         //Para inicializar la instancia de autenticación
         /*mAuth = FirebaseAuth.getInstance();
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         //Relacionamos con el xml
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navview);
+        logout = (LinearLayout) findViewById(R.id.logout);
 
         setFragmentByDefault(); //Para poner el fragment por defecto. En este caso email
 
@@ -65,6 +68,20 @@ public class MainActivity extends AppCompatActivity {
                 changeFragment(new Congelador_Fragment(), navigationView.getMenu().getItem(1));
             }
         }
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(MainActivity.this, "Se pulsa en logout", Toast.LENGTH_SHORT).show();
+                //TODO POR SI QUEREMOS METER UN DIALOG DE SI O NO
+                mAuth.signOut(); //Desconectamos al usuario
+                //Para volver al fragment donde nos encontramos
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);//Establecemos primero donde estamos y luego donde vamos
+                startActivity(intent);//Iniciamos el intent
+            }
+        });
+
+
 
     }
 
