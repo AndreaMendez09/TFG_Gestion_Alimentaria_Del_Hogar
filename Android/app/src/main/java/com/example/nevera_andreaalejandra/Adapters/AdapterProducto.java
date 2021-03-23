@@ -67,7 +67,7 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView nombre;
-        public TextView precio;
+        public TextView fecha;
         public TextView cantidad;
         public ImageView imagenItem;
         public ImageButton btnDelete;
@@ -75,7 +75,7 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nombre = (TextView) itemView.findViewById(R.id.nameProduct);
-            precio = (TextView) itemView.findViewById(R.id.priceProduct);
+            fecha = (TextView) itemView.findViewById(R.id.dateProduct);
             cantidad = (TextView) itemView.findViewById(R.id.cantidadProduct);
             imagenItem = (ImageView) itemView.findViewById(R.id.imageProduct);
             btnDelete = (ImageButton) itemView.findViewById(R.id.imageDelete);
@@ -85,6 +85,8 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
         public void bind(final ProductoModelo product, final OnItemClickListener itemListener, final OnButtonClickListener btnListener) {
             nombre.setText(product.getNombre());
             tipoproducto = product.getTipo();
+            fecha.setText("Caducidad: " + product.getFecha());
+            cantidad.setText("Cantidad : "+ product.getCantidad() + "");
             switch (tipoproducto){
                 case "Vegetales":
                     imagenItem.setImageResource(R.drawable.ic_carrot_solid);

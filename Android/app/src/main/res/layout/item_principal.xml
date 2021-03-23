@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_product"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@drawable/round_corners_item"
+    android:layout_marginBottom="16dp">
+
+    <ImageView
+        android:id="@+id/imageProduct"
+        android:layout_width="80dp"
+        android:layout_height="70dp"
+        android:layout_margin="15dp"
+        android:src="@drawable/ic_fridge" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/imageProduct">
+
+        <TextView
+            android:id="@+id/nameProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Name of the product"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/dateProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha: DD/MM/YYYY"
+            android:textColor="#8F000000"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/cantidadProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cantidad: 3"
+            android:textColor="#8F000000"
+            android:textSize="13sp"/>
+
+    </LinearLayout>
+
+    <ImageButton
+        android:background="#00000000"
+        android:id="@+id/imageDelete"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:clickable="true"
+        android:gravity="right"
+        android:src="@drawable/ic_delete" />
+
+
+</RelativeLayout>

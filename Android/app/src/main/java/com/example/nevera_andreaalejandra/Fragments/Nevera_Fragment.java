@@ -187,7 +187,7 @@ public class Nevera_Fragment extends Fragment {
                             }
                         }
                     }
-                    adapterEliminar = new AdapterProducto(lista_productos, R.layout.item_product, new AdapterProducto.OnItemClickListener() {
+                    adapterEliminar = new AdapterProducto(lista_productos, R.layout.item_principal, new AdapterProducto.OnItemClickListener() {
                         //Este click es al darle a la ciudad
                         @Override
                         public void onItemClick(ProductoModelo productoModelo, int position) {

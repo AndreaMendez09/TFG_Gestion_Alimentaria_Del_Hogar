@@ -186,7 +186,7 @@ public class Congelador_Fragment extends Fragment {
                             }
                         }
                     }
-                    adapterProducto = new AdapterProducto(lista_productos, R.layout.item_product, new AdapterProducto.OnItemClickListener() {
+                    adapterProducto = new AdapterProducto(lista_productos, R.layout.item_principal, new AdapterProducto.OnItemClickListener() {
                         //Este click es al darle a la ciudad
                         @Override
                         public void onItemClick(ProductoModelo productoModelo, int position) {
