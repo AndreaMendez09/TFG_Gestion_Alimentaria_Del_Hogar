@@ -60,7 +60,9 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_product);
-
+        //Linea que se supone que debe hacer lo e flechita
+        //Comenta funicona, no descomentar
+       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //DB Firebase
         mDataBase = FirebaseDatabase.getInstance().getReference().child("Producto");
         mAuth = FirebaseAuth.getInstance();
