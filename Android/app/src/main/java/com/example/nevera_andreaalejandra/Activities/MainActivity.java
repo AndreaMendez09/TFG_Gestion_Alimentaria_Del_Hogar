@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -18,9 +20,13 @@ import com.example.nevera_andreaalejandra.Fragments.Congelador_Fragment;
 import com.example.nevera_andreaalejandra.Fragments.Listas_Fragment;
 import com.example.nevera_andreaalejandra.Fragments.Nevera_Fragment;
 import com.example.nevera_andreaalejandra.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -31,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Para la BBDD
     private FirebaseAuth mAuth;
+    private DatabaseReference mDataBase;
 
     private Bundle extras;
     private String fragment;
@@ -43,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         //BBDD
         mAuth = FirebaseAuth.getInstance();
+        mDataBase = FirebaseDatabase.getInstance().getReference();
 
         //Para inicializar la instancia de autenticación
         /*mAuth = FirebaseAuth.getInstance();
@@ -84,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
 
     //Para poner la imagen en el toolbar
     private void setToolbar() {
@@ -139,6 +150,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.more_options, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -146,7 +163,29 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
+        switch (item.getItemId()) {
+            case R.id.opciones_ordenar:
+                Toast.makeText(MainActivity.this, "Has pulsado en ordenar", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.opciones_borrar:
+                //Toast.makeText(MainActivity.this, "Has pulsado en borrar", Toast.LENGTH_SHORT).show();
+
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
+
+    /*private void BorrarTodos() {
+        mDataBase.child("Producto").child().removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    //Creamos un toast, para informar de que se ha eliminado
+                    Toast.makeText(getApplicationContext(), "Se ha eliminado satisfactoriamente", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+    }*/
 
 }
