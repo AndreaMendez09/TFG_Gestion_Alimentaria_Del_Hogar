@@ -13,6 +13,10 @@
             android:id="@+id/menu_lista"
             android:icon="@drawable/ic_shopping_basket_solid"
             android:title="Lista de la compra" />
+        <item
+            android:id="@+id/menu_ajustes"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="Ajustes" />
     </group>
 
 </menu>

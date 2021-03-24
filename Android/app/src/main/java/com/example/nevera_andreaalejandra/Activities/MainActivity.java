@@ -7,6 +7,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     //private FirebaseUser mFirebaseUser;
     //private FirebaseAuth mFirebaseAuth;
     private LinearLayout logout;
+    private LinearLayout ajustes;
 
     //Para la BBDD
     private FirebaseAuth mAuth;
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView = (NavigationView) findViewById(R.id.navview);
         logout = (LinearLayout) findViewById(R.id.logout);
 
+
         setFragmentByDefault(); //Para poner el fragment por defecto. En este caso email
 
         //Dependiendo de lo que seleccionemos en el menu, iremos a un fragment u a otro
@@ -88,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);//Iniciamos el intent
             }
         });
-
 
 
     }
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             boolean fragmentTransaction = false;
             Fragment fragment = null;
+            Activity activity = null;
             //Obtenemos la posicion del menu
             switch (item.getItemId()) {
                 case R.id.menu_nevera: //Si coincide con el menumail es el fragment de Email
@@ -140,6 +143,10 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new Listas_Fragment();
                     fragmentTransaction = true;
                     break;
+                case R.id.menu_ajustes:
+                    cambiarActivityAjustes();
+                    break;
+
             }
             if (fragmentTransaction) {
                 changeFragment(fragment, item);
@@ -173,6 +180,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+    public void cambiarActivityAjustes(){
+        Intent intent = new Intent(this, Ajustes.class);//Establecemos primero donde estamos y luego donde vamos
+        startActivity(intent);
     }
 
     /*private void BorrarTodos() {
