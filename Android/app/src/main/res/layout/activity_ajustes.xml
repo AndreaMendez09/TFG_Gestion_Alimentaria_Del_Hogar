@@ -63,7 +63,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nombre"
+                        android:text="Nombre:"
                         android:paddingLeft="20pt"
                         android:paddingRight="5pt"
                         android:textSize="10pt"/>
@@ -71,7 +71,7 @@
                         android:id="@+id/nombreUsuario"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" usuario"
+                        android:text="usuario"
                         android:textSize="10pt" />
 
                 </LinearLayout>
@@ -83,7 +83,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Correo"
+                        android:text="Correo:"
                         android:paddingLeft="20pt"
                         android:paddingRight="5pt"
                         android:textSize="10pt"/>
@@ -91,27 +91,8 @@
                         android:id="@+id/correoUsuario"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingLeft="3pt"
                         android:text=" correo@zzz.com"
-                        android:textSize="10pt" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Contraseña"
-                        android:paddingLeft="20pt"
-                        android:paddingRight="5pt"
-                        android:textSize="10pt"/>
-                    <TextView
-                        android:id="@+id/contraseñaUsuario"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="xxxx"
                         android:textSize="10pt" />
 
                 </LinearLayout>
