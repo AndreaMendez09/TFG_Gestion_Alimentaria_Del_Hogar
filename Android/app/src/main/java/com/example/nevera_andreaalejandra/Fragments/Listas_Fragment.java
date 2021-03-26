@@ -4,24 +4,29 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.nevera_andreaalejandra.Fragments.Listas.ListaCongelador_Fragment;
+import com.example.nevera_andreaalejandra.Fragments.Listas.ListaNevera_Fragment;
 import com.example.nevera_andreaalejandra.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class Listas_Fragment extends Fragment {
-    //Creamos el boton flotante para relacionarlo con el xml
-    private FloatingActionButton add;
+
     //Creamos el cuadro de dialogo
     private AlertDialog.Builder builder;
 
-    //Creamos el listview para enlazarlo con el xml
-    private EditText nombre_correo;
+    //Creamos los campos necesarios para vincularlos con el xml
+    private Button lista_nevera, lista_congelador, lista_personal;
+
 
 
     public Listas_Fragment() {
@@ -41,15 +46,38 @@ public class Listas_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_lista, container, false);
 
         //Vinculamos nuestras variables con el XML
+        lista_congelador = (Button) view.findViewById(R.id.lista_congelador);
+        lista_nevera = (Button) view.findViewById(R.id.lista_nevera);
+        lista_personal = (Button) view.findViewById(R.id.lista_personal);
 
+        //Creamos los eventos onclick
+        lista_congelador.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFragment(new ListaCongelador_Fragment());
+            }
+        });
 
-        //listView.setAdapter(myAdapter);
+        lista_nevera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFragment(new ListaNevera_Fragment());
+            }
+        });
+
+        lista_personal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
         return view;
     }
 
 
-    class OyenteFAB implements View.OnClickListener {
+    /*class OyenteFAB implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
@@ -73,5 +101,12 @@ public class Listas_Fragment extends Fragment {
 
             builder.show();
         }
+    }*/
+
+    //Método para cambiar de fragment
+    private void changeFragment(Fragment fragment) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment, "NewFragmentTag");
+        ft.commit();
     }
 }

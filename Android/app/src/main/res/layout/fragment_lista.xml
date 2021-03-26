@@ -29,18 +29,19 @@
             android:textSize="36sp" />
 
         <Button
+            android:id="@+id/lista_nevera"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="30dp"
             android:text="Lista nevera"
             android:textAllCaps="false"
-
             android:textSize="16sp"
             android:textAlignment="textStart"
             android:theme="@style/Button.White"
             android:background="@drawable/round_corners"/>
 
         <Button
+            android:id="@+id/lista_congelador"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
@@ -48,12 +49,12 @@
             android:textAllCaps="false"
             android:textSize="16sp"
             android:text="Lista congelador"
-
             android:textAlignment="textStart"
             android:theme="@style/Button.White"
             android:background="@drawable/round_corners"/>
 
         <Button
+            android:id="@+id/lista_personal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
