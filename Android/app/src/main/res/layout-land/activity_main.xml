@@ -25,9 +25,33 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/purple_500"
+        android:background="@color/purple_700"
         android:fitsSystemWindows="true"
-        app:menu="@menu/nav_options"
-        />
+        app:menu="@menu/nav_options">
+    <LinearLayout
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:layout_margin="20dp"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_logout"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:text="Log out" />
+    </LinearLayout>
+
+</com.google.android.material.navigation.NavigationView>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>
