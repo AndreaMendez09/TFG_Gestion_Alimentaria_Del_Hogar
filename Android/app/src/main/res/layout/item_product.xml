@@ -1,65 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_product"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="@drawable/round_corners_item"
-    android:layout_marginBottom="16dp">
+    android:orientation="horizontal"
+    android:layout_marginBottom="16dp"
+    >
 
-    <ImageView
-        android:id="@+id/imageProduct"
-        android:layout_width="80dp"
-        android:layout_height="70dp"
-        android:layout_margin="15dp"
-        android:src="@drawable/ic_fridge" />
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:background="@drawable/round_corners_item"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/checkbox_product"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageProduct"
+            android:layout_width="80dp"
+            android:layout_height="70dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_fridge" />
 
 
-    <LinearLayout
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imageProduct"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nameProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Name of the product"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/priceProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Price: 2€"
+                android:textColor="#8F000000"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/cantidadProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cantidad: 3"
+                android:textColor="#8F000000"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/imageDelete"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:background="#00000000"
+            android:clickable="true"
+            android:gravity="right"
+            android:src="@drawable/ic_delete" />
+
+
+    </RelativeLayout>
+
+    <CheckBox
+        android:id="@+id/checkbox_product"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_toRightOf="@+id/imageProduct">
-
-        <TextView
-            android:id="@+id/nameProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Name of the product"
-            android:textColor="#000000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/priceProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Price: 2€"
-            android:textColor="#8F000000"
-            android:textSize="13sp"/>
-
-        <TextView
-            android:id="@+id/cantidadProduct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cantidad: 3"
-            android:textColor="#8F000000"
-            android:textSize="13sp"/>
-
-    </LinearLayout>
-
-    <ImageButton
-        android:background="#00000000"
-        android:id="@+id/imageDelete"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
-        android:clickable="true"
-        android:gravity="right"
-        android:src="@drawable/ic_delete" />
-
-
-</RelativeLayout>
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
