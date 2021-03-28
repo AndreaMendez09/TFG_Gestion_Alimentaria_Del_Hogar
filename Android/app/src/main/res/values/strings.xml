@@ -2,6 +2,8 @@
     <string name="app_name">Nevera - Andrea,Alejandra</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="switch_notifications_off">Desactivado</string>
+    <string name="switch_notifications_on">Activado</string>
     <string-array name="TiposProducto">
         <item>Vegetales</item>
         <item>Lacteos</item>

@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -21,11 +20,8 @@ import com.example.nevera_andreaalejandra.Fragments.Congelador_Fragment;
 import com.example.nevera_andreaalejandra.Fragments.Listas_Fragment;
 import com.example.nevera_andreaalejandra.Fragments.Nevera_Fragment;
 import com.example.nevera_andreaalejandra.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -182,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     public void cambiarActivityAjustes(){
-        Intent intent = new Intent(this, Ajustes.class);//Establecemos primero donde estamos y luego donde vamos
+        Intent intent = new Intent(this, AjustesActivity.class);//Establecemos primero donde estamos y luego donde vamos
         startActivity(intent);
     }
 
