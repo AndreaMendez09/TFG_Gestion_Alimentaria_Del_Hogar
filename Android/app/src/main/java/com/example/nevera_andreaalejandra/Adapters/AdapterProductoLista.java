@@ -4,9 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +22,7 @@ import java.util.List;
 public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLista.ViewHolder> {
     private AdapterProductoLista.OnItemClickListener itemClickListener;
     private AdapterProductoLista.OnButtonClickListener buttonClickListener;
+    private AdapterProductoLista.OnCheckedChangeListener checkedChangeListener;
     private Context context;
     private int layout;
     private String tipoproducto;
@@ -30,12 +34,13 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
         this.layout = layout;
         this.list = list;
     }
-    public AdapterProductoLista(List<ProductoModelo> list, int layout, AdapterProductoLista.OnItemClickListener itemListener, AdapterProductoLista.OnButtonClickListener btnListener ) {
+    public AdapterProductoLista(Context context, List<ProductoModelo> list, int layout, AdapterProductoLista.OnItemClickListener itemListener, AdapterProductoLista.OnButtonClickListener btnListener, AdapterProductoLista.OnCheckedChangeListener checkedChangeListener) {
         super();
         this.layout = layout;
         this.list = list;
         this.itemClickListener = itemListener;
         this.buttonClickListener = btnListener;
+        this.checkedChangeListener = checkedChangeListener;
     }
 
     @NonNull
@@ -49,7 +54,7 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
 
     @Override
     public void onBindViewHolder(@NonNull AdapterProductoLista.ViewHolder holder, int position) {
-        holder.bind(list.get(position), itemClickListener, buttonClickListener);
+        holder.bind(list.get(position), itemClickListener, buttonClickListener, checkedChangeListener);
     }
 
     @Override
@@ -64,6 +69,7 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
         public TextView cantidad;
         public ImageView imagenItem;
         public ImageButton btnDelete;
+        public CheckBox check;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,13 +78,14 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
             cantidad = (TextView) itemView.findViewById(R.id.cantidadProduct);
             imagenItem = (ImageView) itemView.findViewById(R.id.imageProduct);
             btnDelete = (ImageButton) itemView.findViewById(R.id.imageDelete);
+            check = (CheckBox) itemView.findViewById(R.id.checkbox_product);
 
         }
 
-        public void bind(final ProductoModelo product, final AdapterProductoLista.OnItemClickListener itemListener, final AdapterProductoLista.OnButtonClickListener btnListener) {
+        public void bind(final ProductoModelo product, final AdapterProductoLista.OnItemClickListener itemListener, final AdapterProductoLista.OnButtonClickListener btnListener, final AdapterProductoLista.OnCheckedChangeListener checkListener) { //
             nombre.setText(product.getNombre());
             tipoproducto = product.getTipo();
-            //precio.setText("Precio: " + product.getPrecio());
+            precio.setText("Precio: " + product.getPrecio() + "€");
             cantidad.setText("Cantidad : "+ product.getCantidad() + "");
             switch (tipoproducto){
                 case "Vegetales":
@@ -132,6 +139,14 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
                     itemListener.onItemClick(product, getAdapterPosition());
                 }
             });
+
+            check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    checkListener.onButtonClick(product, getAdapterPosition(), isChecked);
+                }
+            });
+
         }
     }
 
@@ -141,5 +156,9 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
 
     public interface OnButtonClickListener {
         void onButtonClick(ProductoModelo productoModelo, int position);
+    }
+
+    public interface OnCheckedChangeListener {
+        void onButtonClick(ProductoModelo productoModelo, int position, boolean isChecked);
     }
 }

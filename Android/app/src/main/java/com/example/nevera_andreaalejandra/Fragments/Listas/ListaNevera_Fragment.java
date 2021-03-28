@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.nevera_andreaalejandra.Activities.AddEditProductActivity;
@@ -41,9 +42,11 @@ import java.util.List;
 public class ListaNevera_Fragment extends Fragment {
     //Creamos los campos necesarios para vincularlos con el xml
     private FloatingActionButton add;
+    private Button comprar;
 
     //Creamos nuestra lista para guardar los productos
     private List<ProductoModelo> lista_productos;
+    private List<ProductoModelo> lista_productos_seleccionados; //Para el checkbox
 
     //Para realizar la conexon con la firebase
     private DatabaseReference mDataBase;
@@ -90,9 +93,11 @@ public class ListaNevera_Fragment extends Fragment {
 
         //Creamos la lista
         lista_productos = new ArrayList<ProductoModelo>();
+        lista_productos_seleccionados = new ArrayList<ProductoModelo>();
 
         //Enlazamos con el xml
         add = view.findViewById(R.id.FABAddList);
+        comprar = (Button) view.findViewById(R.id.boton_comprar);
         recyclerView = (RecyclerView) view.findViewById(R.id.item_list_nevera);
         mLayoutManager = new LinearLayoutManager(getContext());
 
@@ -112,9 +117,16 @@ public class ListaNevera_Fragment extends Fragment {
 
                 //En este caso como hemos pulsado en el más, pasaremos la opcion de añadir
                 intent.putExtra("tarea", "añadir"); //Para detectar en el AddEdit si es un añadir o un editar
-                intent.putExtra("ubicacion", "congelador"); //Para detectar en el AddEdit si es de congelador o de nevera
+                intent.putExtra("ubicacion", "lista_nevera"); //Para detectar en el AddEdit si es de congelador o de nevera
 
                 startActivity(intent);//Iniciamos el intent
+            }
+        });
+
+        comprar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Boton " + lista_productos_seleccionados.size(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -177,14 +189,14 @@ public class ListaNevera_Fragment extends Fragment {
                         //Comprobamos el usuario que esta conectado
                         String id = mAuth.getCurrentUser().getUid();
 
-                        if (UbicacionProducto.equals("nevera")) {
+                        if (UbicacionProducto.equals("lista_nevera")) {
                             if (UID_usuario.equals(id)) {
                                 ProductoModelo product = new ProductoModelo(IdProducto,NombreProducto, CantidadProducto, PrecioProducto,UbicacionProducto ,TipoProducto,DateProducto,UID_usuario);
                                 lista_productos.add(product);
                             }
                         }
                     }
-                    adapterProducto = new AdapterProductoLista(lista_productos, R.layout.item_product, new AdapterProductoLista.OnItemClickListener() {
+                    adapterProducto = new AdapterProductoLista(getContext(), lista_productos, R.layout.item_product, new AdapterProductoLista.OnItemClickListener() {
                         //Este click es al darle a la ciudad
                         @Override
                         public void onItemClick(ProductoModelo productoModelo, int position) {
@@ -205,7 +217,24 @@ public class ListaNevera_Fragment extends Fragment {
                             deleteProduct(productoModelo);
                         }
 
+                    }, new AdapterProductoLista.OnCheckedChangeListener() {
+                        @Override
+                        public void onButtonClick(ProductoModelo productoModelo, int position, boolean isChecked) {
+                            if (isChecked) {
+                                Toast.makeText(getContext(), "Seleccionado " + productoModelo.getNombre(), Toast.LENGTH_LONG).show();
+                                lista_productos_seleccionados.add(productoModelo);
+                            }else {
+                                Toast.makeText(getContext(), "deseleccionado", Toast.LENGTH_LONG).show();
+                                lista_productos_seleccionados.remove(productoModelo);
+                            }
+                        }
                     });
+
+                    /*                    if (check.isChecked()) {
+                        Toast.makeText(context, "Seleccionado", Toast.LENGTH_LONG).show();
+                    }else {
+                        Toast.makeText(context, "deseleccionado", Toast.LENGTH_LONG).show();
+                    }*/
 
 
                 }

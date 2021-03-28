@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#DEC7F0 </color>
-    <color name="purple_500">#4B3C7E</color>
-    <color name="purple_700">#CCA9D9</color>
-    <color name="teal_200">#CCA9D9  </color>
+    <color name="purple_200">#D2F6FC </color>
+    <color name="purple_500">#6d2eb2</color>
+    <color name="purple_700">#916CE8</color>
+    <color name="teal_200">#A679EE</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
@@ -18,4 +18,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-</resources> -->
+</resources>
+
+    COLORES MORADOS
+    <resources>
+    <color name="purple_200">#DEC7F0 </color>
+    <color name="purple_500">#4B3C7E</color>
+    <color name="purple_700">#CCA9D9</color>
+    <color name="teal_200">#CCA9D9  </color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>
+-->

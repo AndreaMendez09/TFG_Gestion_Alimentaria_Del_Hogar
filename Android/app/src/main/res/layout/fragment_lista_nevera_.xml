@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.Listas.ListaNevera_Fragment">
 
-    <!--<ImageView
+    <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/fondo2"
-            android:scaleType="centerCrop" />-->
+            android:scaleType="centerCrop" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/FABAddList"
@@ -18,30 +18,41 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="20dp"
+        android:src="@drawable/ic_add"
         app:fabSize="auto"
-        android:src="@drawable/ic_add" />
+        app:layout_constraintBottom_toTopOf="@+id/boton_comprar"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <LinearLayout
-        android:orientation="vertical"
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Lista de la compra para la nevera:"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/item_list_nevera"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/lienar_gradient">
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/boton_comprar"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:layout_editor_absoluteX="20dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Lista de la compra para la nevera:"
-            android:textColor="#000000"
-            android:textSize="36sp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/item_list_nevera"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="20dp"
-            android:scrollbars="vertical"/>
+    <Button
+        android:id="@+id/boton_comprar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:text="Comprar"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-    </LinearLayout>
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
