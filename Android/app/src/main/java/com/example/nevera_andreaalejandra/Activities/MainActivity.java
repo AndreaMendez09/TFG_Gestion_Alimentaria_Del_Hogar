@@ -8,22 +8,32 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.nevera_andreaalejandra.Adapters.AdapterProducto;
 import com.example.nevera_andreaalejandra.Fragments.Congelador_Fragment;
 import com.example.nevera_andreaalejandra.Fragments.Listas_Fragment;
 import com.example.nevera_andreaalejandra.Fragments.Nevera_Fragment;
+import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -39,6 +49,14 @@ public class MainActivity extends AppCompatActivity {
 
     private Bundle extras;
     private String fragment;
+
+    //Variable para detectar en que parte de la app está
+    private int fragment_actual = 0;
+
+    //Variables para detectar el borrar
+    private String IdProducto;
+    private String UbicacionProducto;
+    private String UID_usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,18 +142,20 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             boolean fragmentTransaction = false;
             Fragment fragment = null;
-            Activity activity = null;
             //Obtenemos la posicion del menu
             switch (item.getItemId()) {
                 case R.id.menu_nevera: //Si coincide con el menumail es el fragment de Email
+                    fragment_actual = 0;
                     fragment = new Nevera_Fragment();
                     fragmentTransaction = true;
                     break;
                 case R.id.menu_congelador: //Si coincide con el menumail es el fragment de Email
+                    fragment_actual = 1;
                     fragment = new Congelador_Fragment();
                     fragmentTransaction = true;
                     break;
                 case R.id.menu_lista: //Si coincide con el menumail es el fragment de Email
+                    fragment_actual = 2;
                     fragment = new Listas_Fragment();
                     fragmentTransaction = true;
                     break;
@@ -171,8 +191,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Has pulsado en ordenar", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.opciones_borrar:
-                //Toast.makeText(MainActivity.this, "Has pulsado en borrar", Toast.LENGTH_SHORT).show();
-
+                //Toast.makeText(MainActivity.this, "Has pulsado en borrar " +  fragment_actual, Toast.LENGTH_SHORT).show();
+                BorrarTodos();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -182,17 +202,56 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*private void BorrarTodos() {
-        mDataBase.child("Producto").child().removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+    private void BorrarTodos() {
+        mDataBase.child("Producto").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    //Creamos un toast, para informar de que se ha eliminado
-                    Toast.makeText(getApplicationContext(), "Se ha eliminado satisfactoriamente", Toast.LENGTH_SHORT).show();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot ds : snapshot.getChildren()) { //Añadimos los campos a las variables creadas anteriormente
+                        UbicacionProducto = ds.child("ubicacion").getValue().toString();
+                        UID_usuario = ds.child("uid_usuario").getValue().toString();
 
+                        //Vinculamos el id
+                        IdProducto = ds.getKey();
+
+                        //Comprobamos el usuario que esta conectado
+                        String id = mAuth.getCurrentUser().getUid();
+
+                        //Obtenemos la posicion
+                        String borrarDe = obtenerUbicacion();
+
+                        if (UbicacionProducto.equals(borrarDe)) { //Comprobamos que esta en esa lista
+                            if (UID_usuario.equals(id)) { //Comprobamos que solo borra los del usuario
+                                mDataBase.child("Producto").child(IdProducto).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            //Creamos un toast, para informar de que se ha eliminado
+                                            Toast.makeText(getApplicationContext(), "Se han eliminado todos", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
                 }
             }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
         });
-    }*/
+    }
+
+    private String obtenerUbicacion() {
+        String borrarDe = "";
+        if (fragment_actual == 0) {
+            borrarDe = "nevera";
+        }else if (fragment_actual == 1) {
+            borrarDe = "congelador";
+        }
+        return borrarDe;
+    }
 
 }
