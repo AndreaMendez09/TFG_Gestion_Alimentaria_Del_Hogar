@@ -155,9 +155,7 @@ public class MainActivity extends AppCompatActivity {
                     fragmentTransaction = true;
                     break;
                 case R.id.menu_lista: //Si coincide con el menumail es el fragment de Email
-                    fragment_actual = 2;
-                    fragment = new Listas_Fragment();
-                    fragmentTransaction = true;
+                   cambiarActivityTab();
                     break;
                 case R.id.menu_ajustes:
                     cambiarActivityAjustes();
@@ -199,6 +197,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void cambiarActivityAjustes(){
         Intent intent = new Intent(this, AjustesActivity.class);//Establecemos primero donde estamos y luego donde vamos
+        startActivity(intent);
+    }
+    public void cambiarActivityTab(){
+        Intent intent = new Intent(this, TabActivity.class);//Establecemos primero donde estamos y luego donde vamos
         startActivity(intent);
     }
 

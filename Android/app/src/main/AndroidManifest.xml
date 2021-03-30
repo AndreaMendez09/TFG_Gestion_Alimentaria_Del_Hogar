@@ -28,6 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.AjustesActivity"></activity>
+        <activity android:name=".Activities.TabActivity"></activity>
     </application>
 
 </manifest>
