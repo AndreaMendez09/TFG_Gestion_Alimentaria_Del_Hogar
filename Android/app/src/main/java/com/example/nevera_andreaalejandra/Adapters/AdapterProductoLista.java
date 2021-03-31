@@ -1,6 +1,7 @@
 package com.example.nevera_andreaalejandra.Adapters;
 
 import android.content.Context;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLista.ViewHolder> {
@@ -27,6 +29,7 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
     private int layout;
     private String tipoproducto;
     private List<ProductoModelo> list;
+    SparseBooleanArray mSparseBooleanArray;
 
     public AdapterProductoLista(Context context, int layout, List<ProductoModelo> list) {
         super();
@@ -41,6 +44,7 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
         this.itemClickListener = itemListener;
         this.buttonClickListener = btnListener;
         this.checkedChangeListener = checkedChangeListener;
+        mSparseBooleanArray = new SparseBooleanArray();
     }
 
     @NonNull
@@ -60,6 +64,26 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public List<ProductoModelo> getCheckedItems() {
+        List<ProductoModelo> mTempArry = new ArrayList<ProductoModelo>(); //Instanciamos nuestra lista temporal
+        for(int i=0;i<list.size();i++) {
+            if(mSparseBooleanArray.get(i)) {
+                mTempArry.add(list.get(i));
+            }
+        }
+        return mTempArry;
+    }
+
+    /*public void checkAll(){
+        for(int x = 0; x < list.size(); x++){
+            list.get(x).setChecked(!alumno.get(x).isChecked());
+        }
+    }*/
+
+    public void DondeEstoy(String estoyEn) {
+        Toast.makeText(context, estoyEn , Toast.LENGTH_LONG).show();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

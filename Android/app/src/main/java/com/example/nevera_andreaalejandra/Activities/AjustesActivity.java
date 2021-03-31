@@ -3,16 +3,16 @@ package com.example.nevera_andreaalejandra.Activities;
 import android.app.Notification;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.Models.UsuarioModelo;
 import com.example.nevera_andreaalejandra.R;
 import com.example.nevera_andreaalejandra.Util.NotificationHandler;
@@ -23,31 +23,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import butterknife.BindString;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
-import butterknife.OnClick;
 
 
 public class AjustesActivity extends AppCompatActivity {
+    //Valores de la BBDD
     private TextView nombre;
-
     private TextView correo;
-    private TextView contraseña;
     private UsuarioModelo usuario;
     private String NombreUsuario;
     private String ApellidoUsuario;
     private String CorreoUsuario;
     private String IdUsuario;
+
+    //Notificaciones
     private NotificationHandler notificationHandler;
     private int counter = 0;
-    @BindView(R.id.switchNotificaciones)
-    Switch switchNotificaciones;
-    @BindString(R.string.switch_notifications_on) String switchTextOn;
-    @BindString(R.string.switch_notifications_off) String switchTextOff;
-
-    private boolean isHighImportance = false;
+    private Switch switchNotificaciones;
+    private String switchTextOn = "Activado";
+    private String switchTextOff = "Desactivado";
+    private boolean isHighImportance = true;
+    private Button btn_prueba;
 
     //Para realizar la conexon con la firebase
     private DatabaseReference mDataBase;
@@ -59,10 +54,12 @@ public class AjustesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajustes);
 
+        //Enlazamos con el xml
         nombre = (TextView) findViewById(R.id.nombreUsuario);
         correo = (TextView) findViewById(R.id.correoUsuario);
-        //Para las notifcaciones
-        ButterKnife.bind(this); // Right after setContentView
+        switchNotificaciones = (Switch) findViewById(R.id.switchNotificaciones);
+        btn_prueba = (Button) findViewById(R.id.buttonNotificacion);
+
         notificationHandler = new NotificationHandler(this);
 
         //1.Las referencias de auntenticacion de la base de dato
@@ -71,7 +68,33 @@ public class AjustesActivity extends AppCompatActivity {
         //Para inicializar la instancia de autenticación
         mAuth = FirebaseAuth.getInstance();
 
-        //
+        //Visualizamos los datos del usuario
+        DatosUsuario();
+
+        //Oyentes
+        switchNotificaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchNotificaciones.setText((switchNotificaciones.isChecked()) ? switchTextOn : switchTextOff);
+                if (switchNotificaciones.isChecked()) {
+                    Toast.makeText(getApplicationContext(), "Activado", Toast.LENGTH_LONG).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), "Desactivado", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        btn_prueba.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendNotification();
+            }
+        });
+
+
+    }
+
+    private void DatosUsuario() {
         mDataBase.child("Usuario").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -104,20 +127,16 @@ public class AjustesActivity extends AppCompatActivity {
             }
 
         });
-
     }
 
-    @OnClick(R.id.buttonNotificacion)
-    public void click() {
-        sendNotification();
-    }
-    @OnCheckedChanged(R.id.switchNotificaciones)
     public void change(CompoundButton buttonView, boolean isChecked) {
         isHighImportance = isChecked;
         switchNotificaciones.setText((isChecked) ? switchTextOn : switchTextOff);
     }
 
     private void sendNotification() {
+        Toast.makeText(getApplicationContext(), "notificacion", Toast.LENGTH_LONG).show();
+
         String title = "Probando";
         String message = "Desde ajustes";
 

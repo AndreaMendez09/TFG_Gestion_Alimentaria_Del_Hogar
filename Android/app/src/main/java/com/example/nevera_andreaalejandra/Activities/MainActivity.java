@@ -1,5 +1,13 @@
 package com.example.nevera_andreaalejandra.Activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -7,23 +15,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import com.example.nevera_andreaalejandra.Adapters.AdapterProducto;
 import com.example.nevera_andreaalejandra.Fragments.Congelador_Fragment;
-import com.example.nevera_andreaalejandra.Fragments.Listas_Fragment;
 import com.example.nevera_andreaalejandra.Fragments.Nevera_Fragment;
-import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,12 +29,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
+    //Partes del drawer
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    //private FirebaseUser mFirebaseUser;
-    //private FirebaseAuth mFirebaseAuth;
     private LinearLayout logout;
-    private LinearLayout ajustes;
 
     //Para la BBDD
     private FirebaseAuth mAuth;
@@ -65,13 +56,9 @@ public class MainActivity extends AppCompatActivity {
         setToolbar();
 
         //BBDD
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();//Para inicializar la instancia de autenticación
         mDataBase = FirebaseDatabase.getInstance().getReference();
 
-        //Para inicializar la instancia de autenticación
-        /*mAuth = FirebaseAuth.getInstance();
-        String ID_user = mAuth.getCurrentUser().getUid();
-        Toast.makeText(MainActivity.this, "El usuario: " + ID_user, Toast.LENGTH_SHORT).show();*/
 
         //Relacionamos con el xml
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

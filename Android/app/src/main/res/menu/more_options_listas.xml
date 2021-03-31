@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/opciones"
+        android:icon="@drawable/ic_more"
+        android:title="Opciones"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/opciones_ordenar"
+                android:title="Ordenar por"
+                />
+            <item
+                android:id="@+id/opciones_borrar"
+                android:title="Borrar todos"
+                />
+            <item
+                android:id="@+id/opciones_seleccionar"
+                android:title="Seleccionar todos"
+                />
+            <item
+                android:id="@+id/opciones_deseleccionar"
+                android:title="Deseleccionar todos"
+                />
+        </menu>
+
+    </item>
+
+</menu>
