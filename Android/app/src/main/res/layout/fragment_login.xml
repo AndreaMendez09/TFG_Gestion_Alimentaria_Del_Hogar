@@ -110,6 +110,14 @@
                 android:paddingRight="15dp" />
 
         </LinearLayout>
+        <Switch
+            android:id="@+id/switchRecordar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Recordarme "
+            android:padding="5pt">
+
+        </Switch>
     </LinearLayout>
 
     <LinearLayout

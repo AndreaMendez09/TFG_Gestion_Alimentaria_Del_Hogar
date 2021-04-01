@@ -1,6 +1,8 @@
 package com.example.nevera_andreaalejandra.Fragments.Login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,17 +18,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nevera_andreaalejandra.Activities.MainActivity;
 import com.example.nevera_andreaalejandra.R;
+import com.example.nevera_andreaalejandra.Util.LoginUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.StorageReference;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class LoginFragment extends Fragment {
@@ -37,7 +43,9 @@ public class LoginFragment extends Fragment {
     private ImageButton irAtras;
     private LinearLayout caja_mail, caja_pass, caja_abajo;
     private TextView texto_login;
+    private Switch remember;
 
+    private SharedPreferences preferences;
     //Para el color
     private float alpha = 0;
 
@@ -69,7 +77,7 @@ public class LoginFragment extends Fragment {
         caja_pass = (LinearLayout) view.findViewById(R.id.caja_password);
         caja_abajo = (LinearLayout) view.findViewById(R.id.caja_abajo);
         texto_login = (TextView) view.findViewById(R.id.texto_login);
-
+        remember = (Switch) view.findViewById(R.id.switchRecordar) ;
         //Para inicializar la instancia de autenticación
         mAuth = FirebaseAuth.getInstance();
 
@@ -96,11 +104,17 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        //se auto-rellenan el email y contraseña en caso de haberse guardado
+        preferences = getContext().getSharedPreferences("Preferences", MODE_PRIVATE);
+        setCredentialsIfExist();
+
         //Método para las transicciones
         movimiento();
 
         // Inflate the layout for this fragment
         return view;
+
+
     }
 
     private void movimiento() {
@@ -108,16 +122,19 @@ public class LoginFragment extends Fragment {
         caja_mail.setTranslationY(300);
         caja_pass.setTranslationY(300);
         caja_abajo.setTranslationY(300);
+        remember.setTranslationY(300);
 
         texto_login.setAlpha(alpha);
         caja_mail.setAlpha(alpha);
         caja_pass.setAlpha(alpha);
         caja_abajo.setAlpha(alpha);
+        remember.setAlpha(alpha);
 
         texto_login.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
         caja_mail.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(600).start();
         caja_pass.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(800).start();
         caja_abajo.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1000).start();
+        remember.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1200).start();
     }
 
     private void changeToActivity() {
@@ -143,6 +160,7 @@ public class LoginFragment extends Fragment {
                     if (task.isSuccessful()) { //Si el usuario y contraseña son correctos, se carga el UserActivity.
                         String id = mAuth.getCurrentUser().getUid();
                         Toast.makeText(getContext(), "Bienvenido" + id, Toast.LENGTH_SHORT).show();
+                        saveOnPreferences(correo_login.getText().toString().trim(),pass_login.getText().toString().trim());
                         changeToActivity();
                     } else {
                         Toast.makeText(getContext(), "Error, compruebe el usuario o contraseña", Toast.LENGTH_SHORT).show();
@@ -171,5 +189,29 @@ public class LoginFragment extends Fragment {
 
     private boolean isValidPassword(String password) {
         return password.length() >= 4;
+    }
+
+    //método que guarda el email y contraseña introducidos
+    private void saveOnPreferences(String email, String password) {
+        if (remember.isChecked()) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("email", email);
+            editor.putString("pass", password);
+            editor.apply();
+
+
+        } else {
+            LoginUtil.removeSharedPreferences(preferences);
+        }
+    }
+    //método que fija el email y contraseña que se hayan guardado
+    private void setCredentialsIfExist() {
+        String email = LoginUtil.getUserMailPrefs(preferences);
+        String password = LoginUtil.getUserPassPrefs(preferences);
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+            correo_login.setText(email);
+            pass_login.setText(password);
+            remember.setChecked(true);
+        }
     }
 }
