@@ -256,7 +256,6 @@ public class Nevera_Fragment extends Fragment {
                 .setCancelable(false)//es para que no se salga  si oprime cualquier cosa
                 .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface builder, int id) {
-
                         //Comprobamos si exite el producto
                         if(lista_productos.size()==1){
                             lista_productos.clear();//La limpiamos
