@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.example.nevera_andreaalejandra.Activities.AddEditProductActivity;
@@ -240,30 +242,48 @@ public class Nevera_Fragment extends Fragment {
         });
     }
     private void deleteProduct(final ProductoModelo productoModelo) {
+        //Para el checkbox
+        View checkBoxView = View.inflate(getContext(), R.layout.dialog_checkbox, null);
+        CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
+
+
 
         //creamos el alertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage("¿Seguro que quiere eliminar?")//es como la partesita de arriba
                 .setTitle("Aviso")//es el texto
+                .setView(checkBoxView)
                 .setCancelable(false)//es para que no se salga  si oprime cualquier cosa
                 .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface builder, int id) {
+
                         //Comprobamos si exite el producto
                         if(lista_productos.size()==1){
                             lista_productos.clear();//La limpiamos
                         }
-                        Toast.makeText(getContext(), productoModelo.getId(), Toast.LENGTH_SHORT).show();
 
-                        mDataBase.child("Producto").child(productoModelo.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
-                                    //Creamos un toast, para informar de que se ha eliminado
-                                    Toast.makeText(getContext(), "Se ha eliminado satisfactoriamente", Toast.LENGTH_SHORT).show();
-
+                        //Oyente del check
+                        if (checkBox.isChecked()) {
+                            mDataBase.child("Producto").child(productoModelo.getId()).child("ubicacion").setValue("lista_nevera").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()) {
+                                        Toast.makeText(getContext(), "Se ha añadido satisfactoriamente", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }else {
+                            Toast.makeText(getContext(), productoModelo.getId(), Toast.LENGTH_SHORT).show();
+                            mDataBase.child("Producto").child(productoModelo.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        //Creamos un toast, para informar de que se ha eliminado
+                                        Toast.makeText(getContext(), "Se ha eliminado satisfactoriamente", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        }
                     }
                 });
         builder.setNegativeButton("Cancelar", null).show();
