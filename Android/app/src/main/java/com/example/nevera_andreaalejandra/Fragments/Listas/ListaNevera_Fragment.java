@@ -161,8 +161,11 @@ public class ListaNevera_Fragment extends Fragment {
                         PrecioProducto = Double.valueOf(ds.child("precio").getValue().toString());
                         CantidadProducto = Integer.parseInt(ds.child("cantidad").getValue().toString());
                         UID_usuario = ds.child("uid_usuario").getValue().toString();
-                        DateProducto = ds.child("fecha").getValue().toString();
-
+                        try {
+                            DateProducto = ds.child("fecha").getValue().toString();
+                        } catch (NullPointerException e) {
+                            DateProducto = "--/--/----";
+                        }
                         //Creamos la fecha
                         /*String date = ds.child("fecha").child("date").getValue().toString();
                         String month = ds.child("fecha").child("month").getValue().toString();

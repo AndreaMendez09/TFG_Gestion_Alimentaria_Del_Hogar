@@ -131,16 +131,28 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
                 esCreado = true;
             } else if (tarea.equals("editar")){//esto significa editar
                 AddEditProductActivity.this.setTitle("Editar el producto");//Cambiamos el título
-                Toast.makeText(AddEditProductActivity.this, "Estamos en editar", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(AddEditProductActivity.this, "Estamos en editar", Toast.LENGTH_SHORT).show();
             }
 
             if (esCreado == false) {//Es decir, lo vamos a editar
-                //Toast.makeText(getApplication(), "Estoy en editar", Toast.LENGTH_SHORT).show();
-                //Al estar dentro del cardview de editar, queremos que al cargar el xml tenga los datos por defecto que tiene en la base de datos
+
+                //Ponemos por defecto los datos que obtenemos del producto
                 nombre.setText(producto.getNombre());
-                //precio.setText((int) producto.getPrecio());
-                //cantidad.setText((int) producto.getCantidad());
-                //calendario.setText(producto.getFecha());
+                precio.setText(String.valueOf(producto.getPrecio()));
+                cantidad.setText(String.valueOf(producto.getCantidad()));
+
+                //Para que si no tiene fecha, no muestre el valor por defecto
+                if (!(producto.getFecha().equals("--/--/----"))) {
+                    calendario.setText(String.valueOf(producto.getFecha()));
+                }
+
+                //Para el detectar el tipo y ponerlo por defecto
+                for (int i = 0; i < tipo.getCount(); i++) {
+                    if (tipo.getItemAtPosition(i).equals(producto.getTipo())) {
+                        tipo.setSelection(i);
+                        break;
+                    }
+                }
             }
         }
     }
@@ -183,9 +195,10 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
     }
 
     private boolean añadirProducto() {
-        String productName = nombre.getText().toString().trim();
+
+        int productCantidad = 0;
+        String productName = null;
         String productFecha = calendario.getText().toString();
-        int productCantidad = Integer.parseInt(cantidad.getText().toString().trim());
         double productPrecio = 0.0; //TODO Esto da error, no se porque
         if (!(precio.getText().toString().trim().isEmpty())) {
             productPrecio = Double.parseDouble(precio.getText().toString().trim());
@@ -195,13 +208,17 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
         //Vamos a comprobar si los campos que son obligatorios, estan rellenos
         //En este caso nombre y cantidad, porque tipo siempre tiene uno
         boolean isAble = true;
-        if (productName.isEmpty()) {
+        if (nombre.getText().toString().isEmpty()) {
             nombre.setError("El nombre es obligatorio");
             isAble = false;
+        }else {
+            productName = nombre.getText().toString().trim();
         }
-        if (cantidad.getText().toString().isEmpty()) {
+        if (cantidad.getText().toString().equals("")) {
             cantidad.setError("La cantidad es obligatoria");
             isAble = false;
+        }else {
+            productCantidad = Integer.parseInt(cantidad.getText().toString().trim());
         }
 
         if (isAble) {
@@ -224,7 +241,14 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
         Toast.makeText(AddEditProductActivity.this, "El usuario: " + ID_user, Toast.LENGTH_SHORT).show();
         //IdProducto = ds.getKey();
 
-        ProductoModelo product = new ProductoModelo(productName,productCantidad, productPrecio,ubicacion, productTipo, productFecha, ID_user);
+        ProductoModelo product = new ProductoModelo(productName,productCantidad,ubicacion, productTipo, ID_user);
+
+        //Comprobamos si los datos se han rellenado
+        if (!(productFecha.equals(""))) {
+            product.setFecha(productFecha);
+        }
+
+
         mDataBase.push().setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

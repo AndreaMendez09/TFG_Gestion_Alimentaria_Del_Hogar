@@ -41,6 +41,14 @@ public class ProductoModelo implements Serializable {
         this.ubicacion = ubicacion;
     }
 
+    public ProductoModelo( String nombre, int cantidad,String ubicacion, String tipo, String UID_usuario) {
+        this.nombre = nombre;
+        this.cantidad = cantidad;
+        this.tipo = tipo;
+        this.usuario = UID_usuario;
+        this.ubicacion = ubicacion;
+    }
+
     //Para cuando sea editar, porque no debe tener ni id, ni ubicacion, ni usuario
     public ProductoModelo(String nombre, int cantidad, double precio, String tipo, String fecha) {
         this.nombre = nombre;
