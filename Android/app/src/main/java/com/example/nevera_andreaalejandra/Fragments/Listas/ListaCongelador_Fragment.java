@@ -127,7 +127,18 @@ public class ListaCongelador_Fragment extends Fragment {
         comprar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Boton " + lista_productos_seleccionados.size(), Toast.LENGTH_LONG).show();
+                for(int i=0; lista_productos_seleccionados.size()>i;i++){
+                    mDataBase.child("Producto").child(lista_productos_seleccionados.get(i).getId()).child("ubicacion").setValue("congelador").addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()) {
+                                Toast.makeText(getContext(), "Productos comprados, ya tienes que comer :)", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+
+                //Toast.makeText(getContext(), "Boton " + lista_productos_seleccionados.size(), Toast.LENGTH_LONG).show();
             }
         });
 
