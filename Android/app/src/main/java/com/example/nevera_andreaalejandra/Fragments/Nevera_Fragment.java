@@ -198,6 +198,7 @@ public class Nevera_Fragment extends Fragment {
                         public void onItemClick(ProductoModelo productoModelo, int position) {
                             Intent intent = new Intent(getContext(), AddEditProductActivity.class);
                             intent.putExtra("tarea", "editar");
+                            intent.putExtra("ubicacion", "nevera");
                             ProductoModelo productoModelo1 = lista_productos.get(position);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("objeto", productoModelo1);

@@ -155,9 +155,11 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
         String productNameEdit = nombre.getText().toString().trim();
         String productFechaEdit = calendario.getText().toString();
         int productCantidadEdit = Integer.parseInt(cantidad.getText().toString().trim());
-        double productPrecioEdit = 0.0; //TODO Esto da error, no se porque
-        if (!(precio.getText().toString().trim().isEmpty())) {
-            productPrecioEdit = Double.parseDouble(precio.getText().toString().trim());
+        double productPrecioEdit = -1;
+        try {
+            productPrecioEdit = Double.parseDouble(precio.getText().toString().trim()); //TODO Esto da error, no se porque
+        } catch (NumberFormatException e) {
+
         }
         String productTipoEdit = tipo.getSelectedItem().toString();
         ProductoModelo objeto_producto = new ProductoModelo(productNameEdit, productCantidadEdit,productPrecioEdit, productTipoEdit, productFechaEdit);//Creamos una productp vacia
@@ -180,7 +182,8 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
             mDataBase.child(producto_eliminar.getId()).child("precio").setValue(objeto_producto.getPrecio());
             mDataBase.child(producto_eliminar.getId()).child("cantidad").setValue(objeto_producto.getCantidad());
             mDataBase.child(producto_eliminar.getId()).child("tipo").setValue(objeto_producto.getTipo());
-            mDataBase.child(producto_eliminar.getId()).child("fecha").setValue(objeto_producto.getFecha());
+            if (!(objeto_producto.getFecha().equals(""))) //Para que no añada un campo vacio si la fecha no ha sido seleccionada
+                mDataBase.child(producto_eliminar.getId()).child("fecha").setValue(objeto_producto.getFecha());
         } else {
             Toast.makeText(AddEditProductActivity.this, "Rellena los campos necesarios", Toast.LENGTH_SHORT).show();
         }
@@ -193,11 +196,14 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
         int productCantidad = 0;
         String productName = null;
         String productFecha = calendario.getText().toString();
-        double productPrecio = 0.0; //TODO Esto da error, no se porque
-        if (!(precio.getText().toString().trim().isEmpty())) {
-            productPrecio = Double.parseDouble(precio.getText().toString().trim());
-        }
         String productTipo = tipo.getSelectedItem().toString();
+        double productPrecio = -1;
+        try {
+            productPrecio = Double.parseDouble(precio.getText().toString().trim()); //TODO Esto da error, no se porque
+        } catch (NumberFormatException e) {
+
+        }
+
 
         //Vamos a comprobar si los campos que son obligatorios, estan rellenos
         //En este caso nombre y cantidad, porque tipo siempre tiene uno
@@ -240,6 +246,10 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
         //Comprobamos si los datos se han rellenado
         if (!(productFecha.equals(""))) {
             product.setFecha(productFecha);
+        }
+
+        if (productPrecio > 0) {
+            product.setPrecio(productPrecio);
         }
 
 
