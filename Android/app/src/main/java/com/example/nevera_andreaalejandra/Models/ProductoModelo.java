@@ -3,6 +3,7 @@ package com.example.nevera_andreaalejandra.Models;
 import java.io.Serializable;
 import java.util.Date;
 
+//Implementamos serializable para poder pasar el objeto de un frament a otro
 public class ProductoModelo implements Serializable {
     private String id;
     private int cantidad;
@@ -30,17 +31,8 @@ public class ProductoModelo implements Serializable {
         this.ubicacion = ubicacion;
     }
 
-    //Para addEdit
-    public ProductoModelo( String nombre, int cantidad, double precio,String ubicacion, String tipo, String fecha, String UID_usuario) {
-        this.nombre = nombre;
-        this.cantidad = cantidad;
-        this.precio = precio;
-        this.tipo = tipo;
-        this.fecha = fecha;
-        this.usuario = UID_usuario;
-        this.ubicacion = ubicacion;
-    }
 
+    //Para addEdit
     public ProductoModelo( String nombre, int cantidad,String ubicacion, String tipo, String UID_usuario) {
         this.nombre = nombre;
         this.cantidad = cantidad;

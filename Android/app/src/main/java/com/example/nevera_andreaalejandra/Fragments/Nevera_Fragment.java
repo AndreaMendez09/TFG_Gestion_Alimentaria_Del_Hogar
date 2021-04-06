@@ -267,6 +267,7 @@ public class Nevera_Fragment extends Fragment {
 
                         //Oyente del check
                         if (checkBox.isChecked()) {
+                            //Si esta seleccionado el check, lo cambiamos de ubicacion
                             mDataBase.child("Producto").child(productoModelo.getId()).child("ubicacion").setValue("lista_nevera").addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {

@@ -235,10 +235,10 @@ public class ListaNevera_Fragment extends Fragment {
                         @Override
                         public void onButtonClick(ProductoModelo productoModelo, int position, boolean isChecked) {
                             if (isChecked) {
-                                Toast.makeText(getContext(), "Seleccionado " + productoModelo.getNombre(), Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getContext(), "Seleccionado " + productoModelo.getNombre(), Toast.LENGTH_LONG).show();
                                 lista_productos_seleccionados.add(productoModelo);
                             }else {
-                                Toast.makeText(getContext(), "deseleccionado", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getContext(), "deseleccionado", Toast.LENGTH_LONG).show();
                                 lista_productos_seleccionados.remove(productoModelo);
                             }
                         }

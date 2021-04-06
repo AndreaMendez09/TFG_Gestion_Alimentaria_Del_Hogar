@@ -197,11 +197,11 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
         String productName = null;
         String productFecha = calendario.getText().toString();
         String productTipo = tipo.getSelectedItem().toString();
-        double productPrecio = -1;
+        double productPrecio;
         try {
             productPrecio = Double.parseDouble(precio.getText().toString().trim()); //TODO Esto da error, no se porque
         } catch (NumberFormatException e) {
-
+            productPrecio = -1;
         }
 
 
