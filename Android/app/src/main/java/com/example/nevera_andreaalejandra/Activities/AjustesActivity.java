@@ -42,7 +42,7 @@ public class AjustesActivity extends AppCompatActivity {
     private String switchTextOn = "Activado";
     private String switchTextOff = "Desactivado";
     private boolean isHighImportance = true;
-    private Button btn_prueba;
+
 
     //Para realizar la conexon con la firebase
     private DatabaseReference mDataBase;
@@ -58,7 +58,7 @@ public class AjustesActivity extends AppCompatActivity {
         nombre = (TextView) findViewById(R.id.nombreUsuario);
         correo = (TextView) findViewById(R.id.correoUsuario);
         switchNotificaciones = (Switch) findViewById(R.id.switchNotificaciones);
-        btn_prueba = (Button) findViewById(R.id.buttonNotificacion);
+
 
         notificationHandler = new NotificationHandler(this);
 
@@ -77,20 +77,14 @@ public class AjustesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switchNotificaciones.setText((switchNotificaciones.isChecked()) ? switchTextOn : switchTextOff);
                 if (switchNotificaciones.isChecked()) {
+                    sendNotification(isHighImportance);
                     Toast.makeText(getApplicationContext(), "Activado", Toast.LENGTH_LONG).show();
                 }else {
+                    sendNotification(isHighImportance);
                     Toast.makeText(getApplicationContext(), "Desactivado", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-        btn_prueba.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendNotification();
-            }
-        });
-
 
     }
 
@@ -132,16 +126,23 @@ public class AjustesActivity extends AppCompatActivity {
     public void change(CompoundButton buttonView, boolean isChecked) {
         isHighImportance = isChecked;
         switchNotificaciones.setText((isChecked) ? switchTextOn : switchTextOff);
+        sendNotification(isHighImportance);
     }
 
-    private void sendNotification() {
+    private void sendNotification(boolean isHighImportance) {
         Toast.makeText(getApplicationContext(), "notificacion", Toast.LENGTH_LONG).show();
 
-        String title = "Probando";
-        String message = "Desde ajustes";
+        String title = "Notificaciones";
+        String messageActivada = "Las notificaciones estan activadas";
+        String messageDesactivadas = "Las notificaciones estan Desactivadas";
 
-        if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(message)) {
-            Notification.Builder nb = notificationHandler.createNotification(title, message, isHighImportance);
+
+        if (isHighImportance==true) {
+            Notification.Builder nb = notificationHandler.createNotification(title, messageActivada, isHighImportance);
+            notificationHandler.getManager().notify(++counter, nb.build());
+            notificationHandler.publishNotificationSummaryGroup(isHighImportance);
+        }if(isHighImportance==false) {
+            Notification.Builder nb = notificationHandler.createNotification(title, messageDesactivadas, isHighImportance);
             notificationHandler.getManager().notify(++counter, nb.build());
             notificationHandler.publishNotificationSummaryGroup(isHighImportance);
         }

@@ -179,15 +179,7 @@
                     android:paddingRight="15dp" />
 
             </LinearLayout>
-            <Button
-                android:id="@+id/buttonNotificacion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                android:background="@drawable/button_style1"
-                android:clickable="true"
-                android:text="Notificacion" />
+
         </LinearLayout>
 
 
