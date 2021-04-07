@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -43,7 +44,7 @@ import java.util.List;
 public class Congelador_Fragment extends Fragment {
     //El boton para añadir
     private FloatingActionButton add;
-
+    private ConstraintLayout MensajeSinProductos;
     //Creamos el adapter
     private AdapterProducto adapterProducto;
 
@@ -100,6 +101,8 @@ public class Congelador_Fragment extends Fragment {
         //Enlazamos con el xml
         add = view.findViewById(R.id.FABAddList);
         recyclerView = (RecyclerView) view.findViewById(R.id.item_product_congelador);
+        MensajeSinProductos = (ConstraintLayout) view.findViewById(R.id.MensajeSinProductos);
+
         mLayoutManager = new LinearLayoutManager(getContext());
 
         leerProductos();
@@ -135,6 +138,9 @@ public class Congelador_Fragment extends Fragment {
                     add.show();
             }
         });
+
+
+
 
         return view;
     }
@@ -229,6 +235,14 @@ public class Congelador_Fragment extends Fragment {
                 recyclerView.setLayoutAnimation(layoutAnimationController);
                 recyclerView.getAdapter().notifyDataSetChanged();
                 recyclerView.scheduleLayoutAnimation();
+
+                if (adapterProducto.getItemCount() > 0 ) {
+                    //Toast.makeText(getContext(), "Hay productos", Toast.LENGTH_SHORT).show();
+                    MensajeSinProductos.setVisibility(View.INVISIBLE);
+                }else {
+                    //Toast.makeText(getContext(), "No hay productos", Toast.LENGTH_SHORT).show();
+                    MensajeSinProductos.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

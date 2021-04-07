@@ -3,13 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    tools:context=".Fragments.Listas_Fragment"
-    android:layout_height="match_parent">
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/fondo2"
-        android:scaleType="centerCrop" />
+    tools:context=".Fragments.Congelador_Fragment"
+    android:layout_height="match_parent"
+    android:background="#2E2E2E">
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/FABAddList"
@@ -21,17 +18,16 @@
         android:src="@drawable/ic_add" />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/lienar_gradient">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:text="Mi congelador:"
-            android:textColor="#000000"
+            android:textColor="#FCFCFC"
             android:textSize="36sp" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -39,7 +35,43 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="20dp"
-            android:scrollbars="vertical"/>
+            android:scrollbars="vertical" />
 
     </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/MensajeSinProductos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:scrollbars="none"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        >
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:layout_margin="50dp"
+            android:src="@drawable/ic_taco"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="Puedes añadir productos, que esto esta muy vacio"
+            android:textColor="#FCFCFC"
+            android:layout_margin="20dp"
+            android:textSize="36sp"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

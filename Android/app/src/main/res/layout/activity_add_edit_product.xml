@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Activities.AddEditProductActivity"
     android:orientation="vertical"
-    android:background="#F4EDED">
+    android:background="#F2F2F2">
 
     <!--Este campo es el que se llena cuando pulsamos el ojito al lado de la imagen
     <ImageView
