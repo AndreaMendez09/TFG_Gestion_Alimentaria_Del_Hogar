@@ -28,8 +28,12 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
     private Context context;
     private int layout;
     private String tipoproducto;
-    private List<ProductoModelo> list;
+    public List<ProductoModelo> list;
     SparseBooleanArray mSparseBooleanArray;
+
+    public AdapterProductoLista() {
+
+    }
 
     public AdapterProductoLista(Context context, int layout, List<ProductoModelo> list) {
         super();

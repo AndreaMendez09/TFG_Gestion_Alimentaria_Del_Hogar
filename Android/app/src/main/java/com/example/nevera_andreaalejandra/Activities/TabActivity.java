@@ -17,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.nevera_andreaalejandra.Adapters.AdapterProductoLista;
 import com.example.nevera_andreaalejandra.Adapters.AdapterTab;
 import com.example.nevera_andreaalejandra.Fragments.Congelador_Fragment;
 import com.example.nevera_andreaalejandra.Fragments.Nevera_Fragment;
@@ -42,6 +43,7 @@ public class TabActivity extends AppCompatActivity {
 
     //Declaramos el adapter
     AdapterTab adapter;
+    AdapterProductoLista adapterLista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,7 +161,7 @@ public class TabActivity extends AppCompatActivity {
 
             }
             if (fragmentTransaction) {
-                cambiarActivity(activity, item);
+                cambiarActivity(activity, item, 2);
                 drawerLayout.closeDrawers();
             }
             return true;
@@ -173,7 +175,7 @@ public class TabActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(item.getTitle()); //Cambia el titulo de arriba
     }
 
-    public void cambiarActivity(Activity activity, MenuItem item){
+    public void cambiarActivity(Activity activity, MenuItem item, int position){
         Intent intent = new Intent(this, activity.getClass());//Establecemos primero donde estamos y luego donde vamos
         item.setChecked(true);
         getSupportActionBar().setTitle(item.getTitle()); //Cambia el titulo de arriba
@@ -207,6 +209,8 @@ public class TabActivity extends AppCompatActivity {
             case R.id.opciones_seleccionar:
                 //Toast.makeText(TabActivity.this, "Has pulsado en seleccionar", Toast.LENGTH_SHORT).show();
                 //adapter.
+                adapterLista = new AdapterProductoLista();
+                //adapterLista.list
                 /*TODO A ver, el problema que estamos teniendo es que el adapter que tenemos aqui es el del tab, este adapter
                 este adapter no ve obviamente los métodos del adapter de la lista, por lo tanto no ve el check o no
                 a parte de que no hay manera de identificarlo actualmente (yo diria que habria que añadir atributos al modelo

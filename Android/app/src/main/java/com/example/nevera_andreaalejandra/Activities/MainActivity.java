@@ -177,15 +177,13 @@ public class MainActivity extends AppCompatActivity {
                 // abrir el menu lateral
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
-        }
-        switch (item.getItemId()) {
             case R.id.opciones_ordenar:
                 Toast.makeText(MainActivity.this, "Has pulsado en ordenar", Toast.LENGTH_SHORT).show();
-                break;
+                return true;
             case R.id.opciones_borrar:
                 //Toast.makeText(MainActivity.this, "Has pulsado en borrar " +  fragment_actual, Toast.LENGTH_SHORT).show();
                 BorrarTodos();
-                break;
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -218,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
                                     for (DataSnapshot ds : snapshot.getChildren()) {
                                         UbicacionProducto = ds.child("ubicacion").getValue().toString();
                                         UID_usuario = ds.child("uid_usuario").getValue().toString();
+                                        Toast.makeText(getApplicationContext(), UbicacionProducto + "", Toast.LENGTH_SHORT).show();
 
                                         //Vinculamos el id
                                         IdProducto = ds.getKey();
@@ -253,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if (task.isSuccessful()) {
                                                                 //Creamos un toast, para informar de que se ha eliminado
-                                                                Toast.makeText(getApplicationContext(), "Se han eliminado todos", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(getApplicationContext(), "" + IdProducto, Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     });
