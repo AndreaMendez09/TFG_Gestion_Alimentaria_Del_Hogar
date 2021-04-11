@@ -23,6 +23,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -269,7 +270,7 @@ public class Nevera_Fragment extends Fragment {
         CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
 
         View edit_cantidad = View.inflate(getContext(), R.layout.dialog_cantidad, null);
-
+        EditText cantidad = (EditText) edit_cantidad.findViewById(R.id.CantidadModificar);
 
         //creamos el alertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -290,16 +291,24 @@ public class Nevera_Fragment extends Fragment {
                             builder2.setMessage("Introduce la cantidad a comprar")
                                     .setView(edit_cantidad)
                                     .setCancelable(false)
-                                    .setPositiveButton("Confirmar", null).show();
-                            //Si esta seleccionado el check, lo cambiamos de ubicacion
-                            mDataBase.child("Producto").child(productoModelo.getId()).child("ubicacion").setValue("lista_nevera").addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()) {
-                                        Toast.makeText(getContext(), "Se ha añadido satisfactoriamente", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                                    .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //Cambiamos la cantidad
+                                            mDataBase.child("Producto").child(productoModelo.getId()).child("cantidad").setValue(Integer.parseInt(cantidad.getText().toString().trim()));
+
+                                            //Si esta seleccionado el check, lo cambiamos de ubicacion
+                                            mDataBase.child("Producto").child(productoModelo.getId()).child("ubicacion").setValue("lista_nevera").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if(task.isSuccessful()) {
+                                                        Toast.makeText(getContext(), "Se ha añadido satisfactoriamente", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+
+                                        }
+                                    }).show();
 
                         }else {
                             Toast.makeText(getContext(), productoModelo.getId(), Toast.LENGTH_SHORT).show();

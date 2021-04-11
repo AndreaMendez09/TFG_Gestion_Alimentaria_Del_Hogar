@@ -15,7 +15,7 @@
         android:layout_below="@+id/ENombreProducto"/>
 
     <EditText
-        android:id="@+id/ECantidadProducto"
+        android:id="@+id/CantidadModificar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/TextView2"
