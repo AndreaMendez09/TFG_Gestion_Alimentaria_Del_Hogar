@@ -15,9 +15,9 @@
         <activity
             android:name=".Activities.AddEditProductActivity"
             android:parentActivityName=".Activities.MainActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".Activities.MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MainActivity"/>
         </activity>
 
         <activity android:name=".Activities.LoginActivity">
@@ -27,7 +27,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.AjustesActivity"></activity>
+        <activity android:name=".Activities.AjustesActivity"
+            android:parentActivityName=".Activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MainActivity"/>
+        </activity>
         <activity android:name=".Activities.TabActivity"></activity>
     </application>
 

@@ -3,6 +3,9 @@ package com.example.nevera_andreaalejandra.Activities;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -68,6 +71,21 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
         precio = (EditText) findViewById(R.id.EPrecioProducto);
         cantidad = (EditText) findViewById(R.id.ECantidadProducto);
         tipo = (Spinner) findViewById(R.id.ETipoProducto);
+
+        //Para quitar las funciones de copiar y pegar
+        calendario.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+            public void onDestroyActionMode(ActionMode mode) {
+            }
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                return false;
+            }
+        });
 
 
         //Creamos los métodos on click

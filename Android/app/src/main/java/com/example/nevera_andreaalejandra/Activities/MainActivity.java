@@ -77,10 +77,14 @@ public class MainActivity extends AppCompatActivity {
         extras = getIntent().getExtras();
         if (extras != null) {
             fragment = extras.getString("fragment");
-            if (fragment.equals("nevera")) {
-                changeFragment(new Nevera_Fragment(), navigationView.getMenu().getItem(0));
-            } else if (fragment.equals("congelador")) {
-                changeFragment(new Congelador_Fragment(), navigationView.getMenu().getItem(1));
+            try {
+                if (fragment.equals("nevera")) {
+                    changeFragment(new Nevera_Fragment(), navigationView.getMenu().getItem(0));
+                } else if (fragment.equals("congelador")) {
+                    changeFragment(new Congelador_Fragment(), navigationView.getMenu().getItem(1));
+                }
+            }catch (NullPointerException e) {
+
             }
         }
 
@@ -145,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                     fragmentTransaction = true;
                     break;
                 case R.id.menu_lista: //Si coincide con el menumail es el fragment de Email
-                   cambiarActivityTab();
+                    cambiarActivityTab();
                     break;
                 case R.id.menu_ajustes:
                     cambiarActivityAjustes();
@@ -207,65 +211,65 @@ public class MainActivity extends AppCompatActivity {
                 .setCancelable(false)//es para que no se salga  si oprime cualquier cosa
                 .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface builder, int id) {
-                            mDataBase.child("Producto").addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (snapshot.exists()) {
-                                        for (DataSnapshot ds : snapshot.getChildren()) {
-                                            UbicacionProducto = ds.child("ubicacion").getValue().toString();
-                                            UID_usuario = ds.child("uid_usuario").getValue().toString();
+                        mDataBase.child("Producto").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()) {
+                                    for (DataSnapshot ds : snapshot.getChildren()) {
+                                        UbicacionProducto = ds.child("ubicacion").getValue().toString();
+                                        UID_usuario = ds.child("uid_usuario").getValue().toString();
 
-                                            //Vinculamos el id
-                                            IdProducto = ds.getKey();
+                                        //Vinculamos el id
+                                        IdProducto = ds.getKey();
 
-                                            //Comprobamos el usuario que esta conectado
-                                            String id = mAuth.getCurrentUser().getUid();
+                                        //Comprobamos el usuario que esta conectado
+                                        String id = mAuth.getCurrentUser().getUid();
 
-                                            //Obtenemos la posicion
-                                            String borrarDe = obtenerUbicacion();
-                                            String compra;
-                                            if (UbicacionProducto.equals(borrarDe)) { //Comprobamos que esta en esa lista
-                                                if (UID_usuario.equals(id)) { //Comprobamos que solo borra los del usuario
-                                                    if (checkBox.isChecked()) {
-                                                        if (borrarDe.equals("nevera"))
-                                                            compra="lista_nevera";
-                                                        else
-                                                            compra="lista_congelador";
+                                        //Obtenemos la posicion
+                                        String borrarDe = obtenerUbicacion();
+                                        String compra;
+                                        if (UbicacionProducto.equals(borrarDe)) { //Comprobamos que esta en esa lista
+                                            if (UID_usuario.equals(id)) { //Comprobamos que solo borra los del usuario
+                                                if (checkBox.isChecked()) {
+                                                    if (borrarDe.equals("nevera"))
+                                                        compra="lista_nevera";
+                                                    else
+                                                        compra="lista_congelador";
 
-                                                        //Movemos los productos
-                                                        //Si esta seleccionado el check, lo cambiamos de ubicacion
-                                                        mDataBase.child("Producto").child(IdProducto).child("ubicacion").setValue(compra).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                if(task.isSuccessful()) {
-                                                                    Toast.makeText(getApplicationContext(), "Se ha añadido satisfactoriamente", Toast.LENGTH_SHORT).show();
-                                                                }
+                                                    //Movemos los productos
+                                                    //Si esta seleccionado el check, lo cambiamos de ubicacion
+                                                    mDataBase.child("Producto").child(IdProducto).child("ubicacion").setValue(compra).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if(task.isSuccessful()) {
+                                                                Toast.makeText(getApplicationContext(), "Se ha añadido satisfactoriamente", Toast.LENGTH_SHORT).show();
                                                             }
-                                                        });
-                                                    }else {
-                                                        //Borramos el producto
-                                                        mDataBase.child("Producto").child(IdProducto).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    //Creamos un toast, para informar de que se ha eliminado
-                                                                    Toast.makeText(getApplicationContext(), "Se han eliminado todos", Toast.LENGTH_SHORT).show();
-                                                                }
+                                                        }
+                                                    });
+                                                }else {
+                                                    //Borramos el producto
+                                                    mDataBase.child("Producto").child(IdProducto).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                //Creamos un toast, para informar de que se ha eliminado
+                                                                Toast.makeText(getApplicationContext(), "Se han eliminado todos", Toast.LENGTH_SHORT).show();
                                                             }
-                                                        });
-                                                    }
+                                                        }
+                                                    });
                                                 }
                                             }
                                         }
                                     }
                                 }
+                            }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                                }
-                            });
-                        }
+                            }
+                        });
+                    }
                 });
         builder.setNegativeButton("Cancelar", null).show();
 

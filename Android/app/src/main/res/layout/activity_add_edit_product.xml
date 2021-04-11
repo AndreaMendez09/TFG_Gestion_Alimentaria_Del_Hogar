@@ -105,6 +105,7 @@
                 android:clickable="true"
                 android:maxLines="1"
                 android:layout_below="@+id/TextView5"
+                android:longClickable="false"
                 android:backgroundTint="@color/teal_200"
                 />
 

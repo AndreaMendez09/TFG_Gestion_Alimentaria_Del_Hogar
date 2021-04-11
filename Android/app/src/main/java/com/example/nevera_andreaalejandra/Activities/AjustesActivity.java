@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.nevera_andreaalejandra.Models.UsuarioModelo;
 import com.example.nevera_andreaalejandra.R;
@@ -59,10 +60,11 @@ public class AjustesActivity extends AppCompatActivity {
         correo = (TextView) findViewById(R.id.correoUsuario);
         switchNotificaciones = (Switch) findViewById(R.id.switchNotificaciones);
 
+        setToolbar();
 
         notificationHandler = new NotificationHandler(this);
 
-        //1.Las referencias de auntenticacion de la base de dato
+        //1.Las referencias de auntenticacion de la base de datos
         //leeemos la lista
         mDataBase = FirebaseDatabase.getInstance().getReference();
         //Para inicializar la instancia de autenticación
@@ -147,4 +149,13 @@ public class AjustesActivity extends AppCompatActivity {
             notificationHandler.publishNotificationSummaryGroup(isHighImportance);
         }
     }
+
+    //Para poner la imagen en el toolbar
+    private void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar); //He cambiado esto, porque ponia que el otro era para versiones de 30, y esta es la 26
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_undo); //Esto de aqui pone la imagen
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
 }

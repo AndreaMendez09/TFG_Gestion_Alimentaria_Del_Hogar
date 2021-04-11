@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.nevera_andreaalejandra.Activities.AddEditProductActivity;
@@ -47,6 +49,7 @@ public class Nevera_Fragment extends Fragment {
     //El boton para añadir
     private FloatingActionButton add;
     private ConstraintLayout MensajeSinProductos;
+    private ImageView imageView;
 
     //Creamos el adapter
     private AdapterProducto adapterEliminar;
@@ -101,7 +104,10 @@ public class Nevera_Fragment extends Fragment {
         //Enlazar con el xml
         add = view.findViewById(R.id.FABAddList);
         MensajeSinProductos = (ConstraintLayout) view.findViewById(R.id.MensajeSinProductos);
+        imageView = (ImageView) view.findViewById(R.id.imageView);
 
+        /*Display display = getWindowManager().getDefaultDisplay();
+        imageView.getLayoutParams().height = display.getHeight()/2;*/
 
         lista_productos = new ArrayList<ProductoModelo>();
         recyclerView = (RecyclerView) view.findViewById(R.id.item_product_nevera);
@@ -262,6 +268,7 @@ public class Nevera_Fragment extends Fragment {
         View checkBoxView = View.inflate(getContext(), R.layout.dialog_checkbox, null);
         CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
 
+        View edit_cantidad = View.inflate(getContext(), R.layout.dialog_cantidad, null);
 
 
         //creamos el alertDialog
@@ -279,6 +286,11 @@ public class Nevera_Fragment extends Fragment {
 
                         //Oyente del check
                         if (checkBox.isChecked()) {
+                            AlertDialog.Builder builder2 = new AlertDialog.Builder(getContext());
+                            builder2.setMessage("Introduce la cantidad a comprar")
+                                    .setView(edit_cantidad)
+                                    .setCancelable(false)
+                                    .setPositiveButton("Confirmar", null).show();
                             //Si esta seleccionado el check, lo cambiamos de ubicacion
                             mDataBase.child("Producto").child(productoModelo.getId()).child("ubicacion").setValue("lista_nevera").addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -288,6 +300,7 @@ public class Nevera_Fragment extends Fragment {
                                     }
                                 }
                             });
+
                         }else {
                             Toast.makeText(getContext(), productoModelo.getId(), Toast.LENGTH_SHORT).show();
                             mDataBase.child("Producto").child(productoModelo.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -303,6 +316,8 @@ public class Nevera_Fragment extends Fragment {
                     }
                 });
         builder.setNegativeButton("Cancelar", null).show();
+
+
 
 
     }
