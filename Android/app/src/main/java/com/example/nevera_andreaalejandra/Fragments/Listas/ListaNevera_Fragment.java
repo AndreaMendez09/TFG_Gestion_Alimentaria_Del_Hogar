@@ -43,6 +43,7 @@ public class ListaNevera_Fragment extends Fragment {
     //Creamos los campos necesarios para vincularlos con el xml
     private FloatingActionButton add;
     private Button comprar;
+    private Button borrar;
 
     //Creamos nuestra lista para guardar los productos
     private List<ProductoModelo> lista_productos;
@@ -99,6 +100,8 @@ public class ListaNevera_Fragment extends Fragment {
         add = view.findViewById(R.id.FABAddList);
         comprar = (Button) view.findViewById(R.id.boton_comprar);
         recyclerView = (RecyclerView) view.findViewById(R.id.item_list_nevera);
+        borrar = (Button) view.findViewById(R.id.boton_borrar);
+
         mLayoutManager = new LinearLayoutManager(getContext());
 
         leerProductos();

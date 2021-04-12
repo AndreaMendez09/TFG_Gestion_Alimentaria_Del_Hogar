@@ -154,25 +154,17 @@ public class Nevera_Fragment extends Fragment {
     }
     // CRUD Actions
     private void leerProductos() {
-        /*Query query1 = FirebaseDatabase.getInstance().getReference("Producto").orderByChild("nombre").equalTo("Prueba");
-        query1.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        NombreProducto = ds.child("nombre").getValue().toString(); //Lo que hay entre parentesis es el nombre de como lo guarda la base de datos
-                        Toast.makeText(getContext(), "Desde " + NombreProducto, Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
+        //Comprobamos el usuario que esta conectado
+        String idUsuario = mAuth.getCurrentUser().getUid();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });*/
+        Query query1 = FirebaseDatabase.getInstance().getReference("Producto").orderByChild("uid_usuario").equalTo(idUsuario);
 
-        mDataBase.child("Producto").addValueEventListener(new ValueEventListener() {
+
+        //mDataBase.child("Producto").addValueEventListener();
+
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -189,39 +181,15 @@ public class Nevera_Fragment extends Fragment {
                         } catch (NullPointerException e) {
                             DateProducto = "--/--/----";
                         }
-                        //Creamos la fecha
-                        /*String date = ds.child("fecha").child("date").getValue().toString();
-                        String month = ds.child("fecha").child("month").getValue().toString();
-                        int monthInt = Integer.parseInt(month)+1;
-                        String year = ds.child("fecha").child("year").getValue().toString();
-                        int yearInt = (Integer.parseInt(year)+1900);
-                        String fecha=null;
-                        if(Integer.parseInt(month)<10){
-                            fecha=date+"/0"+monthInt+"/"+yearInt;
-                        }else{
-                            fecha=date+"/"+monthInt+"/"+yearInt;
-
-                        }
-                        FechaProducto = null;
-                        try {
-                            FechaProducto=new SimpleDateFormat("dd/MM/yyyy").parse(fecha);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }*/
 
                         //Vinculamos el id
                         IdProducto = ds.getKey();
 
-                        //Comprobamos el usuario que esta conectado
-                        String id = mAuth.getCurrentUser().getUid();
-
-
                         if (UbicacionProducto.equals("nevera")) {
-                            if (UID_usuario.equals(id)) {
-                                ProductoModelo product = new ProductoModelo(IdProducto,NombreProducto, CantidadProducto, PrecioProducto,UbicacionProducto ,TipoProducto,DateProducto,UID_usuario);
-                                lista_productos.add(product);
-                            }
+                            ProductoModelo product = new ProductoModelo(IdProducto, NombreProducto, CantidadProducto, PrecioProducto, UbicacionProducto, TipoProducto, DateProducto, UID_usuario);
+                            lista_productos.add(product);
                         }
+
                     }
                     adapterEliminar = new AdapterProducto(lista_productos, R.layout.item_principal, new AdapterProducto.OnItemClickListener() {
                         //Este click es al darle a la ciudad
@@ -281,7 +249,9 @@ public class Nevera_Fragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        };
+
+        query1.addValueEventListener(valueEventListener);
     }
     private void deleteProduct(final ProductoModelo productoModelo) {
         //Para el checkbox

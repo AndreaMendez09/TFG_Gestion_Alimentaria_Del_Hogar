@@ -52,6 +52,7 @@ public class TabActivity extends AppCompatActivity {
 
         //Ponemos el toolbar
         setToolbar();
+        getSupportActionBar().setTitle("Mis listas de la compra");
 
         //Relacionamos con el xml
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
