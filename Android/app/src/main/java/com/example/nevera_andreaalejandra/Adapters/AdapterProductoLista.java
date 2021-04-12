@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +50,6 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
         this.itemClickListener = itemListener;
         this.buttonClickListener = btnListener;
         this.checkedChangeListener = checkedChangeListener;
-        mSparseBooleanArray = new SparseBooleanArray();
     }
 
     @NonNull
@@ -85,6 +86,7 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
             list.get(x).setChecked(!alumno.get(x).isChecked());
         }
     }*/
+
 
     public void DondeEstoy(String estoyEn) {
         Toast.makeText(context, estoyEn , Toast.LENGTH_LONG).show();
@@ -176,7 +178,10 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
             });
 
         }
+
     }
+
+
 
     public interface OnItemClickListener {
         void onItemClick(ProductoModelo productoModelo, int position);
@@ -190,3 +195,23 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
         void onButtonClick(ProductoModelo productoModelo, int position, boolean isChecked);
     }
 }
+/*
+    public void seleccionarTodo(final ProductoModelo product,final AdapterProductoLista.OnCheckedChangeListener checkListener){
+
+        for (int i=0; list.size()==i; i++){
+
+            if(list.get(i).getUbicacion().equals("nevera")){
+                list.setItemChecked(i,true);
+            }if(list.get(i).getUbicacion().equals("congelador")){
+
+            }
+        }
+                /*
+        Query queryCheckAllNevera = FirebaseDatabase.getInstance().getReference("Producto")
+                .orderByChild("ubicacion")
+                .equalTo("nevera");
+        Query queryCheckAllCongelador = FirebaseDatabase.getInstance().getReference("Producto")
+                .orderByChild("ubicacion")
+                .equalTo("congelador");
+
+    }*/

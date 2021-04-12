@@ -208,9 +208,10 @@ public class TabActivity extends AppCompatActivity {
                 //BorrarTodos();
                 break;
             case R.id.opciones_seleccionar:
-                //Toast.makeText(TabActivity.this, "Has pulsado en seleccionar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TabActivity.this, "Has pulsado en seleccionar", Toast.LENGTH_SHORT).show();
                 //adapter.
                 adapterLista = new AdapterProductoLista();
+
                 //adapterLista.list
                 /*TODO A ver, el problema que estamos teniendo es que el adapter que tenemos aqui es el del tab, este adapter
                 este adapter no ve obviamente los métodos del adapter de la lista, por lo tanto no ve el check o no
