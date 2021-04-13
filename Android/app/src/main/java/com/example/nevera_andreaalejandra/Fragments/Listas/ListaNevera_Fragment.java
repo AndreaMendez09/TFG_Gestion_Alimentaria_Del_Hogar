@@ -32,6 +32,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -110,6 +111,7 @@ public class ListaNevera_Fragment extends Fragment {
         registerForContextMenu(recyclerView);
 
 
+        //Añadimos los oyentes correspondientes
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,6 +156,49 @@ public class ListaNevera_Fragment extends Fragment {
                     add.hide();
                 else if (dy < 0)
                     add.show();
+            }
+        });
+
+        borrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Comprobamos el usuario que esta conectado
+                Toast.makeText(getContext(), "Hola", Toast.LENGTH_SHORT).show();
+
+                String idUsuario = mAuth.getCurrentUser().getUid();
+                Query query1 = FirebaseDatabase.getInstance().getReference("Producto").orderByChild("uid_usuario").equalTo(idUsuario);
+
+                ValueEventListener valueEventListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()) {
+                            lista_productos.clear();
+                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                UbicacionProducto = ds.child("ubicacion").getValue().toString();
+                                //Vinculamos el id
+                                IdProducto = ds.getKey();
+                                if (UbicacionProducto.equals("lista_nevera")) { //Comprobamos que esta en esa lista
+                                    mDataBase.child("Producto").child(IdProducto).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                //Creamos un toast, para informar de que se ha eliminado
+                                                Toast.makeText(getContext(), "" + IdProducto, Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                };
+
+                query1.addValueEventListener(valueEventListener);
             }
         });
 
