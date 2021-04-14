@@ -1,6 +1,7 @@
 package com.example.nevera_andreaalejandra.Models;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 
 //Implementamos serializable para poder pasar el objeto de un frament a otro
@@ -50,9 +51,31 @@ public class ProductoModelo implements Serializable {
         this.fecha = fecha;
     }
 
+    public static Comparator<ProductoModelo> ProductoAZ = new Comparator<ProductoModelo>() {
+        @Override
+        public int compare(ProductoModelo p1, ProductoModelo p2) {
+            return p1.getNombre().compareTo(p2.getNombre());
+        }
+    };
+
+    public static Comparator<ProductoModelo> ProductoZA = new Comparator<ProductoModelo>() {
+        @Override
+        public int compare(ProductoModelo p1, ProductoModelo p2) {
+            return p2.getNombre().compareTo(p1.getNombre());
+        }
+    };
+
+    /*public static Comparator<ProductoModelo> ProductoDateAscending = new Comparator<ProductoModelo>() {
+        @Override
+        public int compare(ProductoModelo p1, ProductoModelo p2) {
+            return p1.getFecha() - p2.getFecha();
+        }
+    };*/
+
+
+
+
     //Creamos los getters y setters
-
-
     public String getId() {
         return id;
     }

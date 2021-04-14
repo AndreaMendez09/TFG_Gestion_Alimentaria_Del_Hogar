@@ -54,7 +54,7 @@ public class Nevera_Fragment extends Fragment {
     private ImageView imageView;
 
     //Creamos el adapter
-    private AdapterProducto adapterEliminar;
+    public AdapterProducto adapterEliminar;
 
 
     //Creamos nuestra lista para guardar los productos

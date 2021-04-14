@@ -1,11 +1,14 @@
 package com.example.nevera_andreaalejandra.Activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -18,8 +21,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.nevera_andreaalejandra.Adapters.AdapterProducto;
 import com.example.nevera_andreaalejandra.Fragments.Congelador_Fragment;
 import com.example.nevera_andreaalejandra.Fragments.Nevera_Fragment;
+import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,7 +34,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     //Partes del drawer
@@ -47,10 +58,20 @@ public class MainActivity extends AppCompatActivity {
     //Variable para detectar en que parte de la app está
     private int fragment_actual = 0;
 
-    //Variables para detectar el borrar
+
+    //Los datos para vincularlos con la base de datos
     private String IdProducto;
+    private String NombreProducto;
+    private String TipoProducto;
     private String UbicacionProducto;
+    private Double PrecioProducto;
+    private int CantidadProducto;
+    private Date FechaProducto = new Date();
+    private String DateProducto;
     private String UID_usuario;
+
+    //Creamos nuestra lista para guardar los productos
+    private List<ProductoModelo> lista_productos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navview);
         logout = (LinearLayout) findViewById(R.id.logout);
+
+        lista_productos = new ArrayList<ProductoModelo>();
 
 
         setFragmentByDefault(); //Para poner el fragment por defecto. En este caso email
@@ -178,7 +201,11 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.opciones_ordenar:
-                Toast.makeText(MainActivity.this, "Has pulsado en ordenar", Toast.LENGTH_SHORT).show();
+                List<ProductoModelo> lista_temp = sacarLista();
+                Collections.sort(lista_temp, ProductoModelo.ProductoAZ);
+                Nevera_Fragment fragment = new Nevera_Fragment();
+                //fragment.adapterEliminar.notifyDataSetChanged();
+                //Toast.makeText(MainActivity.this, "Has pulsado en ordenar", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.opciones_borrar:
                 //Toast.makeText(MainActivity.this, "Has pulsado en borrar " +  fragment_actual, Toast.LENGTH_SHORT).show();
@@ -282,6 +309,53 @@ public class MainActivity extends AppCompatActivity {
             borrarDe = "congelador";
         }
         return borrarDe;
+    }
+
+    private List<ProductoModelo> sacarLista(){
+        String donde = obtenerUbicacion();
+
+        //Comprobamos el usuario que esta conectado
+        String idUsuario = mAuth.getCurrentUser().getUid();
+        Query query1 = FirebaseDatabase.getInstance().getReference("Producto").orderByChild("uid_usuario").equalTo(idUsuario);
+        //mDataBase.child("Producto").addValueEventListener();
+
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot ds : snapshot.getChildren()) { //Añadimos los campos a las variables creadas anteriormente
+                        NombreProducto = ds.child("nombre").getValue().toString(); //Lo que hay entre parentesis es el nombre de como lo guarda la base de datos
+                        TipoProducto = ds.child("tipo").getValue().toString();
+                        UbicacionProducto = ds.child("ubicacion").getValue().toString();
+                        PrecioProducto = Double.valueOf(ds.child("precio").getValue().toString());
+                        CantidadProducto = Integer.parseInt(ds.child("cantidad").getValue().toString());
+                        UID_usuario = ds.child("uid_usuario").getValue().toString();
+                        try {
+                            DateProducto = ds.child("fecha").getValue().toString();
+                        } catch (NullPointerException e) {
+                            DateProducto = "--/--/----";
+                        }
+
+                        //Vinculamos el id
+                        IdProducto = ds.getKey();
+
+                        if (UbicacionProducto.equals(donde)) {
+                            //Toast.makeText(MainActivity.this, "Se pulsa en logout", Toast.LENGTH_SHORT).show();
+                            ProductoModelo product = new ProductoModelo(IdProducto, NombreProducto, CantidadProducto, PrecioProducto, UbicacionProducto, TipoProducto, DateProducto, UID_usuario);
+                            lista_productos.add(product);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        query1.addValueEventListener(valueEventListener);
+        return lista_productos;
     }
 
 }
