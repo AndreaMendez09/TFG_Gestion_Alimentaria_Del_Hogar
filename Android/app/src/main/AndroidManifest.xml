@@ -9,15 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBarTheme">
-        <activity android:name=".Activities.MainActivity">
 
-        </activity>
+        <activity android:name=".Activities.NeveraActivity"></activity>
+        <activity android:name=".Activities.CongeladorActivity"></activity>
+
         <activity
             android:name=".Activities.AddEditProductActivity"
-            android:parentActivityName=".Activities.MainActivity">
+            android:parentActivityName=".Activities.NeveraActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.MainActivity"/>
+                android:value=".Activities.NeveraActivity"/>
         </activity>
 
         <activity android:name=".Activities.LoginActivity">
@@ -34,6 +35,9 @@
                 android:value=".Activities.MainActivity"/>
         </activity>
         <activity android:name=".Activities.TabActivity"></activity>
+
+
+
     </application>
 
 </manifest>

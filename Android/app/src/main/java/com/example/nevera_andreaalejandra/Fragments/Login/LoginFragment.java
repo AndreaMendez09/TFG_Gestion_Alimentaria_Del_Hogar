@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nevera_andreaalejandra.Activities.MainActivity;
+import com.example.nevera_andreaalejandra.Activities.NeveraActivity;
 import com.example.nevera_andreaalejandra.R;
 import com.example.nevera_andreaalejandra.Util.LoginUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -138,7 +139,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void changeToActivity() {
-        Intent intent = new Intent(getActivity(), MainActivity.class);
+        Intent intent = new Intent(getActivity(), NeveraActivity.class);
         startActivity(intent);
     }
 
