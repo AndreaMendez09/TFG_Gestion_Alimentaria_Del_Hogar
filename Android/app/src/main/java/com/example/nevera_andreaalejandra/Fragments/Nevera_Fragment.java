@@ -56,7 +56,6 @@ public class Nevera_Fragment extends Fragment {
     //Creamos el adapter
     public AdapterProducto adapterEliminar;
 
-
     //Creamos nuestra lista para guardar los productos
     private List<ProductoModelo> lista_productos;
 
