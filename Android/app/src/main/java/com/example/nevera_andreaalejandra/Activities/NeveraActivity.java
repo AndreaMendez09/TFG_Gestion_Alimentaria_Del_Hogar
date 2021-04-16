@@ -86,7 +86,7 @@ public class NeveraActivity extends AppCompatActivity {
 
 
         //Dependiendo de lo que seleccionemos en el menu, iremos a un fragment u a otro
-        navigationView.setNavigationItemSelectedListener(new NeveraActivity.OyenteNav());
+        navigationView.setNavigationItemSelectedListener();
 
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +122,7 @@ public class NeveraActivity extends AppCompatActivity {
     }
 
     //--------Oyentes
-    class OyenteNav implements NavigationView.OnNavigationItemSelectedListener {
+    public class OyenteNav implements NavigationView.OnNavigationItemSelectedListener {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             boolean fragmentTransaction = false;
