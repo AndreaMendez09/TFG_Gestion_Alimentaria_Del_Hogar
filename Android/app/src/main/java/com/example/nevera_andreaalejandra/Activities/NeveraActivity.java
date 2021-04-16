@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -68,6 +69,7 @@ public class NeveraActivity extends AppCompatActivity {
     private Date FechaProducto = new Date();
     private String DateProducto;
     private String UID_usuario;
+
 
     private Bundle extras;
 
@@ -133,6 +135,33 @@ public class NeveraActivity extends AppCompatActivity {
             }
         });
 
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*Toast.makeText(getContext(), "Es necesario un nuevo nombre para el tablero", Toast.LENGTH_LONG).show();
+                showAlertForCreatingBoard("Añadir nuevo producto", "Escribir el nombre del producto");*/
+                //Con intent pasamos informacion al otro activity que vayamos a cambiar
+                Intent intent = new Intent(getApplicationContext(), AddEditProductActivity.class);//Establecemos primero donde estamos y luego donde vamos
+
+                //En este caso como hemos pulsado en el más, pasaremos la opcion de añadir
+                intent.putExtra("tarea", "añadir"); //Para detectar en el AddEdit si es un añadir o un editar
+                intent.putExtra("ubicacion", "nevera"); //Para detectar en el AddEdit si es de congelador o de nevera
+
+                startActivity(intent);//Iniciamos el intent
+            }
+        });
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                if(lista_productos.size()<=2)
+                    add.show();
+                if (dy > 0)
+                    add.hide();
+                else if (dy < 0)
+                    add.show();
+            }
+        });
 
     }
 
@@ -178,7 +207,7 @@ public class NeveraActivity extends AppCompatActivity {
 
                     }
                     adapterEliminar = new AdapterProducto(lista_productos, R.layout.item_principal, new AdapterProducto.OnItemClickListener() {
-                        //Este click es al darle a la ciudad
+                        //Este click es al darle al producto
                         @Override
                         public void onItemClick(ProductoModelo productoModelo, int position) {
                             Intent intent = new Intent(getApplicationContext(), AddEditProductActivity.class);
@@ -191,15 +220,15 @@ public class NeveraActivity extends AppCompatActivity {
 
                             startActivity(intent);
                         }
-                        //Este boton es al clickar en el boton eliminar que tiene cada cardview de ciudad
+                        //Este boton es al clickar en el boton eliminar que tiene cada cardview
                     }, new AdapterProducto.OnButtonClickListener() {
                         @Override
                         public void onButtonClick(ProductoModelo productoModelo, int position) {
                             //Aqui va el boton de eliminar del cardview
                             //Mostramos un dialogo emergente para comprobar si estas seguro de que quieres borrarlo
                             //TODO no tengo ni idea si esto esta bien
-                            //showAlertForErasingCity(city.getName(),city.getDescription(),city);
-                            //deleteProduct(productoModelo);
+
+                            deleteProduct(productoModelo);
                         }
 
                     });
@@ -210,10 +239,6 @@ public class NeveraActivity extends AppCompatActivity {
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setAdapter(adapterEliminar);
 
-                //Ponemos el espacio entre los items
-                /*DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
-                dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
-                recyclerView.addItemDecoration(dividerItemDecoration);*/
 
                 //Ponemos la animacion
                 Context context = recyclerView.getContext();
@@ -243,15 +268,6 @@ public class NeveraActivity extends AppCompatActivity {
         query1.addValueEventListener(valueEventListener);
     }
 
-
-
-
-    //Método para cambiar de fragment
-    private void changeFragment(Fragment fragment, MenuItem item) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
-        item.setChecked(true);
-        getSupportActionBar().setTitle(item.getTitle()); //Cambia el titulo de arriba
-    }
 
     //--------Oyentes
     public class OyenteNav implements NavigationView.OnNavigationItemSelectedListener {
@@ -318,6 +334,70 @@ public class NeveraActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void deleteProduct(final ProductoModelo productoModelo) {
+        //Para el checkbox
+        View checkBoxView = View.inflate(this, R.layout.dialog_checkbox, null);
+        CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
+
+        View edit_cantidad = View.inflate(this, R.layout.dialog_cantidad, null);
+        EditText cantidad = (EditText) edit_cantidad.findViewById(R.id.CantidadModificar);
+
+        //creamos el alertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(NeveraActivity.this);
+        builder.setMessage("¿Seguro que quiere eliminar?")//es como la partesita de arriba
+                .setTitle("Aviso")//es el texto
+                .setView(checkBoxView)
+                .setCancelable(false)//es para que no se salga  si oprime cualquier cosa
+                .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface builder, int id) {
+                        //Comprobamos si exite el producto
+                        if(lista_productos.size()==1){
+                            lista_productos.clear();//La limpiamos
+                        }
+
+                        //Oyente del check
+                        if (checkBox.isChecked()) {
+                            AlertDialog.Builder builder2 = new AlertDialog.Builder(NeveraActivity.this);
+                            builder2.setMessage("Introduce la cantidad a comprar")
+                                    .setView(edit_cantidad)
+                                    .setCancelable(false)
+                                    .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //Cambiamos la cantidad
+                                            mDataBase.child("Producto").child(productoModelo.getId()).child("cantidad").setValue(Integer.parseInt(cantidad.getText().toString().trim()));
+
+                                            //Si esta seleccionado el check, lo cambiamos de ubicacion
+                                            mDataBase.child("Producto").child(productoModelo.getId()).child("ubicacion").setValue("lista_nevera").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if(task.isSuccessful()) {
+                                                        Toast.makeText(NeveraActivity.this, "Se ha añadido satisfactoriamente", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+
+                                        }
+                                    }).show();
+
+                        }else {
+                            Toast.makeText(NeveraActivity.this, productoModelo.getId(), Toast.LENGTH_SHORT).show();
+                            mDataBase.child("Producto").child(productoModelo.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        //Creamos un toast, para informar de que se ha eliminado
+                                        Toast.makeText(NeveraActivity.this, "Se ha eliminado satisfactoriamente", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+        builder.setNegativeButton("Cancelar", null).show();
+
+
     }
 
     public void cambiarActivity(Activity activity){

@@ -286,15 +286,21 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
     }
 
     private void changeActivity() {
+        Intent intent = null;
         extras = getIntent().getExtras();
         if (extras != null) {
             ubicacion = extras.getString("ubicacion");
         }
+        if(ubicacion.equals("nevera")) {
+            //Para volver al fragment donde nos encontramos
+            intent = new Intent(this, NeveraActivity.class);//Establecemos primero donde estamos y luego donde vamos
+        }else{
+            intent = new Intent(this, CongeladorActivity.class);
+        }
+            intent.putExtra("fragment", ubicacion); //Para detectar en el AddEdit si es un añadir o un editar
 
-        //Para volver al fragment donde nos encontramos
-        Intent intent = new Intent(this, MainActivity.class);//Establecemos primero donde estamos y luego donde vamos
-        intent.putExtra("fragment", ubicacion); //Para detectar en el AddEdit si es un añadir o un editar
-        startActivity(intent);//Iniciamos el intent
+            startActivity(intent);//Iniciamos el intent
+
     }
 
     private void mostrarCalendario() {

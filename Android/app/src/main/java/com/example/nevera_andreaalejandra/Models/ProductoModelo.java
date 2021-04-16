@@ -54,14 +54,14 @@ public class ProductoModelo implements Serializable {
     public static Comparator<ProductoModelo> ProductoAZ = new Comparator<ProductoModelo>() {
         @Override
         public int compare(ProductoModelo p1, ProductoModelo p2) {
-            return p1.getNombre().compareTo(p2.getNombre());
+            return p1.getNombre().compareToIgnoreCase(p2.getNombre());
         }
     };
 
     public static Comparator<ProductoModelo> ProductoZA = new Comparator<ProductoModelo>() {
         @Override
         public int compare(ProductoModelo p1, ProductoModelo p2) {
-            return p2.getNombre().compareTo(p1.getNombre());
+            return p2.getNombre().compareToIgnoreCase(p1.getNombre());
         }
     };
 
