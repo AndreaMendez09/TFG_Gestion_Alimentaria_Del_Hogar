@@ -134,40 +134,34 @@ public class TabActivity extends AppCompatActivity {
 
 
     //--------Oyentes
-    class OyenteNav implements NavigationView.OnNavigationItemSelectedListener {
+    public class OyenteNav implements NavigationView.OnNavigationItemSelectedListener {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Toast.makeText(TabActivity.this, "Has pulsado", Toast.LENGTH_SHORT).show();
-            boolean fragmentTransaction = false;
-            Fragment fragment = null;
-            Activity activity = null;
             //Obtenemos la posicion del menu
+            Activity activity = null;
             switch (item.getItemId()) {
                 case R.id.menu_nevera: //Si coincide con el menumail es el fragment de Email
-                    activity = new MainActivity();
-                    fragmentTransaction = true;
+                    activity = new NeveraActivity();
+                    cambiarActivity(activity);
                     break;
                 case R.id.menu_congelador: //Si coincide con el menumail es el fragment de Email
-                    activity = new MainActivity();
-                    fragmentTransaction = true;
+                    activity = new CongeladorActivity();
+                    cambiarActivity(activity);
                     break;
                 case R.id.menu_lista: //Si coincide con el menumail es el fragment de Email
                     activity = new TabActivity();
-                    fragmentTransaction = true;
+                    cambiarActivity(activity);
                     break;
                 case R.id.menu_ajustes:
                     activity = new AjustesActivity();
-                    fragmentTransaction = true;
+                    cambiarActivity(activity);
                     break;
 
-            }
-            if (fragmentTransaction) {
-                cambiarActivity(activity, item, 2);
-                drawerLayout.closeDrawers();
             }
             return true;
         }
     }
+
 
     //Método para cambiar de fragment
     private void changeFragment(Fragment fragment, MenuItem item) {
@@ -176,12 +170,8 @@ public class TabActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(item.getTitle()); //Cambia el titulo de arriba
     }
 
-    public void cambiarActivity(Activity activity, MenuItem item, int position){
+    public void cambiarActivity(Activity activity){
         Intent intent = new Intent(this, activity.getClass());//Establecemos primero donde estamos y luego donde vamos
-        item.setChecked(true);
-        getSupportActionBar().setTitle(item.getTitle()); //Cambia el titulo de arriba
-
-        //Iniciamos el intent
         startActivity(intent);
     }
 

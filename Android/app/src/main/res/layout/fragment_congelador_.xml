@@ -1,79 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    tools:context=".Fragments.Congelador_Fragment"
     android:layout_height="match_parent"
-    android:background="#2E2E2E">
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/FABAddList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="20dp"
-        app:fabSize="auto"
-        android:src="@drawable/ic_add" />
-
-    <LinearLayout
+    android:fitsSystemWindows="true"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="#2E2E2E">
 
-        <TextView
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/FABAddList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
             android:layout_margin="20dp"
-            android:text="Mi congelador:"
-            android:fontFamily="sans-serif-light"
-            android:textColor="#FCFCFC"
-            android:textSize="36sp" />
+            android:src="@drawable/ic_add"
+            app:fabSize="auto"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/item_product_congelador"
+        <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="20dp"
-            android:scrollbars="vertical" />
-
-    </LinearLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/MensajeSinProductos"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="20dp"
-        android:scrollbars="none"
-        android:orientation="horizontal"
-        android:visibility="invisible"
-        >
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_margin="50dp"
-            android:src="@drawable/ic_taco"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.43" />
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="Puedes añadir productos, que esto esta muy vacio"
-            android:textColor="#FCFCFC"
-            android:layout_margin="20dp"
-            android:textSize="26sp"
-            android:textAlignment="center"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:fontFamily="sans-serif-light"
+                android:text="Mi congelador:"
+                android:textColor="#FCFCFC"
+                android:textSize="36sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/item_product_congelador"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="20dp"
+                android:layoutAnimation="@anim/layout_caer"
+                android:scrollbars="vertical" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/MensajeSinProductos"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:orientation="horizontal"
+            android:scrollbars="none"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_margin="50dp"
+                android:src="@drawable/ic_taco"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.43" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_margin="20dp"
+                android:text="Puedes añadir productos, que esto esta muy vacio"
+                android:textAlignment="center"
+                android:textColor="#FCFCFC"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navview"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/nav_options"
+        >
+        <LinearLayout
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:layout_margin="20dp"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_logout"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:text="Log out" />
+        </LinearLayout>
+
+
+
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>
+

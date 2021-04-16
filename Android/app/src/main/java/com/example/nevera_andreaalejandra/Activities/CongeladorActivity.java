@@ -1,5 +1,6 @@
 package com.example.nevera_andreaalejandra.Activities;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -68,7 +69,7 @@ public class CongeladorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_congelador);
+        setContentView(R.layout.fragment_congelador_);
         setToolbar();
 
         //BBDD
@@ -83,11 +84,8 @@ public class CongeladorActivity extends AppCompatActivity {
 
         lista_productos_congelador = new ArrayList<ProductoModelo>();
 
-
-        setFragmentByDefault(); //Para poner el fragment por defecto. En este caso email
-
         //Dependiendo de lo que seleccionemos en el menu, iremos a un fragment u a otro
-        navigationView.setNavigationItemSelectedListener(new CongeladorActivity.OyenteNav());
+        navigationView.setNavigationItemSelectedListener(new OyenteNav());
 
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -116,14 +114,7 @@ public class CongeladorActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    //Método para poner el fragment por defecto al iniciar
-    private void setFragmentByDefault() {
-        /* Esto eran mis pruebas pero es que simplemente soy idiota y estaba llamando al método antes de enlazar el menu
-        Fragment fragment = new Emails_Fragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
-        navigationView.setCheckedItem(R.id.menu_mail);*/
-        changeFragment(new Nevera_Fragment(), navigationView.getMenu().getItem(0));
-    }
+
 
     //Método para cambiar de fragment
     private void changeFragment(Fragment fragment, MenuItem item) {
@@ -133,34 +124,34 @@ public class CongeladorActivity extends AppCompatActivity {
     }
 
     //--------Oyentes
-    class OyenteNav implements NavigationView.OnNavigationItemSelectedListener {
+    public class OyenteNav implements NavigationView.OnNavigationItemSelectedListener {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            boolean fragmentTransaction = false;
-            Fragment fragment = null;
             //Obtenemos la posicion del menu
+            Activity activity = null;
             switch (item.getItemId()) {
                 case R.id.menu_nevera: //Si coincide con el menumail es el fragment de Email
-                    cambiarActivityNevera();
+                    activity = new NeveraActivity();
+                    cambiarActivity(activity);
                     break;
                 case R.id.menu_congelador: //Si coincide con el menumail es el fragment de Email
-                    cambiarActivityCongelador();
+                    activity = new CongeladorActivity();
+                    cambiarActivity(activity);
                     break;
                 case R.id.menu_lista: //Si coincide con el menumail es el fragment de Email
-                    cambiarActivityTab();
+                    activity = new TabActivity();
+                    cambiarActivity(activity);
                     break;
                 case R.id.menu_ajustes:
-                    cambiarActivityAjustes();
+                    activity = new AjustesActivity();
+                    cambiarActivity(activity);
                     break;
 
-            }
-            if (fragmentTransaction) {
-                changeFragment(fragment, item);
-                drawerLayout.closeDrawers();
             }
             return true;
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -178,7 +169,6 @@ public class CongeladorActivity extends AppCompatActivity {
             case R.id.opciones_ordenar:
                 List<ProductoModelo> lista_temp = sacarLista();
                 Collections.sort(lista_temp, ProductoModelo.ProductoAZ);
-                Nevera_Fragment fragment = new Nevera_Fragment();
                 //fragment.adapterEliminar.notifyDataSetChanged();
                 //Toast.makeText(MainActivity.this, "Has pulsado en ordenar", Toast.LENGTH_SHORT).show();
                 return true;
@@ -189,23 +179,10 @@ public class CongeladorActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void cambiarActivityAjustes(){
-        Intent intent = new Intent(this, AjustesActivity.class);//Establecemos primero donde estamos y luego donde vamos
+    public void cambiarActivity(Activity activity){
+        Intent intent = new Intent(this, activity.getClass());//Establecemos primero donde estamos y luego donde vamos
         startActivity(intent);
     }
-    public void cambiarActivityTab(){
-        Intent intent = new Intent(this, TabActivity.class);//Establecemos primero donde estamos y luego donde vamos
-        startActivity(intent);
-    }
-    public void cambiarActivityNevera(){
-        Intent intent = new Intent(this, NeveraActivity.class);//Establecemos primero donde estamos y luego donde vamos
-        startActivity(intent);
-    }
-    public void cambiarActivityCongelador(){
-        Intent intent = new Intent(this, CongeladorActivity.class);//Establecemos primero donde estamos y luego donde vamos
-        startActivity(intent);
-    }
-
     private void BorrarTodos() {
         //Para el checkbox
         View checkBoxView = View.inflate(this, R.layout.dialog_checkbox, null);
