@@ -69,7 +69,7 @@ public class NeveraActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nevera);
+        setContentView(R.layout.fragment_nevera_);
         setToolbar();
 
         //BBDD
@@ -86,7 +86,7 @@ public class NeveraActivity extends AppCompatActivity {
 
 
         //Dependiendo de lo que seleccionemos en el menu, iremos a un fragment u a otro
-        navigationView.setNavigationItemSelectedListener();
+        navigationView.setNavigationItemSelectedListener(new OyenteNav());
 
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -125,8 +125,6 @@ public class NeveraActivity extends AppCompatActivity {
     public class OyenteNav implements NavigationView.OnNavigationItemSelectedListener {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            boolean fragmentTransaction = false;
-            Fragment fragment = null;
             //Obtenemos la posicion del menu
             switch (item.getItemId()) {
                 case R.id.menu_nevera: //Si coincide con el menumail es el fragment de Email
@@ -142,10 +140,6 @@ public class NeveraActivity extends AppCompatActivity {
                     cambiarActivityAjustes();
                     break;
 
-            }
-            if (fragmentTransaction) {
-                changeFragment(fragment, item);
-                drawerLayout.closeDrawers();
             }
             return true;
         }
