@@ -12,7 +12,19 @@
         <menu>
             <item
                 android:id="@+id/opciones_ordenar"
-                android:title="Ordenar por"
+                android:title="Ordenar por AZ"
+                />
+            <item
+                android:id="@+id/opciones_ordenar2"
+                android:title="Ordenar por ZA"
+                />
+            <item
+                android:id="@+id/opciones_ordenar3"
+                android:title="Ordenar por precio ascendente"
+                />
+            <item
+                android:id="@+id/opciones_ordenar4"
+                android:title="Ordenar por precio descendente"
                 />
             <item
                 android:id="@+id/opciones_borrar"

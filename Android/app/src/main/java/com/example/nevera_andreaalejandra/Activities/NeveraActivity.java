@@ -1,5 +1,6 @@
 package com.example.nevera_andreaalejandra.Activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -146,13 +147,8 @@ public class NeveraActivity extends AppCompatActivity {
     private void leerProductos() {
         //Comprobamos el usuario que esta conectado
         String idUsuario = mAuth.getCurrentUser().getUid();
-
-
         Query query1 = FirebaseDatabase.getInstance().getReference("Producto").orderByChild("uid_usuario").equalTo(idUsuario);
-
-
         //mDataBase.child("Producto").addValueEventListener();
-
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
@@ -262,18 +258,23 @@ public class NeveraActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             //Obtenemos la posicion del menu
+            Activity activity = null;
             switch (item.getItemId()) {
                 case R.id.menu_nevera: //Si coincide con el menumail es el fragment de Email
-                    cambiarActivityNevera();
+                    activity = new NeveraActivity();
+                    cambiarActivity(activity);
                     break;
                 case R.id.menu_congelador: //Si coincide con el menumail es el fragment de Email
-                    cambiarActivityCongelador();
+                    activity = new CongeladorActivity();
+                    cambiarActivity(activity);
                     break;
                 case R.id.menu_lista: //Si coincide con el menumail es el fragment de Email
-                    cambiarActivityTab();
+                    activity = new TabActivity();
+                    cambiarActivity(activity);
                     break;
                 case R.id.menu_ajustes:
-                    cambiarActivityAjustes();
+                    activity = new AjustesActivity();
+                    cambiarActivity(activity);
                     break;
 
             }
@@ -299,6 +300,18 @@ public class NeveraActivity extends AppCompatActivity {
                 adapterEliminar.notifyDataSetChanged();
                 //Toast.makeText(MainActivity.this, "Has pulsado en ordenar", Toast.LENGTH_SHORT).show();
                 return true;
+            case R.id.opciones_ordenar2:
+                Collections.sort(lista_productos, ProductoModelo.ProductoZA);
+                adapterEliminar.notifyDataSetChanged();
+                return true;
+            case R.id.opciones_ordenar3:
+                Collections.sort(lista_productos, ProductoModelo.ProductoCantidadA);
+                adapterEliminar.notifyDataSetChanged();
+                return true;
+            case R.id.opciones_ordenar4:
+                Collections.sort(lista_productos, ProductoModelo.ProductoCantidadD);
+                adapterEliminar.notifyDataSetChanged();
+                return true;
             case R.id.opciones_borrar:
                 //Toast.makeText(MainActivity.this, "Has pulsado en borrar " +  fragment_actual, Toast.LENGTH_SHORT).show();
                 //BorrarTodos();
@@ -306,22 +319,12 @@ public class NeveraActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void cambiarActivityAjustes(){
-        Intent intent = new Intent(this, AjustesActivity.class);//Establecemos primero donde estamos y luego donde vamos
+
+    public void cambiarActivity(Activity activity){
+        Intent intent = new Intent(this, activity.getClass());//Establecemos primero donde estamos y luego donde vamos
         startActivity(intent);
     }
-    public void cambiarActivityTab(){
-        Intent intent = new Intent(this, TabActivity.class);//Establecemos primero donde estamos y luego donde vamos
-        startActivity(intent);
-    }
-    public void cambiarActivityNevera(){
-        Intent intent = new Intent(this, NeveraActivity.class);//Establecemos primero donde estamos y luego donde vamos
-        startActivity(intent);
-    }
-    public void cambiarActivityCongelador(){
-        Intent intent = new Intent(this, CongeladorActivity.class);//Establecemos primero donde estamos y luego donde vamos
-        startActivity(intent);
-    }
+
 
 
 }

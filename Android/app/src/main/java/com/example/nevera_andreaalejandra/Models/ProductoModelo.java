@@ -65,6 +65,27 @@ public class ProductoModelo implements Serializable {
         }
     };
 
+    public static Comparator<ProductoModelo> ProductoPrecioD = new Comparator<ProductoModelo>() {
+        @Override
+        public int compare(ProductoModelo p1, ProductoModelo p2) {
+            return (int) (p2.getPrecio() - p1.getPrecio());
+        }
+    };
+
+    public static Comparator<ProductoModelo> ProductoCantidadA = new Comparator<ProductoModelo>() {
+        @Override
+        public int compare(ProductoModelo p1, ProductoModelo p2) {
+            return p2.getCantidad() - p1.getCantidad();
+        }
+    };
+
+    public static Comparator<ProductoModelo> ProductoCantidadD = new Comparator<ProductoModelo>() {
+        @Override
+        public int compare(ProductoModelo p1, ProductoModelo p2) {
+            return p1.getCantidad() - p2.getCantidad();
+        }
+    };
+
     /*public static Comparator<ProductoModelo> ProductoDateAscending = new Comparator<ProductoModelo>() {
         @Override
         public int compare(ProductoModelo p1, ProductoModelo p2) {
