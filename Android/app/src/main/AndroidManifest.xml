@@ -29,10 +29,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.AjustesActivity"
-            android:parentActivityName=".Activities.MainActivity">
+            android:parentActivityName=".Activities.NeveraActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.MainActivity"/>
+                android:value=".Activities.NeveraActivity"/>
         </activity>
         <activity android:name=".Activities.TabActivity"></activity>
 
