@@ -36,10 +36,6 @@ public class TabActivity extends AppCompatActivity {
 
     //Para la BBDD
     private FirebaseAuth mAuth;
-    private DatabaseReference mDataBase;
-
-    private Bundle extras;
-    private String fragment;
 
     //Declaramos el adapter
     AdapterTab adapter;
@@ -160,14 +156,6 @@ public class TabActivity extends AppCompatActivity {
             }
             return true;
         }
-    }
-
-
-    //Método para cambiar de fragment
-    private void changeFragment(Fragment fragment, MenuItem item) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
-        item.setChecked(true);
-        getSupportActionBar().setTitle(item.getTitle()); //Cambia el titulo de arriba
     }
 
     public void cambiarActivity(Activity activity){
