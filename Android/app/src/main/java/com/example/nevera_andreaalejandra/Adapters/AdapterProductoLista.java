@@ -15,18 +15,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nevera_andreaalejandra.Interfaces.OnButtonClickListener;
+import com.example.nevera_andreaalejandra.Interfaces.OnCheckedChangeListener;
+import com.example.nevera_andreaalejandra.Interfaces.OnItemClickListener;
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLista.ViewHolder> {
-    private AdapterProductoLista.OnItemClickListener itemClickListener;
-    private AdapterProductoLista.OnButtonClickListener buttonClickListener;
-    private AdapterProductoLista.OnCheckedChangeListener checkedChangeListener;
+    private OnItemClickListener itemClickListener;
+    private OnButtonClickListener buttonClickListener;
+    private OnCheckedChangeListener checkedChangeListener;
     private Context context;
     private int layout;
     private String tipoproducto;
@@ -37,13 +38,7 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
 
     }
 
-    public AdapterProductoLista(Context context, int layout, List<ProductoModelo> list) {
-        super();
-        this.context = context;
-        this.layout = layout;
-        this.list = list;
-    }
-    public AdapterProductoLista(Context context, List<ProductoModelo> list, int layout, AdapterProductoLista.OnItemClickListener itemListener, AdapterProductoLista.OnButtonClickListener btnListener, AdapterProductoLista.OnCheckedChangeListener checkedChangeListener) {
+    public AdapterProductoLista(Context context, List<ProductoModelo> list, int layout, OnItemClickListener itemListener, OnButtonClickListener btnListener, OnCheckedChangeListener checkedChangeListener) {
         super();
         this.layout = layout;
         this.list = list;
@@ -54,15 +49,15 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
 
     @NonNull
     @Override
-    public AdapterProductoLista.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
         context = parent.getContext();
-        AdapterProductoLista.ViewHolder vh = new AdapterProductoLista.ViewHolder(v);
+        ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterProductoLista.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bind(list.get(position), itemClickListener, buttonClickListener, checkedChangeListener);
     }
 
@@ -112,7 +107,7 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
 
         }
 
-        public void bind(final ProductoModelo product, final AdapterProductoLista.OnItemClickListener itemListener, final AdapterProductoLista.OnButtonClickListener btnListener, final AdapterProductoLista.OnCheckedChangeListener checkListener) { //
+        public void bind(final ProductoModelo product, final OnItemClickListener itemListener, final OnButtonClickListener btnListener, final OnCheckedChangeListener checkListener) { //
             nombre.setText(product.getNombre());
             tipoproducto = product.getTipo();
             precio.setText("Precio: " + product.getPrecio() + "€");
@@ -182,18 +177,6 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
     }
 
 
-
-    public interface OnItemClickListener {
-        void onItemClick(ProductoModelo productoModelo, int position);
-    }
-
-    public interface OnButtonClickListener {
-        void onButtonClick(ProductoModelo productoModelo, int position);
-    }
-
-    public interface OnCheckedChangeListener {
-        void onButtonClick(ProductoModelo productoModelo, int position, boolean isChecked);
-    }
 }
 /*
     public void seleccionarTodo(final ProductoModelo product,final AdapterProductoLista.OnCheckedChangeListener checkListener){

@@ -1,23 +1,18 @@
 package com.example.nevera_andreaalejandra.Adapters;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nevera_andreaalejandra.Interfaces.OnButtonClickListener;
+import com.example.nevera_andreaalejandra.Interfaces.OnItemClickListener;
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
 
@@ -142,13 +137,6 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
         }
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(ProductoModelo productoModelo, int position);
-    }
-
-    public interface OnButtonClickListener {
-        void onButtonClick(ProductoModelo productoModelo, int position);
-    }
 }
 
 
