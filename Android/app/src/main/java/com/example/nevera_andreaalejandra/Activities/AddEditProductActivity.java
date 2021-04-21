@@ -1,6 +1,7 @@
 package com.example.nevera_andreaalejandra.Activities;
 
 import android.app.DatePickerDialog;
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ActionMode;
@@ -18,6 +19,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
+import com.example.nevera_andreaalejandra.Util.NotificationHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -40,6 +42,11 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
     private EditText cantidad;
     private Spinner tipo;
     private List<ProductoModelo> producto;
+
+    //Notificaciones
+    private NotificationHandler notificationHandler;
+    private int counter = 0;
+    private boolean isHighImportance = true;
 
     //Creamos el DatePicker para seleccionar una fecha
     private DatePickerDialog SeleccionarFecha;
@@ -165,6 +172,7 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
                         break;
                     }
                 }
+
             }
         }
     }
@@ -192,8 +200,10 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
         if (cantidad.getText().toString().isEmpty()) {
             cantidad.setError("La cantidad es obligatoria");
             esVacio = false;
-        }
-
+        }/*
+        if(cantidad.getText().equals("2")){
+            sendNotificationProductos(String.valueOf(nombre),isHighImportance);
+        }*/
         if (esVacio) {
             //Actualizamos los campos
             mDataBase.child(producto_eliminar.getId()).child("nombre").setValue(objeto_producto.getNombre());
@@ -327,5 +337,18 @@ public class AddEditProductActivity extends AppCompatActivity implements Seriali
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_undo); //Esto de aqui pone la imagen
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+/*
+    private void sendNotificationProductos(String nombreProducto, boolean isHighImportance) {
+        Toast.makeText(getApplicationContext(), "notificacion", Toast.LENGTH_LONG).show();
+
+        String title = "Quedan pocos productos" ;
+        String message = "Añade a tu lista de compra que quedan pocas unidades";
+
+        if (isHighImportance==true) {
+            Notification.Builder nb = notificationHandler.createNotification(title, message, isHighImportance);
+            notificationHandler.getManager().notify(++counter, nb.build());
+            notificationHandler.publishNotificationSummaryGroup(isHighImportance);
+        }
+    }*/
 
 }
