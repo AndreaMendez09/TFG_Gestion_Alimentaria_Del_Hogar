@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 import com.example.nevera_andreaalejandra.Activities.AddEditProductActivity;
 import com.example.nevera_andreaalejandra.Adapters.AdapterProducto;
+import com.example.nevera_andreaalejandra.Interfaces.OnButtonClickListener;
+import com.example.nevera_andreaalejandra.Interfaces.OnItemClickListener;
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -196,7 +198,7 @@ public class Congelador_Fragment extends Fragment {
                             }
                         }
                     }
-                    adapterProducto = new AdapterProducto(lista_productos, R.layout.item_principal, new AdapterProducto.OnItemClickListener() {
+                    adapterProducto = new AdapterProducto(lista_productos, R.layout.item_principal, new OnItemClickListener() {
                         //Este click es al darle a la ciudad
                         @Override
                         public void onItemClick(ProductoModelo productoModelo, int position) {
@@ -210,7 +212,7 @@ public class Congelador_Fragment extends Fragment {
                             startActivity(intent);
                         }
                         //Este boton es al clickar en el boton eliminar que tiene cada cardview de ciudad
-                    }, new AdapterProducto.OnButtonClickListener() {
+                    }, new OnButtonClickListener() {
                         @Override
                         public void onButtonClick(ProductoModelo productoModelo, int position) {
                             //Aqui va el boton de eliminar del cardview

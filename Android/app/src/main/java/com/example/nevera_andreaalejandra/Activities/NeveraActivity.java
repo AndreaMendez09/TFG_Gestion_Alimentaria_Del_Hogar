@@ -30,6 +30,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.nevera_andreaalejandra.Adapters.AdapterProducto;
 import com.example.nevera_andreaalejandra.Fragments.Congelador_Fragment;
 import com.example.nevera_andreaalejandra.Fragments.Nevera_Fragment;
+import com.example.nevera_andreaalejandra.Interfaces.OnButtonClickListener;
+import com.example.nevera_andreaalejandra.Interfaces.OnItemClickListener;
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -206,7 +208,7 @@ public class NeveraActivity extends AppCompatActivity {
                         }
 
                     }
-                    adapterEliminar = new AdapterProducto(lista_productos, R.layout.item_principal, new AdapterProducto.OnItemClickListener() {
+                    adapterEliminar = new AdapterProducto(lista_productos, R.layout.item_principal, new OnItemClickListener() {
                         //Este click es al darle al producto
                         @Override
                         public void onItemClick(ProductoModelo productoModelo, int position) {
@@ -221,7 +223,7 @@ public class NeveraActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                         //Este boton es al clickar en el boton eliminar que tiene cada cardview
-                    }, new AdapterProducto.OnButtonClickListener() {
+                    }, new OnButtonClickListener() {
                         @Override
                         public void onButtonClick(ProductoModelo productoModelo, int position) {
                             //Aqui va el boton de eliminar del cardview

@@ -22,6 +22,9 @@ import android.widget.Toast;
 import com.example.nevera_andreaalejandra.Activities.AddEditProductActivity;
 import com.example.nevera_andreaalejandra.Adapters.AdapterProducto;
 import com.example.nevera_andreaalejandra.Adapters.AdapterProductoLista;
+import com.example.nevera_andreaalejandra.Interfaces.OnButtonClickListener;
+import com.example.nevera_andreaalejandra.Interfaces.OnCheckedChangeListener;
+import com.example.nevera_andreaalejandra.Interfaces.OnItemClickListener;
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -258,7 +261,7 @@ public class ListaNevera_Fragment extends Fragment {
                             }
                         }
                     }
-                    adapterProducto = new AdapterProductoLista(getContext(), lista_productos, R.layout.item_product, new AdapterProductoLista.OnItemClickListener() {
+                    adapterProducto = new AdapterProductoLista(getContext(), lista_productos, R.layout.item_product, new OnItemClickListener() {
                         //Este click es al darle a la ciudad
                         @Override
                         public void onItemClick(ProductoModelo productoModelo, int position) {
@@ -272,14 +275,14 @@ public class ListaNevera_Fragment extends Fragment {
                             startActivity(intent);
                         }
                         //Este boton es al clickar en el boton eliminar que tiene cada cardview de ciudad
-                    }, new AdapterProductoLista.OnButtonClickListener() {
+                    }, new OnButtonClickListener() {
                         @Override
                         public void onButtonClick(ProductoModelo productoModelo, int position) {
                             //Aqui va el boton de eliminar del cardview
                             deleteProduct(productoModelo);
                         }
 
-                    }, new AdapterProductoLista.OnCheckedChangeListener() {
+                    }, new OnCheckedChangeListener() {
                         @Override
                         public void onButtonClick(ProductoModelo productoModelo, int position, boolean isChecked) {
                             if (isChecked) {
