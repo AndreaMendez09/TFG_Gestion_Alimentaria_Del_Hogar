@@ -1,7 +1,6 @@
 package com.example.nevera_andreaalejandra.Activities;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,13 +23,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nevera_andreaalejandra.Adapters.AdapterProducto;
-import com.example.nevera_andreaalejandra.Fragments.Congelador_Fragment;
-import com.example.nevera_andreaalejandra.Fragments.Nevera_Fragment;
 import com.example.nevera_andreaalejandra.Interfaces.OnButtonClickListener;
 import com.example.nevera_andreaalejandra.Interfaces.OnItemClickListener;
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;

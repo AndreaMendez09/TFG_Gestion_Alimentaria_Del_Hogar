@@ -17,7 +17,14 @@ public class UsuarioModelo {
         this.correo = correo;
     }
 
+
+
     //Creamos los getters y setters
+
+    public String getId_usuario() {
+        return id_usuario;
+    }
+
     public String getNombre() {
         return nombre;
     }

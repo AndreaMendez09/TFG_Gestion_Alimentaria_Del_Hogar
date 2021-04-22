@@ -1,6 +1,5 @@
 package com.example.nevera_andreaalejandra.Fragments.Login;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,7 +21,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nevera_andreaalejandra.Activities.MainActivity;
 import com.example.nevera_andreaalejandra.Activities.NeveraActivity;
 import com.example.nevera_andreaalejandra.R;
 import com.example.nevera_andreaalejandra.Util.LoginUtil;
@@ -30,8 +28,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.storage.StorageReference;
 
 import static android.content.Context.MODE_PRIVATE;
 

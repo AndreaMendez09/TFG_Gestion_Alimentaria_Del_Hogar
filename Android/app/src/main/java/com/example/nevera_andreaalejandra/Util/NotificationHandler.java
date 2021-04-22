@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.os.Build;
 
-import com.example.nevera_andreaalejandra.Activities.MainActivity;
 import com.example.nevera_andreaalejandra.R;
 
 public class NotificationHandler extends ContextWrapper {
