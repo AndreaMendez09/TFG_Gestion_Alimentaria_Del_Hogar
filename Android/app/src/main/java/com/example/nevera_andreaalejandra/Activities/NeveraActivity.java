@@ -95,7 +95,7 @@ public class NeveraActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_nevera_);
+        setContentView(R.layout.activity_nevera);
         setToolbar();
 
         //BBDD

@@ -88,7 +88,7 @@ public class CongeladorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_congelador_);
+        setContentView(R.layout.activity_congelador);
         setToolbar();
 
         //BBDD
