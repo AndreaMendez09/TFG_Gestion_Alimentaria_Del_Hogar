@@ -109,11 +109,14 @@ public class AjustesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 switchNotificaciones.setText((switchNotificaciones.isChecked()) ? switchTextOn : switchTextOff);
+                boolean activa;
                 if (switchNotificaciones.isChecked()) {
-                    sendNotification(isHighImportance);
+                    activa = true;
+                    sendNotification(isHighImportance, activa);
                     Toast.makeText(getApplicationContext(), "Activado", Toast.LENGTH_LONG).show();
                 }else {
-                    sendNotification(isHighImportance);
+                    activa = false;
+                    sendNotification(isHighImportance, activa);
                     Toast.makeText(getApplicationContext(), "Desactivado", Toast.LENGTH_LONG).show();
                 }
             }
@@ -159,10 +162,10 @@ public class AjustesActivity extends AppCompatActivity {
     public void change(CompoundButton buttonView, boolean isChecked) {
         isHighImportance = isChecked;
         switchNotificaciones.setText((isChecked) ? switchTextOn : switchTextOff);
-        sendNotification(isHighImportance);
+        //sendNotification(isHighImportance, act);
     }
 
-    private void sendNotification(boolean isHighImportance) {
+    private void sendNotification(boolean isHighImportance, boolean activa) {
         Toast.makeText(getApplicationContext(), "notificacion", Toast.LENGTH_LONG).show();
 
         String title = "Notificaciones";
@@ -170,11 +173,13 @@ public class AjustesActivity extends AppCompatActivity {
         String messageDesactivadas = "Las notificaciones estan Desactivadas";
 
 
-        if (isHighImportance==true) {
+        if (activa==true) {
             Notification.Builder nb = notificationHandler.createNotification(title, messageActivada, isHighImportance);
             notificationHandler.getManager().notify(++counter, nb.build());
             notificationHandler.publishNotificationSummaryGroup(isHighImportance);
-        }if(isHighImportance==false) {
+            notificationHandler.
+
+        }if(activa==false) {
             Notification.Builder nb = notificationHandler.createNotification(title, messageDesactivadas, isHighImportance);
             notificationHandler.getManager().notify(++counter, nb.build());
             notificationHandler.publishNotificationSummaryGroup(isHighImportance);

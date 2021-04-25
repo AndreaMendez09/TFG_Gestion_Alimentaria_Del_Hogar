@@ -11,6 +11,8 @@ import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.os.Build;
 
+import androidx.core.app.NotificationCompat;
+
 import com.example.nevera_andreaalejandra.Activities.DetailActivity;
 import com.example.nevera_andreaalejandra.R;
 
@@ -95,6 +97,7 @@ public class NotificationHandler extends ContextWrapper {
                     .setSmallIcon(android.R.drawable.stat_notify_chat)
                     .setGroup(SUMMARY_GROUP_NAME)
                     .setAutoCancel(true);
+
         }
         return null;
     }
