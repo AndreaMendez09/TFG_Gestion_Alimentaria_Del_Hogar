@@ -177,7 +177,7 @@ public class AjustesActivity extends AppCompatActivity {
             Notification.Builder nb = notificationHandler.createNotification(title, messageActivada, isHighImportance);
             notificationHandler.getManager().notify(++counter, nb.build());
             notificationHandler.publishNotificationSummaryGroup(isHighImportance);
-            notificationHandler.
+
 
         }if(activa==false) {
             Notification.Builder nb = notificationHandler.createNotification(title, messageDesactivadas, isHighImportance);
