@@ -1,6 +1,7 @@
 package com.example.nevera_andreaalejandra.Activities;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -116,6 +117,7 @@ public class NeveraActivity extends AppCompatActivity {
         lista_productos = new ArrayList<ProductoModelo>();
         recyclerView = (RecyclerView) findViewById(R.id.item_product_nevera);
         mLayoutManager = new LinearLayoutManager(this);
+        notificationHandler = new NotificationHandler(this);
 
 
         //Dependiendo de lo que seleccionemos en el menu, iremos a un fragment u a otro
@@ -208,9 +210,9 @@ public class NeveraActivity extends AppCompatActivity {
                             ProductoModelo product = new ProductoModelo(IdProducto, NombreProducto, CantidadProducto, PrecioProducto, UbicacionProducto, TipoProducto, DateProducto, UID_usuario);
                             lista_productos.add(product);
                         }
-                        /*if(CantidadProducto<2){
+                        if(CantidadProducto<2){
                             sendNotificationProductos(NombreProducto,isHighImportance);
-                        }*/
+                        }
 
                     }
                     adapterEliminar = new AdapterProducto(lista_productos, R.layout.item_principal, new OnItemClickListener() {
@@ -411,12 +413,12 @@ public class NeveraActivity extends AppCompatActivity {
         Intent intent = new Intent(this, activity.getClass());//Establecemos primero donde estamos y luego donde vamos
         startActivity(intent);
     }
-/*
+
     private void sendNotificationProductos(String nombreProducto, boolean isHighImportance) {
-        Toast.makeText(getApplicationContext(), "notificacion", Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(), "notificacion", Toast.LENGTH_LONG).show();
 
         String title = "Quedan pocos productos" ;
-        String message = "Añade a tu lista de compra"+ nombreProducto + "que quedan pocas unidades";
+        String message = "Añade a tu lista de compra "+ nombreProducto + " que quedan pocas unidades";
 
         if (isHighImportance==true) {
             Notification.Builder nb = notificationHandler.createNotification(title, message, isHighImportance);
@@ -424,6 +426,6 @@ public class NeveraActivity extends AppCompatActivity {
             notificationHandler.publishNotificationSummaryGroup(isHighImportance);
         }
 }
-*/
+
 
 }

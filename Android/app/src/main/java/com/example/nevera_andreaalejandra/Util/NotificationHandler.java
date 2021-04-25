@@ -11,7 +11,9 @@ import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.os.Build;
 
+import com.example.nevera_andreaalejandra.Activities.DetailActivity;
 import com.example.nevera_andreaalejandra.R;
+
 
 public class NotificationHandler extends ContextWrapper {
 
@@ -74,7 +76,7 @@ public class NotificationHandler extends ContextWrapper {
 
     private Notification.Builder createNotificationWithChannel(String title, String message, String channelId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Intent intent = new Intent(this, MainActivity.class); //TODO cambiar esto
+            Intent intent = new Intent(this, DetailActivity.class); //TODO cambiar esto
             intent.putExtra("title", title);
             intent.putExtra("message", message);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

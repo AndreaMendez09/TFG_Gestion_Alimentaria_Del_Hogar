@@ -1,6 +1,7 @@
 package com.example.nevera_andreaalejandra.Activities;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +33,7 @@ import com.example.nevera_andreaalejandra.Interfaces.OnButtonClickListener;
 import com.example.nevera_andreaalejandra.Interfaces.OnItemClickListener;
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
+import com.example.nevera_andreaalejandra.Util.NotificationHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -70,6 +72,11 @@ public class CongeladorActivity extends AppCompatActivity {
     private String DateProducto;
     private String UID_usuario;
 
+    //Notificaciones
+    private NotificationHandler notificationHandler;
+    private int counter = 0;
+    private boolean isHighImportance = true;
+
     private Bundle extras;
     //Variable para detectar en que parte de la app está
     private int fragment_actual = 0;
@@ -107,6 +114,8 @@ public class CongeladorActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.item_product_congelador);
         mLayoutManager = new LinearLayoutManager(this);
+        notificationHandler = new NotificationHandler(this);
+
 
         lista_productos = new ArrayList<ProductoModelo>();
 
@@ -186,6 +195,10 @@ public class CongeladorActivity extends AppCompatActivity {
                             ProductoModelo product = new ProductoModelo(IdProducto, NombreProducto, CantidadProducto, PrecioProducto, UbicacionProducto, TipoProducto, DateProducto, UID_usuario);
                             lista_productos.add(product);
                         }
+                        if(CantidadProducto<2){
+                            sendNotificationProductos(NombreProducto,isHighImportance);
+                        }
+
 
                     }
                     adapterEliminar = new AdapterProducto(lista_productos, R.layout.item_principal, new OnItemClickListener() {
@@ -406,6 +419,18 @@ public class CongeladorActivity extends AppCompatActivity {
     public void cambiarActivity(Activity activity){
         Intent intent = new Intent(this, activity.getClass());//Establecemos primero donde estamos y luego donde vamos
         startActivity(intent);
+    }
+    private void sendNotificationProductos(String nombreProducto, boolean isHighImportance) {
+        //Toast.makeText(getApplicationContext(), "notificacion", Toast.LENGTH_LONG).show();
+
+        String title = "Quedan pocos productos" ;
+        String message = "Añade a tu lista de compra "+ nombreProducto + " que quedan pocas unidades";
+
+        if (isHighImportance==true) {
+            Notification.Builder nb = notificationHandler.createNotification(title, message, isHighImportance);
+            notificationHandler.getManager().notify(++counter, nb.build());
+            notificationHandler.publishNotificationSummaryGroup(isHighImportance);
+        }
     }
 
 }
