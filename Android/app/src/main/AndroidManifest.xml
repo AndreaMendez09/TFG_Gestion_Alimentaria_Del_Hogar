@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
 
     <application
+        android:name=".App.AppSplash"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,9 +18,16 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBarTheme">
 
+        <activity android:name=".Splash.SplashActivity" android:theme="@style/SplashScreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".Activities.NeveraActivity"></activity>
         <activity android:name=".Activities.CongeladorActivity"></activity>
-
         <activity
             android:name=".Activities.AddEditProductActivity"
             android:parentActivityName=".Activities.NeveraActivity">
@@ -28,13 +36,7 @@
                 android:value=".Activities.NeveraActivity"/>
         </activity>
 
-        <activity android:name=".Activities.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".Activities.LoginActivity"></activity>
         <activity android:name=".Activities.AjustesActivity"
             android:parentActivityName=".Activities.NeveraActivity">
             <meta-data

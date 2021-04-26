@@ -70,10 +70,7 @@ public class NeveraActivity extends AppCompatActivity {
     private Date FechaProducto = new Date();
     private String DateProducto;
     private String UID_usuario;
-    //Notificaciones
-    private NotificationHandler notificationHandler;
-    private int counter = 0;
-    private boolean isHighImportance = true;
+
 
 
     private Bundle extras;
@@ -117,7 +114,6 @@ public class NeveraActivity extends AppCompatActivity {
         lista_productos = new ArrayList<ProductoModelo>();
         recyclerView = (RecyclerView) findViewById(R.id.item_product_nevera);
         mLayoutManager = new LinearLayoutManager(this);
-        notificationHandler = new NotificationHandler(this);
 
 
         //Dependiendo de lo que seleccionemos en el menu, iremos a un fragment u a otro
@@ -211,7 +207,7 @@ public class NeveraActivity extends AppCompatActivity {
                             lista_productos.add(product);
                         }
                         if(CantidadProducto<2){
-                            sendNotificationProductos(NombreProducto,isHighImportance);
+                            //sendNotificationProductos(NombreProducto,isHighImportance);
                         }
 
                     }
@@ -414,18 +410,7 @@ public class NeveraActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void sendNotificationProductos(String nombreProducto, boolean isHighImportance) {
-       // Toast.makeText(getApplicationContext(), "notificacion", Toast.LENGTH_LONG).show();
 
-        String title = "Quedan pocos productos" ;
-        String message = "Añade a tu lista de compra "+ nombreProducto + " que quedan pocas unidades";
-
-        if (isHighImportance==true) {
-            Notification.Builder nb = notificationHandler.createNotification(title, message, isHighImportance);
-            notificationHandler.getManager().notify(++counter, nb.build());
-            notificationHandler.publishNotificationSummaryGroup(isHighImportance);
-        }
-}
 
 
 }
