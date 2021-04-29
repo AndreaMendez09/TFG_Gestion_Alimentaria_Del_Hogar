@@ -17,9 +17,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         changeFragment(new HomeFragment());
 
-
-
-
     }
 
     //Método para cambiar de fragment
