@@ -104,7 +104,6 @@ public class ListaNevera_Fragment extends Fragment {
         add = view.findViewById(R.id.FABAddList);
         comprar = (Button) view.findViewById(R.id.boton_comprar);
         recyclerView = (RecyclerView) view.findViewById(R.id.item_list_nevera);
-        borrar = (Button) view.findViewById(R.id.boton_borrar);
 
         mLayoutManager = new LinearLayoutManager(getContext());
 
@@ -159,49 +158,6 @@ public class ListaNevera_Fragment extends Fragment {
                     add.hide();
                 else if (dy < 0)
                     add.show();
-            }
-        });
-
-        borrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Comprobamos el usuario que esta conectado
-                Toast.makeText(getContext(), "Hola", Toast.LENGTH_SHORT).show();
-
-                String idUsuario = mAuth.getCurrentUser().getUid();
-                Query query1 = FirebaseDatabase.getInstance().getReference("Producto").orderByChild("uid_usuario").equalTo(idUsuario);
-
-                ValueEventListener valueEventListener = new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()) {
-                            lista_productos.clear();
-                            for (DataSnapshot ds : snapshot.getChildren()) {
-                                UbicacionProducto = ds.child("ubicacion").getValue().toString();
-                                //Vinculamos el id
-                                IdProducto = ds.getKey();
-                                if (UbicacionProducto.equals("lista_nevera")) { //Comprobamos que esta en esa lista
-                                    mDataBase.child("Producto").child(IdProducto).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                //Creamos un toast, para informar de que se ha eliminado
-                                                Toast.makeText(getContext(), "" + IdProducto, Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                };
-
-                query1.addValueEventListener(valueEventListener);
             }
         });
 

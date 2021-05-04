@@ -177,10 +177,6 @@ public class TabActivity extends AppCompatActivity {
             case R.id.opciones_ordenar:
                 Toast.makeText(TabActivity.this, "Has pulsado en ordenar", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.opciones_borrar:
-                Toast.makeText(TabActivity.this, "Has pulsado en borrar" , Toast.LENGTH_SHORT).show();
-                //BorrarTodos();
-                break;
             case R.id.opciones_seleccionar:
                 Toast.makeText(TabActivity.this, "Has pulsado en seleccionar", Toast.LENGTH_SHORT).show();
                 //adapter.

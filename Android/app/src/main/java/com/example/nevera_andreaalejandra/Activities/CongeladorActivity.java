@@ -97,6 +97,8 @@ public class CongeladorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_congelador);
         setToolbar();
+        getSupportActionBar().setTitle("Mi congelador");
+
 
         //BBDD
         mAuth = FirebaseAuth.getInstance();//Para inicializar la instancia de autenticación
@@ -346,10 +348,6 @@ public class CongeladorActivity extends AppCompatActivity {
             case R.id.opciones_ordenar4:
                 Collections.sort(lista_productos, ProductoModelo.ProductoCantidadD);
                 adapterEliminar.notifyDataSetChanged();
-                return true;
-            case R.id.opciones_borrar:
-                //Toast.makeText(MainActivity.this, "Has pulsado en borrar " +  fragment_actual, Toast.LENGTH_SHORT).show();
-                //BorrarTodos();
                 return true;
         }
         return super.onOptionsItemSelected(item);

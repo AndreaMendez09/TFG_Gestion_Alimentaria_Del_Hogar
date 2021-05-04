@@ -12,10 +12,6 @@
                 android:title="Ordenar por"
                 />
             <item
-                android:id="@+id/opciones_borrar"
-                android:title="Borrar todos"
-                />
-            <item
                 android:id="@+id/opciones_seleccionar"
                 android:title="Seleccionar todos"
                 />

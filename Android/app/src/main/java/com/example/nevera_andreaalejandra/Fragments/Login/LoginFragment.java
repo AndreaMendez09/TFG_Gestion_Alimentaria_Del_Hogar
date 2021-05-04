@@ -130,8 +130,8 @@ public class LoginFragment extends Fragment {
         texto_login.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
         caja_mail.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(600).start();
         caja_pass.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(800).start();
-        caja_abajo.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1000).start();
-        remember.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1200).start();
+        caja_abajo.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1200).start();
+        remember.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1000).start();
     }
 
     private void changeToActivity() {

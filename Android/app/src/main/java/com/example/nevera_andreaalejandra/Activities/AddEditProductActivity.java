@@ -31,7 +31,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
-public class AddEditProductActivity extends AppCompatActivity implements Serializable {
+public class AddEditProductActivity extends AppCompatActivity{
     //El boton para añadir
     private FloatingActionButton add;
 

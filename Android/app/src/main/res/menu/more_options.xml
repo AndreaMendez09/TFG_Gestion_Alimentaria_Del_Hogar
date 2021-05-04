@@ -13,22 +13,22 @@
             <item
                 android:id="@+id/opciones_ordenar"
                 android:title="Ordenar por A-Z"
+                android:icon="@drawable/ic_sort_az"
                 />
             <item
                 android:id="@+id/opciones_ordenar2"
                 android:title="Ordenar por Z-A"
+                android:icon="@drawable/ic_sort_za"
                 />
             <item
                 android:id="@+id/opciones_ordenar3"
                 android:title="Ordenar por cantidad ascendente"
+                android:icon="@drawable/ic_sort_9_1"
                 />
             <item
                 android:id="@+id/opciones_ordenar4"
                 android:title="Ordenar por cantidad descendente"
-                />
-            <item
-                android:id="@+id/opciones_borrar"
-                android:title="Borrar todos"
+                android:icon="@drawable/ic_sort_1_9"
                 />
         </menu>
 
