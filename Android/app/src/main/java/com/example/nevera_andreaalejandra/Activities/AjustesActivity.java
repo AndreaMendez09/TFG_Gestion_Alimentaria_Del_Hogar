@@ -174,13 +174,15 @@ public class AjustesActivity extends AppCompatActivity {
 
 
         if (activa==true) {
-            Notification.Builder nb = notificationHandler.createNotification(title, messageActivada, isHighImportance);
+            //TODO MIRAR ESTO
+            Notification.Builder nb = notificationHandler.createNotification(title, messageActivada, isHighImportance,null);
             notificationHandler.getManager().notify(++counter, nb.build());
             notificationHandler.publishNotificationSummaryGroup(isHighImportance);
 
 
         }if(activa==false) {
-            Notification.Builder nb = notificationHandler.createNotification(title, messageDesactivadas, isHighImportance);
+            //TODO MIRAR ESTO
+            Notification.Builder nb = notificationHandler.createNotification(title, messageDesactivadas, isHighImportance, null);
             notificationHandler.getManager().notify(++counter, nb.build());
             notificationHandler.publishNotificationSummaryGroup(isHighImportance);
         }

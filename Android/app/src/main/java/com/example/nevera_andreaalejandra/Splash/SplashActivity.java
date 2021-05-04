@@ -87,7 +87,8 @@ public class SplashActivity extends AppCompatActivity {
         String message = "Añade a tu lista de compra "+ nombreProducto + " que quedan pocas unidades";
 
         if (isHighImportance==true) {
-            Notification.Builder nb = notificationHandler.createNotification(title, message, isHighImportance);
+            //TODO MIRAR ESTO
+            Notification.Builder nb = notificationHandler.createNotification(title, message, isHighImportance, null);
             notificationHandler.getManager().notify(++counter, nb.build());
             notificationHandler.publishNotificationSummaryGroup(isHighImportance);
         }

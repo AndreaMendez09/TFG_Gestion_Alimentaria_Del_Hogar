@@ -7,6 +7,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.os.Build;
@@ -66,23 +68,30 @@ public class NotificationHandler extends ContextWrapper {
         }
     }
 
-    public Notification.Builder createNotification(String title, String message, boolean isHighImportance) {
+    public Notification.Builder createNotification(String title, String message, boolean isHighImportance, PendingIntent pendingIntent) {
         if (Build.VERSION.SDK_INT >= 26) {
             if (isHighImportance) {
-                return this.createNotificationWithChannel(title, message, CHANNEL_HIGH_ID);
+                return this.createNotificationWithChannel(title, message, CHANNEL_HIGH_ID, pendingIntent);
             }
-            return this.createNotificationWithChannel(title, message, CHANNEL_LOW_ID);
+            return this.createNotificationWithChannel(title, message, CHANNEL_LOW_ID, pendingIntent);
         }
         return this.createNotificationWithoutChannel(title, message);
     }
 
-    private Notification.Builder createNotificationWithChannel(String title, String message, String channelId) {
+    private Notification.Builder createNotificationWithChannel(String title, String message, String channelId, PendingIntent pendingIntent) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Intent intent = new Intent(this, DetailActivity.class); //TODO cambiar esto
             intent.putExtra("title", title);
             intent.putExtra("message", message);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            //Para la funcionalidad de ir a la app al pulsar la notificacion
             PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+            //Para que el texto sea expandible
+
+            //Para poner una imagen
+            Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_fridge);
 
             Notification.Action action =
                     new Notification.Action.Builder(Icon.createWithResource
@@ -91,12 +100,16 @@ public class NotificationHandler extends ContextWrapper {
 
             return new Notification.Builder(getApplicationContext(), channelId)
                     .setContentTitle(title)
-                    .setContentText(message)
+                    //.setLargeIcon(icon)
+                    .setStyle(new Notification.BigTextStyle()
+                    .bigText(message)
+                    .setBigContentTitle(title))
                     // .addAction(action)
                     .setColor(getColor(R.color.teal_700))
                     .setSmallIcon(android.R.drawable.stat_notify_chat)
                     .setGroup(SUMMARY_GROUP_NAME)
-                    .setAutoCancel(true);
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent);
 
         }
         return null;
