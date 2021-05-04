@@ -24,7 +24,7 @@ import com.example.nevera_andreaalejandra.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLista.ViewHolder> {
+public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLista.ViewHolderLista> {
     private OnItemClickListener itemClickListener;
     private OnButtonClickListener buttonClickListener;
     private OnCheckedChangeListener checkedChangeListener;
@@ -49,15 +49,15 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolderLista onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
         context = parent.getContext();
-        ViewHolder vh = new ViewHolder(v);
+        ViewHolderLista vh = new ViewHolderLista(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolderLista holder, int position) {
         holder.bind(list.get(position), itemClickListener, buttonClickListener, checkedChangeListener);
     }
 
@@ -87,7 +87,7 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
         Toast.makeText(context, estoyEn , Toast.LENGTH_LONG).show();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolderLista extends RecyclerView.ViewHolder {
 
         public TextView nombre;
         public TextView precio;
@@ -96,7 +96,7 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
         public ImageButton btnDelete;
         public CheckBox check;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolderLista(@NonNull View itemView) {
             super(itemView);
             nombre = (TextView) itemView.findViewById(R.id.nameProduct);
             precio = (TextView) itemView.findViewById(R.id.priceProduct);

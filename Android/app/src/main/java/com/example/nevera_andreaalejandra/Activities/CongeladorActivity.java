@@ -288,22 +288,27 @@ public class CongeladorActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             //Obtenemos la posicion del menu
             Activity activity = null;
+
             switch (item.getItemId()) {
                 case R.id.menu_nevera: //Si coincide con el menumail es el fragment de Email
                     activity = new NeveraActivity();
                     cambiarActivity(activity);
+                    item.setChecked(true);
                     break;
                 case R.id.menu_congelador: //Si coincide con el menumail es el fragment de Email
                     activity = new CongeladorActivity();
                     cambiarActivity(activity);
+                    item.setChecked(true);
                     break;
                 case R.id.menu_lista: //Si coincide con el menumail es el fragment de Email
                     activity = new TabActivity();
                     cambiarActivity(activity);
+                    item.setChecked(true);
                     break;
                 case R.id.menu_ajustes:
                     activity = new AjustesActivity();
                     cambiarActivity(activity);
+                    item.setChecked(true);
                     break;
 
             }
