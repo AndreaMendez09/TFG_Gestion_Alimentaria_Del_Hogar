@@ -18,10 +18,14 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.nevera_andreaalejandra.Adapters.AdapterProductoLista;
 import com.example.nevera_andreaalejandra.Adapters.AdapterTab;
+import com.example.nevera_andreaalejandra.Fragments.Listas.ListaNevera_Fragment;
+import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Collections;
 
 public class TabActivity extends AppCompatActivity {
 
@@ -113,6 +117,7 @@ public class TabActivity extends AppCompatActivity {
                 startActivity(intent);//Iniciamos el intent
             }
         });
+        adapterLista = new ListaNevera_Fragment().getAdapter();
 
     }
     //Para poner la imagen en el toolbar
@@ -175,12 +180,25 @@ public class TabActivity extends AppCompatActivity {
         }
         switch (item.getItemId()) {
             case R.id.opciones_ordenar:
-                Toast.makeText(TabActivity.this, "Has pulsado en ordenar", Toast.LENGTH_SHORT).show();
-                break;
+                Collections.sort(adapterLista.getList(), ProductoModelo.ProductoAZ);
+                adapterLista.notifyDataSetChanged();
+                //Toast.makeText(MainActivity.this, "Has pulsado en ordenar", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.opciones_ordenar2:
+                Collections.sort(adapterLista.list, ProductoModelo.ProductoZA);
+                adapterLista.notifyDataSetChanged();
+                return true;
+            case R.id.opciones_ordenar3:
+                Collections.sort(adapterLista.list, ProductoModelo.ProductoCantidadA);
+                adapterLista.notifyDataSetChanged();
+                return true;
+            case R.id.opciones_ordenar4:
+                Collections.sort(adapterLista.list, ProductoModelo.ProductoCantidadD);
+                adapterLista.notifyDataSetChanged();
+                return true;
             case R.id.opciones_seleccionar:
                 Toast.makeText(TabActivity.this, "Has pulsado en seleccionar", Toast.LENGTH_SHORT).show();
-                //adapter.
-                adapterLista = new AdapterProductoLista();
+                //adapter
 
                 //adapterLista.list
                 /*TODO A ver, el problema que estamos teniendo es que el adapter que tenemos aqui es el del tab, este adapter

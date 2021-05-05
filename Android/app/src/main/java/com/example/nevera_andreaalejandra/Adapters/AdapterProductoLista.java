@@ -66,6 +66,10 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
         return list.size();
     }
 
+    public List<ProductoModelo> getList() {
+        return list;
+    }
+
     public List<ProductoModelo> getCheckedItems() {
         List<ProductoModelo> mTempArry = new ArrayList<ProductoModelo>(); //Instanciamos nuestra lista temporal
         for(int i=0;i<list.size();i++) {
