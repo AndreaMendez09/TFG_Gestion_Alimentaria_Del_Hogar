@@ -16,6 +16,7 @@ import com.example.nevera_andreaalejandra.Interfaces.OnItemClickListener;
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHolder> {
@@ -57,6 +58,11 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public void filterList(ArrayList<ProductoModelo> filteredList) {
+        list = filteredList;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

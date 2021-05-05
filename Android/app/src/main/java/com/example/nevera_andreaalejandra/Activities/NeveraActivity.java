@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +24,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -70,18 +73,17 @@ public class NeveraActivity extends AppCompatActivity {
     private Date FechaProducto = new Date();
     private String DateProducto;
     private String UID_usuario;
-
-
-
     private Bundle extras;
 
     //Creamos la lista para los productos de Nevera
     private List<ProductoModelo> lista_productos;
 
-    //El boton para añadir
+    //Atributos para enlazar con el XML
     private FloatingActionButton add;
     private ConstraintLayout MensajeSinProductos;
+    private EditText buscar;
     private ImageView imageView;
+    private ConstraintLayout LayoutPadre;
 
     //Para el list view
     private RecyclerView recyclerView;
@@ -112,6 +114,8 @@ public class NeveraActivity extends AppCompatActivity {
         add = findViewById(R.id.FABAddList);
         MensajeSinProductos = (ConstraintLayout) findViewById(R.id.MensajeSinProductos);
         imageView = (ImageView) findViewById(R.id.imageView);
+        buscar = (EditText) findViewById(R.id.buscar);
+        LayoutPadre = (ConstraintLayout) findViewById(R.id.layout_padre);
 
         lista_productos = new ArrayList<ProductoModelo>();
         recyclerView = (RecyclerView) findViewById(R.id.item_product_nevera);
@@ -167,6 +171,34 @@ public class NeveraActivity extends AppCompatActivity {
             }
         });
 
+        buscar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+
+    }
+
+    private void filter(String textoBuscar) {
+        ArrayList<ProductoModelo> filteredList = new ArrayList<ProductoModelo>();
+        for (ProductoModelo producto : lista_productos) {
+            if(producto.getNombre().toLowerCase().contains(textoBuscar.toLowerCase())) {
+                filteredList.add(producto);
+            }
+        }
+
+        adapterEliminar.filterList(filteredList);
     }
 
     //Para poner la imagen en el toolbar
@@ -338,6 +370,18 @@ public class NeveraActivity extends AppCompatActivity {
             case R.id.opciones_ordenar4:
                 Collections.sort(lista_productos, ProductoModelo.ProductoCantidadD);
                 adapterEliminar.notifyDataSetChanged();
+                return true;
+            case R.id.buscar:
+                /*ConstraintSet constraintSet = new ConstraintSet();
+                constraintSet.clone(LayoutPadre);
+                constraintSet.connect(R.id.linearLayout2, ConstraintSet.BOTTOM, R.id.toolbar, ConstraintSet.BOTTOM, 0);
+                constraintSet.applyTo(LayoutPadre);*/
+                if (buscar.getVisibility() == View.INVISIBLE)
+                    buscar.setVisibility(View.VISIBLE);
+                else {
+                    buscar.setText("");
+                    buscar.setVisibility(View.INVISIBLE);
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
