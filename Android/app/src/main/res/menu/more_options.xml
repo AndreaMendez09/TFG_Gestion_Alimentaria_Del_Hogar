@@ -32,7 +32,8 @@
                 />
             <item
                 android:id="@+id/buscar"
-                android:title="Buscar productos"/>
+                android:title="Buscar productos"
+                android:icon="@drawable/ic_search"/>
         </menu>
 
     </item>

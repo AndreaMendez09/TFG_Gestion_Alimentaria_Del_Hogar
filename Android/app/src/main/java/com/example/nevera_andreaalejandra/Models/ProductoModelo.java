@@ -65,13 +65,6 @@ public class ProductoModelo implements Serializable {
         }
     };
 
-    public static Comparator<ProductoModelo> ProductoPrecioD = new Comparator<ProductoModelo>() {
-        @Override
-        public int compare(ProductoModelo p1, ProductoModelo p2) {
-            return (int) (p2.getPrecio() - p1.getPrecio());
-        }
-    };
-
     public static Comparator<ProductoModelo> ProductoCantidadA = new Comparator<ProductoModelo>() {
         @Override
         public int compare(ProductoModelo p1, ProductoModelo p2) {
@@ -83,6 +76,20 @@ public class ProductoModelo implements Serializable {
         @Override
         public int compare(ProductoModelo p1, ProductoModelo p2) {
             return p1.getCantidad() - p2.getCantidad();
+        }
+    };
+
+    public static Comparator<ProductoModelo> ProductoPrecioD = new Comparator<ProductoModelo>() {
+        @Override
+        public int compare(ProductoModelo p1, ProductoModelo p2) {
+            return (int)(p1.getPrecio() - p2.getPrecio());
+        }
+    };
+
+    public static Comparator<ProductoModelo> ProductoPrecioA = new Comparator<ProductoModelo>() {
+        @Override
+        public int compare(ProductoModelo p1, ProductoModelo p2) {
+            return (int)(p2.getPrecio() - p1.getPrecio());
         }
     };
 

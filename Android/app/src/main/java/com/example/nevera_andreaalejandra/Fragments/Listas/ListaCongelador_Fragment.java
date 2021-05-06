@@ -163,12 +163,12 @@ public class ListaCongelador_Fragment extends Fragment {
     }
 
     public void Update19() {
-        Collections.sort(lista_productos, ProductoModelo.ProductoCantidadA);
+        Collections.sort(lista_productos, ProductoModelo.ProductoPrecioA);
         adapterProducto.notifyDataSetChanged();
     }
 
     public void Update91() {
-        Collections.sort(lista_productos, ProductoModelo.ProductoCantidadD);
+        Collections.sort(lista_productos, ProductoModelo.ProductoPrecioD);
         adapterProducto.notifyDataSetChanged();
     }
 

@@ -30,6 +30,7 @@
             <item
                 android:id="@+id/opciones_seleccionar"
                 android:title="Comprar todos"
+                android:icon="@drawable/ic_shopping_cart"
                 />
             <item
                 android:id="@+id/opciones_deseleccionar"
