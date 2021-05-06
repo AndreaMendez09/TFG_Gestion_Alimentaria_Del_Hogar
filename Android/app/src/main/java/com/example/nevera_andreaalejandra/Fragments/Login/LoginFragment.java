@@ -209,6 +209,7 @@ public class LoginFragment extends Fragment {
             correo_login.setText(email);
             pass_login.setText(password);
             remember.setChecked(true);
+            //LoginUser();
         }
     }
 }

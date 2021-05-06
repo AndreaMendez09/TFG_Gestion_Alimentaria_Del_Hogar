@@ -45,10 +45,8 @@ public class SplashActivity extends AppCompatActivity {
 
         Intent intentLogin = new Intent(this, LoginActivity.class);
 
-        if (!TextUtils.isEmpty(LoginUtil.getUserMailPrefs(prefs)) &&
-                !TextUtils.isEmpty(LoginUtil.getUserPassPrefs(prefs))) {
+        if (!TextUtils.isEmpty(LoginUtil.getUserMailPrefs(prefs)) && !TextUtils.isEmpty(LoginUtil.getUserPassPrefs(prefs))) {
             login();
-
         } else {
             startActivity(intentLogin);
         }
@@ -70,12 +68,8 @@ public class SplashActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) { //Si el usuario y contraseña son correctos, se carga el UserActivity.
-
-                            Intent intent = new Intent(getApplication(), LoginActivity.class);
+                            Intent intent = new Intent(getApplication(), NeveraActivity.class);
                             startActivity(intent);
-
-
-
                         }
                     }
                 });
