@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,6 +43,9 @@ public class AddEditProductActivity extends AppCompatActivity{
     private EditText cantidad;
     private Spinner tipo;
     private List<ProductoModelo> producto;
+    private int año;
+    private int mes;
+    private int dia;
 
     //Notificaciones
     private NotificationHandler notificationHandler;
@@ -134,6 +138,7 @@ public class AddEditProductActivity extends AppCompatActivity{
                     //Para saber cuando cambiar de activity
                     if (cambiar){
                         changeActivity();
+                       // Agregar();
                     }
                 }
             }
@@ -328,6 +333,27 @@ public class AddEditProductActivity extends AppCompatActivity{
         SeleccionarFecha.show();
 
 
+    }
+    public void Agregar(){
+        Calendar cal = Calendar.getInstance();
+
+        boolean val = false; //controlador del ciclo while
+        Intent intent = null;
+        while(val == false){
+            try{
+                cal.set(Calendar.YEAR, año);
+                cal.set(Calendar.MONTH, mes);
+                cal.set(Calendar.DAY_OF_MONTH, dia);
+
+                intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, cal.getTimeInMillis());
+                intent.putExtra(CalendarContract.Events.TITLE,"Hacer la compra");
+                intent.putExtra(CalendarContract.Events.DESCRIPTION, "Hacen falta algunos productos ");
+                startActivity(intent);
+                val = true;
+            }catch (Exception e){
+                Toast.makeText(getApplicationContext(), "Fecha invalida", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     //Para poner la imagen en el toolbar
