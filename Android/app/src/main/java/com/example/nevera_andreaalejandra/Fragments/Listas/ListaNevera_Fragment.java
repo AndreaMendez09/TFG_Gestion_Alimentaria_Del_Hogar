@@ -37,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -160,8 +161,41 @@ public class ListaNevera_Fragment extends Fragment {
         });
 
 
+
+
+
         // Inflate the layout for this fragment
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        Bundle bundle = this.getArguments();
+        if (!(bundle == null)) {
+            String strtext = getArguments().getString("edttext");
+            Toast.makeText(getContext(), "Seleccionado" + strtext, Toast.LENGTH_LONG).show();
+        }
+        super.onAttach(context);
+    }
+
+    public void UpdateAZ () {
+        Collections.sort(lista_productos, ProductoModelo.ProductoAZ);
+        adapterProducto.notifyDataSetChanged();
+    }
+
+    public void UpdateZA() {
+        Collections.sort(lista_productos, ProductoModelo.ProductoZA);
+        adapterProducto.notifyDataSetChanged();
+    }
+
+    public void Update19() {
+        Collections.sort(lista_productos, ProductoModelo.ProductoCantidadA);
+        adapterProducto.notifyDataSetChanged();
+    }
+
+    public void Update91() {
+        Collections.sort(lista_productos, ProductoModelo.ProductoCantidadD);
+        adapterProducto.notifyDataSetChanged();
     }
 
     private void leerProductos() {
@@ -229,9 +263,6 @@ public class ListaNevera_Fragment extends Fragment {
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setAdapter(adapterProducto);
 
-                /*DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
-                dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
-                recyclerView.addItemDecoration(dividerItemDecoration);*/
 
                 //Ponemos la animacion
                 Context context = recyclerView.getContext();

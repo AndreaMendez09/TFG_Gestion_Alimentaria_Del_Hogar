@@ -10,7 +10,8 @@ import com.example.nevera_andreaalejandra.Fragments.Listas.ListaNevera_Fragment;
 public class AdapterTab extends FragmentStatePagerAdapter {
 
     private int numberOfTabs;
-
+    private ListaNevera_Fragment nevera = new ListaNevera_Fragment();
+    private ListaCongelador_Fragment congelador = new ListaCongelador_Fragment();
 
     public AdapterTab(FragmentManager fm, int numberOfTabs) {
         super(fm);
@@ -23,10 +24,9 @@ public class AdapterTab extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                return new ListaNevera_Fragment();
+                return nevera;
             case 1:
-                return new ListaCongelador_Fragment();
-
+                return congelador;
             default:
                 return null;
         }
