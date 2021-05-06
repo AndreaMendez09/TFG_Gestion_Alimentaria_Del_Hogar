@@ -37,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -162,6 +163,26 @@ public class ListaCongelador_Fragment extends Fragment {
         return view;
     }
 
+    public void UpdateAZ () {
+        Collections.sort(lista_productos, ProductoModelo.ProductoAZ);
+        adapterProducto.notifyDataSetChanged();
+    }
+
+    public void UpdateZA() {
+        Collections.sort(lista_productos, ProductoModelo.ProductoZA);
+        adapterProducto.notifyDataSetChanged();
+    }
+
+    public void Update19() {
+        Collections.sort(lista_productos, ProductoModelo.ProductoCantidadA);
+        adapterProducto.notifyDataSetChanged();
+    }
+
+    public void Update91() {
+        Collections.sort(lista_productos, ProductoModelo.ProductoCantidadD);
+        adapterProducto.notifyDataSetChanged();
+    }
+
     private void leerProductos() {
         mDataBase.child("Producto").addValueEventListener(new ValueEventListener() {
             @Override
@@ -213,39 +234,7 @@ public class ListaCongelador_Fragment extends Fragment {
                             }
                         }
                     }
-                    adapterProducto = new AdapterProductoLista(getContext(), lista_productos, R.layout.item_product, new OnItemClickListener() {
-                        //Este click es al darle a la ciudad
-                        @Override
-                        public void onItemClick(ProductoModelo productoModelo, int position) {
-                            Intent intent = new Intent(getContext(), AddEditProductActivity.class);
-                            intent.putExtra("tarea", "editar");
-                            ProductoModelo productoModelo1 = lista_productos.get(position);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("objeto", productoModelo1);
-                            intent.putExtras(bundle);
-
-                            startActivity(intent);
-                        }
-                        //Este boton es al clickar en el boton eliminar que tiene cada cardview de ciudad
-                    }, new OnButtonClickListener() {
-                        @Override
-                        public void onButtonClick(ProductoModelo productoModelo, int position) {
-                            //Aqui va el boton de eliminar del cardview
-                            deleteProduct(productoModelo);
-                        }
-
-                    }, new OnCheckedChangeListener() {
-                        @Override
-                        public void onButtonClick(ProductoModelo productoModelo, int position, boolean isChecked) {
-                            if (isChecked) {
-                                //Toast.makeText(getContext(), "Seleccionado " + productoModelo.getNombre(), Toast.LENGTH_LONG).show();
-                                lista_productos_seleccionados.add(productoModelo);
-                            }else {
-                                //Toast.makeText(getContext(), "deseleccionado", Toast.LENGTH_LONG).show();
-                                lista_productos_seleccionados.remove(productoModelo);
-                            }
-                        }
-                    });
+                    adapterProducto = getAdapter();
 
                     /*                    if (check.isChecked()) {
                         Toast.makeText(context, "Seleccionado", Toast.LENGTH_LONG).show();
@@ -276,6 +265,44 @@ public class ListaCongelador_Fragment extends Fragment {
 
             }
         });
+    }
+
+    public AdapterProductoLista getAdapter() {
+        adapterProducto = new AdapterProductoLista(getContext(), lista_productos, R.layout.item_product, new OnItemClickListener() {
+            //Este click es al darle a la ciudad
+            @Override
+            public void onItemClick(ProductoModelo productoModelo, int position) {
+                Intent intent = new Intent(getContext(), AddEditProductActivity.class);
+                intent.putExtra("tarea", "editar");
+                ProductoModelo productoModelo1 = lista_productos.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("objeto", productoModelo1);
+                intent.putExtras(bundle);
+
+                startActivity(intent);
+            }
+            //Este boton es al clickar en el boton eliminar que tiene cada cardview de ciudad
+        }, new OnButtonClickListener() {
+            @Override
+            public void onButtonClick(ProductoModelo productoModelo, int position) {
+                //Aqui va el boton de eliminar del cardview
+                deleteProduct(productoModelo);
+            }
+
+        }, new OnCheckedChangeListener() {
+            @Override
+            public void onButtonClick(ProductoModelo productoModelo, int position, boolean isChecked) {
+                if (isChecked) {
+                    //Toast.makeText(getContext(), "Seleccionado " + productoModelo.getNombre(), Toast.LENGTH_LONG).show();
+                    lista_productos_seleccionados.add(productoModelo);
+                }else {
+                    //Toast.makeText(getContext(), "deseleccionado", Toast.LENGTH_LONG).show();
+                    lista_productos_seleccionados.remove(productoModelo);
+                }
+            }
+        });
+
+        return adapterProducto;
     }
 
     private void deleteProduct(final ProductoModelo productoModelo) {

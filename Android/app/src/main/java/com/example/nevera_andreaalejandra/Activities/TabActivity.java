@@ -18,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.nevera_andreaalejandra.Adapters.AdapterProductoLista;
 import com.example.nevera_andreaalejandra.Adapters.AdapterTab;
+import com.example.nevera_andreaalejandra.Fragments.Listas.ListaCongelador_Fragment;
 import com.example.nevera_andreaalejandra.Fragments.Listas.ListaNevera_Fragment;
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
@@ -40,6 +41,13 @@ public class TabActivity extends AppCompatActivity {
     //Declaramos el adapter
     AdapterTab adapter;
     AdapterProductoLista adapterLista;
+
+    //Creamos las listas
+    private ListaNevera_Fragment lista_nevera = new ListaNevera_Fragment();
+    private ListaCongelador_Fragment lista_congelador = new ListaCongelador_Fragment();
+
+    //Creamos la posicion
+    int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +79,10 @@ public class TabActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
+                position = tab.getPosition();
                 viewPager.setCurrentItem(position);
+
+
             }
 
             @Override
@@ -95,15 +105,6 @@ public class TabActivity extends AppCompatActivity {
             }
         });
 
-        /*extras = getIntent().getExtras();
-        if (extras != null) {
-            fragment = extras.getString("fragment");
-            if (fragment.equals("nevera")) {
-                changeFragment(new Nevera_Fragment(), navigationView.getMenu().getItem(0));
-            } else if (fragment.equals("congelador")) {
-                changeFragment(new Congelador_Fragment(), navigationView.getMenu().getItem(1));
-            }
-        }*/
 
         //Funcion de logout
         logout.setOnClickListener(new View.OnClickListener() {
@@ -117,8 +118,9 @@ public class TabActivity extends AppCompatActivity {
                 startActivity(intent);//Iniciamos el intent
             }
         });
-        adapterLista = new ListaNevera_Fragment().getAdapter();
 
+        lista_nevera = (ListaNevera_Fragment) adapter.getItem(0);
+        lista_congelador = (ListaCongelador_Fragment) adapter.getItem(1);
     }
     //Para poner la imagen en el toolbar
     private void setToolbar() {
@@ -179,22 +181,35 @@ public class TabActivity extends AppCompatActivity {
                 return true;
         }
         switch (item.getItemId()) {
+            //0 es el item de nevera y 1 es el item de congelador
+
             case R.id.opciones_ordenar:
-                Collections.sort(adapterLista.getList(), ProductoModelo.ProductoAZ);
-                adapterLista.notifyDataSetChanged();
-                //Toast.makeText(MainActivity.this, "Has pulsado en ordenar", Toast.LENGTH_SHORT).show();
+                if (position == 0) {
+                    lista_nevera.UpdateAZ();
+                }else if (position == 1) {
+                    lista_congelador.UpdateAZ();
+                }
                 return true;
             case R.id.opciones_ordenar2:
-                Collections.sort(adapterLista.list, ProductoModelo.ProductoZA);
-                adapterLista.notifyDataSetChanged();
+                if (position == 0) {
+                    lista_nevera.UpdateZA();
+                }else if (position == 1) {
+                    lista_congelador.UpdateZA();
+                }
                 return true;
             case R.id.opciones_ordenar3:
-                Collections.sort(adapterLista.list, ProductoModelo.ProductoCantidadA);
-                adapterLista.notifyDataSetChanged();
+                if (position == 0) {
+                    lista_nevera.Update19();
+                }else if (position == 1) {
+                    lista_congelador.Update19();
+                }
                 return true;
             case R.id.opciones_ordenar4:
-                Collections.sort(adapterLista.list, ProductoModelo.ProductoCantidadD);
-                adapterLista.notifyDataSetChanged();
+                if (position == 0) {
+                    lista_nevera.Update91();
+                }else if (position == 1) {
+                    lista_congelador.Update91();
+                }
                 return true;
             case R.id.opciones_seleccionar:
                 Toast.makeText(TabActivity.this, "Has pulsado en seleccionar", Toast.LENGTH_SHORT).show();
