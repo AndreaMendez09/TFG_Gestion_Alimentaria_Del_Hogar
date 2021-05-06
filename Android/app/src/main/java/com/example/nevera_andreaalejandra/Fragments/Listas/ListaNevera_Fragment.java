@@ -132,18 +132,7 @@ public class ListaNevera_Fragment extends Fragment {
         comprar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(int i=0; lista_productos_seleccionados.size()>i;i++){
-
-                    mDataBase.child("Producto").child(lista_productos_seleccionados.get(i).getId()).child("ubicacion").setValue("nevera").addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()) {
-                                Toast.makeText(getContext(), "Productos comprados, ya tienes que comer :)", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                }
-                //Toast.makeText(getContext(), "Boton " + lista_productos_seleccionados.size(), Toast.LENGTH_LONG).show();
+                comprar();
             }
         });
 
@@ -168,15 +157,6 @@ public class ListaNevera_Fragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        Bundle bundle = this.getArguments();
-        if (!(bundle == null)) {
-            String strtext = getArguments().getString("edttext");
-            Toast.makeText(getContext(), "Seleccionado" + strtext, Toast.LENGTH_LONG).show();
-        }
-        super.onAttach(context);
-    }
 
     public void UpdateAZ () {
         Collections.sort(lista_productos, ProductoModelo.ProductoAZ);
@@ -345,5 +325,28 @@ public class ListaNevera_Fragment extends Fragment {
         builder.setNegativeButton("Cancelar", null).show();
 
 
+    }
+
+    public void comprar_todos() {
+        lista_productos_seleccionados.clear();
+
+        for (ProductoModelo item : lista_productos) {
+            lista_productos_seleccionados.add(item);
+        }
+        comprar();
+    }
+
+    public void comprar() {
+        for(int i=0; lista_productos_seleccionados.size()>i;i++){
+
+            mDataBase.child("Producto").child(lista_productos_seleccionados.get(i).getId()).child("ubicacion").setValue("nevera").addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()) {
+                        Toast.makeText(getContext(), "Productos comprados, ya tienes que comer :)", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
     }
 }

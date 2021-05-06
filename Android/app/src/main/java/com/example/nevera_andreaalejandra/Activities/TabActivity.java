@@ -212,7 +212,12 @@ public class TabActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.opciones_seleccionar:
-                Toast.makeText(TabActivity.this, "Has pulsado en seleccionar", Toast.LENGTH_SHORT).show();
+                if (position == 0) {
+                    lista_nevera.comprar_todos();
+                }else if (position == 1) {
+                    lista_congelador.comprar_todos();
+                }
+                //Toast.makeText(TabActivity.this, "Has pulsado en seleccionar", Toast.LENGTH_SHORT).show();
                 //adapter
 
                 //adapterLista.list
