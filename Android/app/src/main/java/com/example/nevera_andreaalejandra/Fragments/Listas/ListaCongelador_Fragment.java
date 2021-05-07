@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +46,8 @@ public class ListaCongelador_Fragment extends Fragment {
     //Creamos los campos necesarios para vincularlos con el xml
     private FloatingActionButton add;
     private Button comprar;
+    private ConstraintLayout MensajeSinProductos;
+
 
     //Creamos nuestra lista para guardar los productos
     private List<ProductoModelo> lista_productos;
@@ -98,6 +101,7 @@ public class ListaCongelador_Fragment extends Fragment {
         //Creamos la lista
         lista_productos = new ArrayList<ProductoModelo>();
         lista_productos_seleccionados = new ArrayList<ProductoModelo>();
+        MensajeSinProductos = (ConstraintLayout) view.findViewById(R.id.MensajeSinProductos);
 
 
         //Enlazamos con el xml
@@ -247,6 +251,14 @@ public class ListaCongelador_Fragment extends Fragment {
                 recyclerView.setLayoutAnimation(layoutAnimationController);
                 recyclerView.getAdapter().notifyDataSetChanged();
                 recyclerView.scheduleLayoutAnimation();
+
+                if (adapterProducto.getItemCount() > 0 ) {
+                    //Toast.makeText(getContext(), "Hay productos", Toast.LENGTH_SHORT).show();
+                    MensajeSinProductos.setVisibility(View.INVISIBLE);
+                }else {
+                    //Toast.makeText(getContext(), "No hay productos", Toast.LENGTH_SHORT).show();
+                    MensajeSinProductos.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

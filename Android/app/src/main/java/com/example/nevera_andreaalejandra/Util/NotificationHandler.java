@@ -24,9 +24,9 @@ public class NotificationHandler extends ContextWrapper {
     private NotificationManager manager;
 
     public static final String CHANNEL_HIGH_ID = "1";
-    private final String CHANNEL_HIGH_NAME = "HIGH CHANNEL";
+    private final String CHANNEL_HIGH_NAME = "Pocos productos";
     public static final String CHANNEL_LOW_ID = "2";
-    private final String CHANNEL_LOW_NAME = "LOW CHANNEL";
+    private final String CHANNEL_LOW_NAME = "Caducidad cercana";
     private final int SUMMARY_GROUP_ID = 1001;
     private final String SUMMARY_GROUP_NAME = "GROUPING_NOTIFICATION";
 
@@ -88,8 +88,6 @@ public class NotificationHandler extends ContextWrapper {
             //Para la funcionalidad de ir a la app al pulsar la notificacion
             PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-            //Para que el texto sea expandible
-
             //Para poner una imagen
             Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_fridge);
 
@@ -100,6 +98,7 @@ public class NotificationHandler extends ContextWrapper {
 
             return new Notification.Builder(getApplicationContext(), channelId)
                     .setContentTitle(title)
+                    .setContentText(message)
                     //.setLargeIcon(icon)
                     .setStyle(new Notification.BigTextStyle()
                     .bigText(message)

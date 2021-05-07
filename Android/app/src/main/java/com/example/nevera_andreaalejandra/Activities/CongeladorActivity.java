@@ -234,9 +234,6 @@ public class CongeladorActivity extends AppCompatActivity {
                             ProductoModelo product = new ProductoModelo(IdProducto, NombreProducto, CantidadProducto, PrecioProducto, UbicacionProducto, TipoProducto, DateProducto, UID_usuario);
                             lista_productos.add(product);
                         }
-                        if(CantidadProducto<2){
-                            sendNotificationProductos(NombreProducto,isHighImportance);
-                        }
 
 
                     }
@@ -471,22 +468,6 @@ public class CongeladorActivity extends AppCompatActivity {
     public void cambiarActivity(Activity activity){
         Intent intent = new Intent(this, activity.getClass());//Establecemos primero donde estamos y luego donde vamos
         startActivity(intent);
-    }
-    private void sendNotificationProductos(String nombreProducto, boolean isHighImportance) {
-        //Toast.makeText(getApplicationContext(), "notificacion", Toast.LENGTH_LONG).show();
-
-        String title = "Quedan pocos productos" ;
-        String message = "Añade a tu lista de compra "+ nombreProducto + " que quedan pocas unidades";
-
-        //Para que al pulsar la notificacion, vuelva a la app
-        Intent intent = new Intent(this, CongeladorActivity.class);
-        PendingIntent pendingIntent = TaskStackBuilder.create(this).addNextIntentWithParentStack(intent).getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        if (isHighImportance==true) {
-            Notification.Builder nb = notificationHandler.createNotification(title, message, isHighImportance, pendingIntent);
-            notificationHandler.getManager().notify(++counter, nb.build());
-            notificationHandler.publishNotificationSummaryGroup(isHighImportance);
-        }
     }
 
 }

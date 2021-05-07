@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,6 +48,7 @@ public class ListaNevera_Fragment extends Fragment {
     private FloatingActionButton add;
     private Button comprar;
     private Button borrar;
+    private ConstraintLayout MensajeSinProductos;
 
     //Creamos nuestra lista para guardar los productos
     private List<ProductoModelo> lista_productos;
@@ -103,6 +105,8 @@ public class ListaNevera_Fragment extends Fragment {
         add = view.findViewById(R.id.FABAddList);
         comprar = (Button) view.findViewById(R.id.boton_comprar);
         recyclerView = (RecyclerView) view.findViewById(R.id.item_list_nevera);
+        MensajeSinProductos = (ConstraintLayout) view.findViewById(R.id.MensajeSinProductos);
+
 
         mLayoutManager = new LinearLayoutManager(getContext());
 
@@ -250,6 +254,14 @@ public class ListaNevera_Fragment extends Fragment {
                 recyclerView.setLayoutAnimation(layoutAnimationController);
                 recyclerView.getAdapter().notifyDataSetChanged();
                 recyclerView.scheduleLayoutAnimation();
+
+                if (adapterProducto.getItemCount() > 0 ) {
+                    //Toast.makeText(getContext(), "Hay productos", Toast.LENGTH_SHORT).show();
+                    MensajeSinProductos.setVisibility(View.INVISIBLE);
+                }else {
+                    //Toast.makeText(getContext(), "No hay productos", Toast.LENGTH_SHORT).show();
+                    MensajeSinProductos.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

@@ -175,7 +175,7 @@ public class AjustesActivity extends AppCompatActivity {
 
         if (activa==true) {
             //TODO MIRAR ESTO
-            Notification.Builder nb = notificationHandler.createNotification(title, messageActivada, isHighImportance,null);
+            Notification.Builder nb = (Notification.Builder) notificationHandler.createNotification(title, messageActivada, isHighImportance,null);
             notificationHandler.getManager().notify(++counter, nb.build());
             notificationHandler.publishNotificationSummaryGroup(isHighImportance);
 
