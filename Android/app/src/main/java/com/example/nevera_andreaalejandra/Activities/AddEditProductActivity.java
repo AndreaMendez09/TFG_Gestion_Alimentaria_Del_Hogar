@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,6 +43,7 @@ public class AddEditProductActivity extends AppCompatActivity{
     private EditText precio;
     private EditText cantidad;
     private Spinner tipo;
+    private Switch switchCalendario;
     private List<ProductoModelo> producto;
     private int año;
     private int mes;
@@ -82,6 +84,7 @@ public class AddEditProductActivity extends AppCompatActivity{
         precio = (EditText) findViewById(R.id.EPrecioProducto);
         cantidad = (EditText) findViewById(R.id.ECantidadProducto);
         tipo = (Spinner) findViewById(R.id.ETipoProducto);
+        switchCalendario = (Switch) findViewById(R.id.switchCalendario);
 
         //Para quitar las funciones de copiar y pegar
         calendario.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
@@ -136,10 +139,11 @@ public class AddEditProductActivity extends AppCompatActivity{
                     }
 
                     //Para saber cuando cambiar de activity
-                    if (cambiar){
+                    if (cambiar)
                         changeActivity();
-                       // Agregar();
-                    }
+
+                    if (switchCalendario.isChecked())
+                        Agregar();
                 }
             }
         });
@@ -339,21 +343,34 @@ public class AddEditProductActivity extends AppCompatActivity{
 
         boolean val = false; //controlador del ciclo while
         Intent intent = null;
-        while(val == false){
+        //while(val == false){
             try{
-                cal.set(Calendar.YEAR, año);
-                cal.set(Calendar.MONTH, mes);
-                cal.set(Calendar.DAY_OF_MONTH, dia);
+                String[] fecha = calendario.getText().toString().split("/");
 
-                intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, cal.getTimeInMillis());
-                intent.putExtra(CalendarContract.Events.TITLE,"Hacer la compra");
-                intent.putExtra(CalendarContract.Events.DESCRIPTION, "Hacen falta algunos productos ");
-                startActivity(intent);
+                cal.set(Calendar.YEAR, Integer.parseInt(fecha[2]));
+                cal.set(Calendar.MONTH, Integer.parseInt(fecha[1]) - 1);
+                cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(fecha[0]));
+
+                intent = new Intent(Intent.ACTION_INSERT);
+                intent.setData(CalendarContract.Events.CONTENT_URI);
+                intent.putExtra(CalendarContract.Events.ALL_DAY,true);
+                intent.putExtra(CalendarContract.Events.TITLE,"El producto " + nombre.getText() + " se caduca pronto");
+                intent.putExtra(CalendarContract.Events.DESCRIPTION, "Comer antes de que se ponga malo.");
+                intent.putExtra(CalendarContract.Events.HAS_ALARM, false);
+                //intent.putExtra(CalendarContract.Events.DTSTART, cal.getTimeInMillis());
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, cal.getTimeInMillis());
+
+
+                if(intent.resolveActivity(getPackageManager()) != null)
+                    startActivity(intent);
+                else
+                    Toast.makeText(getApplicationContext(), "No hay aplicacion para crear un evento de calendario", Toast.LENGTH_LONG).show();
+
                 val = true;
             }catch (Exception e){
                 Toast.makeText(getApplicationContext(), "Fecha invalida", Toast.LENGTH_LONG).show();
             }
-        }
+        //}
     }
 
     //Para poner la imagen en el toolbar

@@ -8,6 +8,6 @@ public class AppSplash extends Application {
     public void onCreate() {
         super.onCreate();
 
-        SystemClock.sleep(3000);
+        SystemClock.sleep(1000);
     }
 }

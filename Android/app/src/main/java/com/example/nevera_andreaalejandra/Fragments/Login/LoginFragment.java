@@ -196,7 +196,6 @@ public class LoginFragment extends Fragment {
             editor.putString("pass", password);
             editor.apply();
 
-
         } else {
             LoginUtil.removeSharedPreferences(preferences);
         }
