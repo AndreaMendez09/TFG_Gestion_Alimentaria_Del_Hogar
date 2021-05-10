@@ -6,6 +6,7 @@ import java.util.Date;
 
 //Implementamos serializable para poder pasar el objeto de un frament a otro
 public class ProductoModelo implements Serializable {
+    //Creamos las variables que deberá tener nuestro producto
     private String id;
     private int cantidad;
     private String tipo;
@@ -51,6 +52,7 @@ public class ProductoModelo implements Serializable {
         this.fecha = fecha;
     }
 
+    //Métodos para ordenar los productos
     public static Comparator<ProductoModelo> ProductoAZ = new Comparator<ProductoModelo>() {
         @Override
         public int compare(ProductoModelo p1, ProductoModelo p2) {
@@ -93,12 +95,6 @@ public class ProductoModelo implements Serializable {
         }
     };
 
-    /*public static Comparator<ProductoModelo> ProductoDateAscending = new Comparator<ProductoModelo>() {
-        @Override
-        public int compare(ProductoModelo p1, ProductoModelo p2) {
-            return p1.getFecha() - p2.getFecha();
-        }
-    };*/
 
 
 

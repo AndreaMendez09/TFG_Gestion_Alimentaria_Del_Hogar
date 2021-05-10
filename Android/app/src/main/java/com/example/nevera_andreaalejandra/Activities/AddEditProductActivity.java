@@ -44,15 +44,6 @@ public class AddEditProductActivity extends AppCompatActivity{
     private EditText cantidad;
     private Spinner tipo;
     private Switch switchCalendario;
-    private List<ProductoModelo> producto;
-    private int año;
-    private int mes;
-    private int dia;
-
-    //Notificaciones
-    private NotificationHandler notificationHandler;
-    private int counter = 0;
-    private boolean isHighImportance = true;
 
     //Creamos el DatePicker para seleccionar una fecha
     private DatePickerDialog SeleccionarFecha;
@@ -70,9 +61,7 @@ public class AddEditProductActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_product);
-        //Linea que se supone que debe hacer lo e flechita
-        //Comenta funicona, no descomentar
-       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //DB Firebase
         mDataBase = FirebaseDatabase.getInstance().getReference().child("Producto");
         mAuth = FirebaseAuth.getInstance();
@@ -110,13 +99,13 @@ public class AddEditProductActivity extends AppCompatActivity{
             }
         });
 
-
+        //Añadimos la toolbar
         setToolbar();
 
         //Obtenemos el intent
         Bundle bundle = getIntent().getExtras();
 
-        //Obtenemos el objeto
+        //Obtenemos el producto
         ProductoModelo producto = (ProductoModelo) bundle.getSerializable("objeto");
 
         //Llamamos al metodo
@@ -128,13 +117,12 @@ public class AddEditProductActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 boolean cambiar = false;
-                //Obtenemos el valor del intent
+                //Obtenemos el valor del intent, para detectar si es añadir o editar
                 if (bundle != null) { //Si ha encontrado algun dato
                     String tarea = bundle.getString("tarea"); //Obtenemos el dato
                     if (tarea.equals("añadir")) {
                         añadirProducto();
                     }else if (tarea.equals("editar")){
-                        Toast.makeText(AddEditProductActivity.this, "Se edita el producto", Toast.LENGTH_SHORT).show();
                         cambiar = editProduct(producto);
                     }
 
@@ -142,6 +130,7 @@ public class AddEditProductActivity extends AppCompatActivity{
                     if (cambiar)
                         changeActivity();
 
+                    //En caso de que el usuario quiera añadir el evento de calendario
                     if (switchCalendario.isChecked())
                         CrearEvento();
                 }
@@ -151,15 +140,13 @@ public class AddEditProductActivity extends AppCompatActivity{
 
     }
     private void Edit_O_Add(ProductoModelo producto, Bundle valor) {
-        if (valor != null) {//Comprobamos que nos ha llegado algo con la tag añadir del BoardActivity
+        if (valor != null) {//Comprobamos que nos ha llegado algo con la tag tarea
             String tarea = valor.getString("tarea"); //Obtenemos el dato
-            if (tarea.equals("añadir")) {//Comprobamos que nos ha llegado algo con la tag añadir del BoardActivity
+            if (tarea.equals("añadir")) {//Comprobamos si es añadir
                 AddEditProductActivity.this.setTitle("Añadir un nuevo producto");//Cambiamos el título
-                Toast.makeText(AddEditProductActivity.this, "Estamos en añadir", Toast.LENGTH_SHORT).show();
-                esCreado = true;
-            } else if (tarea.equals("editar")){//esto significa editar
+                esCreado = true; //Establecemos la booleana a true para detectar que debe crear un nuevo producto
+            } else if (tarea.equals("editar")){//Comprobamos si es editar
                 AddEditProductActivity.this.setTitle("Editar el producto");//Cambiamos el título
-                //Toast.makeText(AddEditProductActivity.this, "Estamos en editar", Toast.LENGTH_SHORT).show();
             }
 
             if (esCreado == false) {//Es decir, lo vamos a editar
@@ -169,12 +156,12 @@ public class AddEditProductActivity extends AppCompatActivity{
                 precio.setText(String.valueOf(producto.getPrecio()));
                 cantidad.setText(String.valueOf(producto.getCantidad()));
 
-                //Para que si no tiene fecha, no muestre el valor por defecto
+                //En caso de que no exista fecha, no rellenara el campo
                 if (!(producto.getFecha().equals("--/--/----"))) {
                     calendario.setText(String.valueOf(producto.getFecha()));
                 }
 
-                //Para el detectar el tipo y ponerlo por defecto
+                //Para detectar el tipo de producto y ponerlo por defecto
                 for (int i = 0; i < tipo.getCount(); i++) {
                     if (tipo.getItemAtPosition(i).equals(producto.getTipo())) {
                         tipo.setSelection(i);
@@ -185,8 +172,10 @@ public class AddEditProductActivity extends AppCompatActivity{
             }
         }
     }
-    //Para editar el producto
-    private Boolean editProduct(ProductoModelo producto_eliminar) {//Pasamos el producto a "eliminar" para poder obtener el id
+
+    //Método para editar el producto
+    private Boolean editProduct(ProductoModelo producto_eliminar) {
+        //Obtenemos los datos de los editText
         String productNameEdit = nombre.getText().toString().trim();
         String productFechaEdit = calendario.getText().toString();
         int productCantidadEdit = Integer.parseInt(cantidad.getText().toString().trim());
@@ -197,6 +186,8 @@ public class AddEditProductActivity extends AppCompatActivity{
 
         }
         String productTipoEdit = tipo.getSelectedItem().toString();
+
+        //Creamos el nuevo producto
         ProductoModelo objeto_producto = new ProductoModelo(productNameEdit, productCantidadEdit,productPrecioEdit, productTipoEdit, productFechaEdit);//Creamos una productp vacia
 
 
@@ -209,10 +200,9 @@ public class AddEditProductActivity extends AppCompatActivity{
         if (cantidad.getText().toString().isEmpty()) {
             cantidad.setError("La cantidad es obligatoria");
             esVacio = false;
-        }/*
-        if(cantidad.getText().equals("2")){
-            sendNotificationProductos(String.valueOf(nombre),isHighImportance);
-        }*/
+        }
+
+        //Si todos los campos estan rellenos, procedemos a editar en la BBDD
         if (esVacio) {
             //Actualizamos los campos
             mDataBase.child(producto_eliminar.getId()).child("nombre").setValue(objeto_producto.getNombre());
@@ -221,22 +211,24 @@ public class AddEditProductActivity extends AppCompatActivity{
             mDataBase.child(producto_eliminar.getId()).child("tipo").setValue(objeto_producto.getTipo());
             if (!(objeto_producto.getFecha().equals(""))) //Para que no añada un campo vacio si la fecha no ha sido seleccionada
                 mDataBase.child(producto_eliminar.getId()).child("fecha").setValue(objeto_producto.getFecha());
-        } else {
+        } else { //Informamos al usuario que debe rellenar todos los campos
             Toast.makeText(AddEditProductActivity.this, "Rellena los campos necesarios", Toast.LENGTH_SHORT).show();
         }
 
         return esVacio;//Devolvemos para saber si debemos cambiar de activity o no
     }
 
+    //Método para cuando deseamos crear un nuevo producto
     private boolean añadirProducto() {
 
+        //Creamos y rellenamos algunas variables
         int productCantidad = 0;
         String productName = null;
         String productFecha = calendario.getText().toString();
         String productTipo = tipo.getSelectedItem().toString();
         double productPrecio;
         try {
-            productPrecio = Double.parseDouble(precio.getText().toString().trim()); //TODO Esto da error, no se porque
+            productPrecio = Double.parseDouble(precio.getText().toString().trim());
         } catch (NumberFormatException e) {
             productPrecio = -1;
         }
@@ -258,7 +250,7 @@ public class AddEditProductActivity extends AppCompatActivity{
             productCantidad = Integer.parseInt(cantidad.getText().toString().trim());
         }
 
-        if (isAble) {
+        if (isAble) {//Si los campos obligatorios estan rellenos, lo añadimos a la BBDD
             addBBDD(productName, productFecha, productCantidad, productPrecio, productTipo);
         } else {
             Toast.makeText(AddEditProductActivity.this, "Rellena los campos necesarios", Toast.LENGTH_SHORT).show();
@@ -267,17 +259,18 @@ public class AddEditProductActivity extends AppCompatActivity{
 
     }
 
+    //Método para añadir a la BBDD
     private void addBBDD(String productName, String productFecha, int productCantidad, double productPrecio, String productTipo) {
         extras = getIntent().getExtras();
+        //Obtenemos la ubicacion desde donde hemos llamado a añadir
         if (extras != null) {
             ubicacion = extras.getString("ubicacion");
-        }        //Para inicializar la instancia de autenticación
+        }
 
         //Obtenemos el id del usuario conectado
         String ID_user = mAuth.getCurrentUser().getUid();
-        Toast.makeText(AddEditProductActivity.this, "El usuario: " + ID_user, Toast.LENGTH_SHORT).show();
-        //IdProducto = ds.getKey();
 
+        //Creamos el producto
         ProductoModelo product = new ProductoModelo(productName,productCantidad,ubicacion, productTipo, ID_user);
 
         //Comprobamos si los datos se han rellenado
@@ -289,7 +282,7 @@ public class AddEditProductActivity extends AppCompatActivity{
             product.setPrecio(productPrecio);
         }
 
-
+        //Lo añadimos a la BBDD
         mDataBase.push().setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -300,6 +293,7 @@ public class AddEditProductActivity extends AppCompatActivity{
                 }
             }
         });
+        //Cambiamos el activity
         changeActivity();
 
     }
@@ -323,7 +317,6 @@ public class AddEditProductActivity extends AppCompatActivity{
     }
 
     private void mostrarCalendario() {
-        //Toast.makeText(this, "Has pulsado para mostrar el calendario", Toast.LENGTH_SHORT).show();
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
@@ -377,18 +370,5 @@ public class AddEditProductActivity extends AppCompatActivity{
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_undo); //Esto de aqui pone la imagen
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-/*
-    private void sendNotificationProductos(String nombreProducto, boolean isHighImportance) {
-        Toast.makeText(getApplicationContext(), "notificacion", Toast.LENGTH_LONG).show();
-
-        String title = "Quedan pocos productos" ;
-        String message = "Añade a tu lista de compra que quedan pocas unidades";
-
-        if (isHighImportance==true) {
-            Notification.Builder nb = notificationHandler.createNotification(title, message, isHighImportance);
-            notificationHandler.getManager().notify(++counter, nb.build());
-            notificationHandler.publishNotificationSummaryGroup(isHighImportance);
-        }
-    }*/
 
 }
