@@ -143,7 +143,7 @@ public class AddEditProductActivity extends AppCompatActivity{
                         changeActivity();
 
                     if (switchCalendario.isChecked())
-                        Agregar();
+                        CrearEvento();
                 }
             }
         });
@@ -338,35 +338,32 @@ public class AddEditProductActivity extends AppCompatActivity{
 
 
     }
-    public void Agregar(){
+    public void CrearEvento(){
+        //Creamos la instancia del calendario, para poder establecer la fecha del evento
         Calendar cal = Calendar.getInstance();
-
-        boolean val = false; //controlador del ciclo while
         Intent intent = null;
-        //while(val == false){
             try{
+                //Obtenemos la fecha
                 String[] fecha = calendario.getText().toString().split("/");
 
+                //Establecemos la fecha
                 cal.set(Calendar.YEAR, Integer.parseInt(fecha[2]));
-                cal.set(Calendar.MONTH, Integer.parseInt(fecha[1]) - 1);
+                cal.set(Calendar.MONTH, Integer.parseInt(fecha[1]) - 1); //Es menos 1, debido a que enero es 0
                 cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(fecha[0]));
 
+                //Creamos el evento
                 intent = new Intent(Intent.ACTION_INSERT);
                 intent.setData(CalendarContract.Events.CONTENT_URI);
                 intent.putExtra(CalendarContract.Events.ALL_DAY,true);
                 intent.putExtra(CalendarContract.Events.TITLE,"El producto " + nombre.getText() + " se caduca pronto");
                 intent.putExtra(CalendarContract.Events.DESCRIPTION, "Comer antes de que se ponga malo.");
-                intent.putExtra(CalendarContract.Events.HAS_ALARM, false);
-                //intent.putExtra(CalendarContract.Events.DTSTART, cal.getTimeInMillis());
-                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, cal.getTimeInMillis());
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, cal.getTimeInMillis()); //Establecemos el día del evento
 
-
+                //Comprobamos que tenga aplicación para ello
                 if(intent.resolveActivity(getPackageManager()) != null)
                     startActivity(intent);
                 else
                     Toast.makeText(getApplicationContext(), "No hay aplicacion para crear un evento de calendario", Toast.LENGTH_LONG).show();
-
-                val = true;
             }catch (Exception e){
                 Toast.makeText(getApplicationContext(), "Fecha invalida", Toast.LENGTH_LONG).show();
             }

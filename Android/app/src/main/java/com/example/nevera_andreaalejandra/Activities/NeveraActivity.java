@@ -417,17 +417,22 @@ public class NeveraActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             //Cambiamos la cantidad
-                                            mDataBase.child("Producto").child(productoModelo.getId()).child("cantidad").setValue(Integer.parseInt(cantidad.getText().toString().trim()));
+                                            try {
+                                                mDataBase.child("Producto").child(productoModelo.getId()).child("cantidad").setValue(Integer.parseInt(cantidad.getText().toString().trim()));
 
-                                            //Si esta seleccionado el check, lo cambiamos de ubicacion
-                                            mDataBase.child("Producto").child(productoModelo.getId()).child("ubicacion").setValue("lista_nevera").addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if(task.isSuccessful()) {
-                                                        Toast.makeText(NeveraActivity.this, "Se ha añadido satisfactoriamente", Toast.LENGTH_SHORT).show();
+                                                //Si esta seleccionado el check, lo cambiamos de ubicacion
+                                                mDataBase.child("Producto").child(productoModelo.getId()).child("ubicacion").setValue("lista_nevera").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Toast.makeText(NeveraActivity.this, "Se ha añadido satisfactoriamente", Toast.LENGTH_SHORT).show();
+                                                        }
                                                     }
-                                                }
-                                            });
+                                                });
+
+                                            }catch (NumberFormatException e){
+                                                Toast.makeText(getApplicationContext(), "Debe introducir una cantidad", Toast.LENGTH_LONG).show();
+                                            }
 
                                         }
                                     }).show();
