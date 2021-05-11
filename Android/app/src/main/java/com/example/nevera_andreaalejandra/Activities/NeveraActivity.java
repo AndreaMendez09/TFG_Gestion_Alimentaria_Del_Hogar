@@ -1,7 +1,6 @@
 package com.example.nevera_andreaalejandra.Activities;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -24,7 +22,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,7 +32,6 @@ import com.example.nevera_andreaalejandra.Interfaces.OnButtonClickListener;
 import com.example.nevera_andreaalejandra.Interfaces.OnItemClickListener;
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
-import com.example.nevera_andreaalejandra.Util.NotificationHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -50,7 +46,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 public class NeveraActivity extends AppCompatActivity {
@@ -70,7 +65,6 @@ public class NeveraActivity extends AppCompatActivity {
     private String UbicacionProducto;
     private Double PrecioProducto;
     private int CantidadProducto;
-    private Date FechaProducto = new Date();
     private String DateProducto;
     private String UID_usuario;
 
@@ -82,8 +76,6 @@ public class NeveraActivity extends AppCompatActivity {
     private FloatingActionButton add;
     private ConstraintLayout MensajeSinProductos;
     private EditText buscar;
-    private ImageView imageView;
-    private ConstraintLayout LayoutPadre;
 
     //Para el list view
     private RecyclerView recyclerView;
@@ -96,27 +88,28 @@ public class NeveraActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nevera);
+
+        //Establecemos la toolbar y el mensaje que aparece en ella
         setToolbar();
         getSupportActionBar().setTitle("Mi nevera");
 
 
-        //BBDD
+        //Inicializamos las variables para la BBDD
         mAuth = FirebaseAuth.getInstance();//Para inicializar la instancia de autenticación
         mDataBase = FirebaseDatabase.getInstance().getReference();
 
 
-        //Relacionamos con el xml
+        //****Relacionamos con el xml***
+        add = findViewById(R.id.FABAddList);
+        MensajeSinProductos = (ConstraintLayout) findViewById(R.id.MensajeSinProductos);
+        buscar = (EditText) findViewById(R.id.buscar);
+
+        //Partes del drawer
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navview);
         logout = (LinearLayout) findViewById(R.id.logout);
 
-        //Enlazar con el xml
-        add = findViewById(R.id.FABAddList);
-        MensajeSinProductos = (ConstraintLayout) findViewById(R.id.MensajeSinProductos);
-        imageView = (ImageView) findViewById(R.id.imageView);
-        buscar = (EditText) findViewById(R.id.buscar);
-        LayoutPadre = (ConstraintLayout) findViewById(R.id.layout_padre);
-
+        //Variables necesarias para visualizar la lista
         lista_productos = new ArrayList<ProductoModelo>();
         recyclerView = (RecyclerView) findViewById(R.id.item_product_nevera);
         mLayoutManager = new LinearLayoutManager(this);
@@ -127,29 +120,29 @@ public class NeveraActivity extends AppCompatActivity {
 
         leerProductos();
 
+        //Esta lista auxiliar es para poder recuperarla en caso de que busque
         lista_auxiliar = lista_productos;
 
         //Para que se visualize
         registerForContextMenu(recyclerView);
 
-
+        //*****CREAMOS LISTENERS****
+        //Función para cuando pulse el logout, localizado en el drawer abajo a la izquierda
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(MainActivity.this, "Se pulsa en logout", Toast.LENGTH_SHORT).show();
-                //TODO POR SI QUEREMOS METER UN DIALOG DE SI O NO
                 mAuth.signOut(); //Desconectamos al usuario
+
                 //Para volver al fragment donde nos encontramos
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);//Establecemos primero donde estamos y luego donde vamos
                 startActivity(intent);//Iniciamos el intent
             }
         });
 
+        //Función para añadir un producto
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Toast.makeText(getContext(), "Es necesario un nuevo nombre para el tablero", Toast.LENGTH_LONG).show();
-                showAlertForCreatingBoard("Añadir nuevo producto", "Escribir el nombre del producto");*/
                 //Con intent pasamos informacion al otro activity que vayamos a cambiar
                 Intent intent = new Intent(getApplicationContext(), AddEditProductActivity.class);//Establecemos primero donde estamos y luego donde vamos
 
@@ -160,6 +153,8 @@ public class NeveraActivity extends AppCompatActivity {
                 startActivity(intent);//Iniciamos el intent
             }
         });
+
+        //Función para aparecer o desaparecer el boton flotante al scrollear la lista
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -173,6 +168,7 @@ public class NeveraActivity extends AppCompatActivity {
             }
         });
 
+        //Función para buscar en la lista de productos
         buscar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -193,31 +189,35 @@ public class NeveraActivity extends AppCompatActivity {
 
     }
 
+    //********** METODOS *************
+    //Método para buscar, se activará cuando pulse el usuario en la opción localizada en los tres puntitos
     private void filter(String textoBuscar) {
-        ArrayList<ProductoModelo> filteredList = new ArrayList<ProductoModelo>();
+        ArrayList<ProductoModelo> filteredList = new ArrayList<ProductoModelo>(); //Se crea la lista donde se guardan los productos filtrados
         for (ProductoModelo producto : lista_productos) {
-            if(producto.getNombre().toLowerCase().contains(textoBuscar.toLowerCase())) {
-                filteredList.add(producto);
+            if(producto.getNombre().toLowerCase().contains(textoBuscar.toLowerCase())) { //Filtramos por el nombre
+                filteredList.add(producto); //Añadimos los productos resultantes del filtrar
             }
         }
+        //Actualizamos
         lista_productos = filteredList;
         adapterEliminar.notifyDataSetChanged();
         adapterEliminar.filterList(filteredList);
     }
 
-    //Para poner la imagen en el toolbar
+    //Método para establecer el toolbar
     private void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar); //He cambiado esto, porque ponia que el otro era para versiones de 30, y esta es la 26
+        setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home); //Esto de aqui pone la imagen
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    //Método para leer los productos de la BBDD
     private void leerProductos() {
+
         //Comprobamos el usuario que esta conectado
         String idUsuario = mAuth.getCurrentUser().getUid();
         Query query1 = FirebaseDatabase.getInstance().getReference("Producto").orderByChild("uid_usuario").equalTo(idUsuario);
-        //mDataBase.child("Producto").addValueEventListener();
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
@@ -231,6 +231,8 @@ public class NeveraActivity extends AppCompatActivity {
                         PrecioProducto = Double.valueOf(ds.child("precio").getValue().toString());
                         CantidadProducto = Integer.parseInt(ds.child("cantidad").getValue().toString());
                         UID_usuario = ds.child("uid_usuario").getValue().toString();
+
+                        //Para visualizar de manera distinta si en la BBDD no existe fecha
                         try {
                             DateProducto = ds.child("fecha").getValue().toString();
                         } catch (NullPointerException e) {
@@ -240,15 +242,13 @@ public class NeveraActivity extends AppCompatActivity {
                         //Vinculamos el id
                         IdProducto = ds.getKey();
 
+                        //Mostramos solo aquellos de nevera
                         if (UbicacionProducto.equals("nevera")) {
                             ProductoModelo product = new ProductoModelo(IdProducto, NombreProducto, CantidadProducto, PrecioProducto, UbicacionProducto, TipoProducto, DateProducto, UID_usuario);
                             lista_productos.add(product);
                         }
-                        if(CantidadProducto<2){
-                            //sendNotificationProductos(NombreProducto,isHighImportance);
-                        }
-
                     }
+                    //Creamos el adapter
                     adapterEliminar = new AdapterProducto(lista_productos, R.layout.item_principal, new OnItemClickListener() {
                         //Este click es al darle al producto
                         @Override
@@ -267,17 +267,12 @@ public class NeveraActivity extends AppCompatActivity {
                     }, new OnButtonClickListener() {
                         @Override
                         public void onButtonClick(ProductoModelo productoModelo, int position) {
-                            //Aqui va el boton de eliminar del cardview
-                            //Mostramos un dialogo emergente para comprobar si estas seguro de que quieres borrarlo
-                            //TODO no tengo ni idea si esto esta bien
-
                             deleteProduct(productoModelo);
                         }
-
                     });
-
-
                 }
+
+                //Atributos del recycler view
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setAdapter(adapterEliminar);
@@ -287,19 +282,14 @@ public class NeveraActivity extends AppCompatActivity {
                 Context context = recyclerView.getContext();
                 LayoutAnimationController layoutAnimationController = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_caer);
                 recyclerView.setLayoutAnimation(layoutAnimationController);
-                //recyclerView.getAdapter().notifyDataSetChanged();
                 recyclerView.scheduleLayoutAnimation();
 
+                //En caso de que no haya productos, visualizaremos una foto con mensaje
                 if (adapterEliminar.getItemCount() > 0 ) {
-                    //Toast.makeText(getContext(), "Hay productos", Toast.LENGTH_SHORT).show();
                     MensajeSinProductos.setVisibility(View.INVISIBLE);
                 }else {
-                    //Toast.makeText(getContext(), "No hay productos", Toast.LENGTH_SHORT).show();
                     MensajeSinProductos.setVisibility(View.VISIBLE);
                 }
-
-                //Collections.sort(lista_productos, ProductoModelo.ProductoAZ);
-                //adapterEliminar.notifyDataSetChanged();
             }
 
             @Override
@@ -308,112 +298,35 @@ public class NeveraActivity extends AppCompatActivity {
             }
         };
 
+        //Ejecutamos la query
         query1.addValueEventListener(valueEventListener);
     }
 
+    //Método para borrar un producto
+    private void deleteProduct(final ProductoModelo productoModelo) { //Pasamos el producto a borrar
 
-    //--------Oyentes
-    public class OyenteNav implements NavigationView.OnNavigationItemSelectedListener {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            //Obtenemos la posicion del menu
-            Activity activity = null;
-            switch (item.getItemId()) {
-                case R.id.menu_nevera: //Si coincide con el menumail es el fragment de Email
-                    activity = new NeveraActivity();
-                    cambiarActivity(activity);
-                    item.setChecked(true);
-                    break;
-                case R.id.menu_congelador: //Si coincide con el menumail es el fragment de Email
-                    activity = new CongeladorActivity();
-                    cambiarActivity(activity);
-                    item.setChecked(true);
-                    break;
-                case R.id.menu_lista: //Si coincide con el menumail es el fragment de Email
-                    activity = new TabActivity();
-                    cambiarActivity(activity);
-                    item.setChecked(true);
-                    break;
-                case R.id.menu_ajustes:
-                    activity = new AjustesActivity();
-                    cambiarActivity(activity);
-                    item.setChecked(true);
-                    break;
-
-            }
-            return true;
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.more_options, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // abrir el menu lateral
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-            case R.id.opciones_ordenar:
-                Collections.sort(lista_productos, ProductoModelo.ProductoAZ);
-                adapterEliminar.notifyDataSetChanged();
-                //Toast.makeText(MainActivity.this, "Has pulsado en ordenar", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.opciones_ordenar2:
-                Collections.sort(lista_productos, ProductoModelo.ProductoZA);
-                adapterEliminar.notifyDataSetChanged();
-                return true;
-            case R.id.opciones_ordenar3:
-                Collections.sort(lista_productos, ProductoModelo.ProductoCantidadA);
-                adapterEliminar.notifyDataSetChanged();
-                return true;
-            case R.id.opciones_ordenar4:
-                Collections.sort(lista_productos, ProductoModelo.ProductoCantidadD);
-                adapterEliminar.notifyDataSetChanged();
-                return true;
-            case R.id.buscar:
-                /*ConstraintSet constraintSet = new ConstraintSet();
-                constraintSet.clone(LayoutPadre);
-                constraintSet.connect(R.id.linearLayout2, ConstraintSet.BOTTOM, R.id.toolbar, ConstraintSet.BOTTOM, 0);
-                constraintSet.applyTo(LayoutPadre);*/
-                leerProductos();
-                //adapterEliminar.notifyAll();
-                if (buscar.getVisibility() == View.INVISIBLE)
-                    buscar.setVisibility(View.VISIBLE);
-                else {
-                    buscar.setText("");
-                    buscar.setVisibility(View.INVISIBLE);
-                }
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-    private void deleteProduct(final ProductoModelo productoModelo) {
-        //Para el checkbox
+        //Para el checkbox del dialog
         View checkBoxView = View.inflate(this, R.layout.dialog_checkbox, null);
         CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
 
+        //Si marcamos el checkbox saldrá otro dialog con un edittext para introducir la cantidad
         View edit_cantidad = View.inflate(this, R.layout.dialog_cantidad, null);
         EditText cantidad = (EditText) edit_cantidad.findViewById(R.id.CantidadModificar);
 
-        //creamos el alertDialog
+        //creamos el primer alertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(NeveraActivity.this);
-        builder.setMessage("¿Seguro que quiere eliminar?")//es como la partesita de arriba
-                .setTitle("Aviso")//es el texto
+        builder.setMessage("¿Seguro que quiere eliminar?")//Es el titulo
+                .setTitle("Aviso")//Es el cuerpo
                 .setView(checkBoxView)
-                .setCancelable(false)//es para que no se salga  si oprime cualquier cosa
-                .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                .setCancelable(false)//Con esta opción no se puede salir aunque pulse atras
+                .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {//En caso de que de a confirmar
                     public void onClick(DialogInterface builder, int id) {
                         //Comprobamos si exite el producto
                         if(lista_productos.size()==1){
                             lista_productos.clear();//La limpiamos
                         }
 
-                        //Oyente del check
+                        //Oyente del check, si esta checkeado se creará otro alertdialog
                         if (checkBox.isChecked()) {
                             AlertDialog.Builder builder2 = new AlertDialog.Builder(NeveraActivity.this);
                             builder2.setMessage("Introduce la cantidad a comprar")
@@ -439,12 +352,10 @@ public class NeveraActivity extends AppCompatActivity {
                                             }catch (NumberFormatException e){
                                                 Toast.makeText(getApplicationContext(), "Debe introducir una cantidad", Toast.LENGTH_LONG).show();
                                             }
-
                                         }
                                     }).show();
 
-                        }else {
-                            Toast.makeText(NeveraActivity.this, productoModelo.getId(), Toast.LENGTH_SHORT).show();
+                        }else {//Si no esta seleccionado el check
                             mDataBase.child("Producto").child(productoModelo.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -462,12 +373,82 @@ public class NeveraActivity extends AppCompatActivity {
 
     }
 
+    //Método para cambiar de activity
     public void cambiarActivity(Activity activity){
         Intent intent = new Intent(this, activity.getClass());//Establecemos primero donde estamos y luego donde vamos
         startActivity(intent);
     }
 
 
+    //***** OYENTES MENUS ****
+    //Este oyente es el del drawer
+    public class OyenteNav implements NavigationView.OnNavigationItemSelectedListener {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            //Obtenemos la posicion del menu
+            Activity activity = null;
+            switch (item.getItemId()) {
+                case R.id.menu_nevera:
+                    activity = new NeveraActivity();
+                    cambiarActivity(activity);
+                    break;
+                case R.id.menu_congelador:
+                    activity = new CongeladorActivity();
+                    cambiarActivity(activity);
+                    break;
+                case R.id.menu_lista:
+                    activity = new TabActivity();
+                    cambiarActivity(activity);
+                    break;
+                case R.id.menu_ajustes:
+                    activity = new AjustesActivity();
+                    cambiarActivity(activity);
+                    break;
+            }
+            return true;
+        }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.more_options, menu);
+        return true;
+    }
 
+    //Oyente para los tres puntitos localizados en el toolbar
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                //Abre el drawer
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            case R.id.opciones_ordenar: //Ordena de la AZ
+                Collections.sort(lista_productos, ProductoModelo.ProductoAZ);
+                adapterEliminar.notifyDataSetChanged();
+                return true;
+            case R.id.opciones_ordenar2: //Ordena de la ZA
+                Collections.sort(lista_productos, ProductoModelo.ProductoZA);
+                adapterEliminar.notifyDataSetChanged();
+                return true;
+            case R.id.opciones_ordenar3: //Ordena por cantidad ascendente
+                Collections.sort(lista_productos, ProductoModelo.ProductoCantidadA);
+                adapterEliminar.notifyDataSetChanged();
+                return true;
+            case R.id.opciones_ordenar4: //Ordena por cantidad descendente
+                Collections.sort(lista_productos, ProductoModelo.ProductoCantidadD);
+                adapterEliminar.notifyDataSetChanged();
+                return true;
+            case R.id.buscar: //Habilida/dehabilita la opción de buscar
+                leerProductos();
+                if (buscar.getVisibility() == View.INVISIBLE)
+                    buscar.setVisibility(View.VISIBLE);
+                else {
+                    buscar.setText("");
+                    buscar.setVisibility(View.INVISIBLE);
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

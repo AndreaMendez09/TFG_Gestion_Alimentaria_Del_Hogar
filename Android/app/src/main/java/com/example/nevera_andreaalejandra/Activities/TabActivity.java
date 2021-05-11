@@ -40,7 +40,6 @@ public class TabActivity extends AppCompatActivity {
 
     //Declaramos el adapter
     AdapterTab adapter;
-    AdapterProductoLista adapterLista;
 
     //Creamos las listas
     private ListaNevera_Fragment lista_nevera = new ListaNevera_Fragment();
@@ -63,14 +62,14 @@ public class TabActivity extends AppCompatActivity {
         navigationView = (NavigationView) findViewById(R.id.navTabs);
         logout = (LinearLayout) findViewById(R.id.logout);
 
-        //BBDD
+        //Inicializamos las variables para la BBDD
         mAuth = FirebaseAuth.getInstance();
 
         //Establecemos el tabLayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        //Establecemos el adapter
+        //Establecemos el adapter para el tablayout
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         adapter = new AdapterTab(getSupportFragmentManager(),tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
@@ -81,29 +80,19 @@ public class TabActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 position = tab.getPosition();
                 viewPager.setCurrentItem(position);
-
-
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                //Toast.makeText(TabActivity.this, "Deseleccionado -> "+tab.getText(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                //Toast.makeText(TabActivity.this, "Reseleccioando -> "+tab.getText(), Toast.LENGTH_SHORT).show();
             }
         });
 
         //Dependiendo de lo que seleccionemos en el menu, iremos a un fragment u a otro
         navigationView.setNavigationItemSelectedListener(new TabActivity.OyenteNav());
-        drawerLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(TabActivity.this, "Reseleccioando", Toast.LENGTH_SHORT).show();
-            }
-        });
 
 
         //Funcion de logout
@@ -182,7 +171,6 @@ public class TabActivity extends AppCompatActivity {
         }
         switch (item.getItemId()) {
             //0 es el item de nevera y 1 es el item de congelador
-
             case R.id.opciones_ordenar:
                 if (position == 0) {
                     lista_nevera.UpdateAZ();
@@ -211,21 +199,12 @@ public class TabActivity extends AppCompatActivity {
                     lista_congelador.Update91();
                 }
                 return true;
-            case R.id.opciones_seleccionar:
+            case R.id.opciones_comprar: //Compra todos
                 if (position == 0) {
                     lista_nevera.comprar_todos();
                 }else if (position == 1) {
                     lista_congelador.comprar_todos();
                 }
-                //Toast.makeText(TabActivity.this, "Has pulsado en seleccionar", Toast.LENGTH_SHORT).show();
-                //adapter
-
-                //adapterLista.list
-                /*TODO A ver, el problema que estamos teniendo es que el adapter que tenemos aqui es el del tab, este adapter
-                este adapter no ve obviamente los métodos del adapter de la lista, por lo tanto no ve el check o no
-                a parte de que no hay manera de identificarlo actualmente (yo diria que habria que añadir atributos al modelo
-                , sin meterlo en el constructor, simplemente getter y setter, de un booleano, y cambiarlo cada vez que
-                seleccione o deseleccione) un problema complicado, muchas capas, como las cebollas */
                 break;
             case R.id.opciones_deseleccionar:
                 Toast.makeText(TabActivity.this, "Has pulsado en deseleccionar", Toast.LENGTH_SHORT).show();

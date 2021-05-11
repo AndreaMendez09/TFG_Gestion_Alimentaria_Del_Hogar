@@ -28,7 +28,7 @@
                 android:icon="@drawable/ic_sort_1_9"
                 />
             <item
-                android:id="@+id/opciones_seleccionar"
+                android:id="@+id/opciones_comprar"
                 android:title="Comprar todos"
                 android:icon="@drawable/ic_shopping_cart"
                 />

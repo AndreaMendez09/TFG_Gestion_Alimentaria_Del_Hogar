@@ -67,7 +67,6 @@ public class ListaCongelador_Fragment extends Fragment {
     private String UbicacionProducto;
     private Double PrecioProducto;
     private int CantidadProducto;
-    private Date FechaProducto = new Date();
     private String DateProducto;
     private String UID_usuario;
 
