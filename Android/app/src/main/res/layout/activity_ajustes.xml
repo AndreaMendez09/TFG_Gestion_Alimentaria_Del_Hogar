@@ -74,13 +74,14 @@
                     android:textColor="#FCFCFC"
                     android:textSize="8pt" />
 
-                <TextView
+                <EditText
                     android:id="@+id/nombreUsuario"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Nombre del producto"
                     android:textColor="#FCFCFC"
-                    android:text="usuario"
-                    android:textSize="8pt" />
+                    android:layout_below="@+id/TextView"
+                    android:backgroundTint="@color/teal_200"/>
 
             </LinearLayout>
 
@@ -97,15 +98,14 @@
                     android:textColor="#FCFCFC"
                     android:text="Correo:"
                     android:textSize="8pt" />
-
-                <TextView
+                <EditText
                     android:id="@+id/correoUsuario"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="3pt"
+                    android:hint="Nombre del producto"
                     android:textColor="#FCFCFC"
-                    android:text=" correo@zzz.com"
-                    android:textSize="8pt" />
+                    android:layout_below="@+id/TextView"
+                    android:backgroundTint="@color/teal_200"/>
 
             </LinearLayout>
             <LinearLayout
@@ -113,42 +113,41 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="20pt"
-                    android:paddingRight="5pt"
-                    android:textColor="#FCFCFC"
-                    android:text="Contraseña:"
-                    android:textSize="8pt" />
 
-                <TextView
-                    android:id="@+id/contraseñaUsuario"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="3pt"
-                    android:textColor="#FCFCFC"
-                    android:text="******"
-                    android:textSize="8pt" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2pt"
-            android:orientation="vertical">
+            android:layout_marginTop="2pt">
 
-
-            <LinearLayout
+            <Button
+                android:id="@+id/buttonRecuperarContraseña"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="50dp"
+                android:background="@drawable/button_style1"
+                android:clickable="true"
+                android:text="Recuperar contraseña"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-            </LinearLayout>
-        </LinearLayout>
+            <Button
+                android:id="@+id/buttonEditarPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/button_style1"
+                android:clickable="true"
+                android:text="Editar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/buttonRecuperarContraseña"
+                app:layout_constraintStart_toStartOf="@+id/buttonRecuperarContraseña"
+                tools:layout_editor_absoluteY="0dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
