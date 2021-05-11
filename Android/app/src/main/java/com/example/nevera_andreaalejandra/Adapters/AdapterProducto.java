@@ -60,8 +60,12 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
         return list.size();
     }
 
+    public void setList(List<ProductoModelo> list) {
+        this.list = list;
+    }
+
     public void filterList(ArrayList<ProductoModelo> filteredList) {
-        list = filteredList;
+        setList(filteredList);
         notifyDataSetChanged();
     }
 

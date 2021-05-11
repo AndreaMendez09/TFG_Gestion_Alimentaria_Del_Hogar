@@ -73,10 +73,10 @@ public class NeveraActivity extends AppCompatActivity {
     private Date FechaProducto = new Date();
     private String DateProducto;
     private String UID_usuario;
-    private Bundle extras;
 
     //Creamos la lista para los productos de Nevera
     private List<ProductoModelo> lista_productos;
+    private List<ProductoModelo> lista_auxiliar;
 
     //Atributos para enlazar con el XML
     private FloatingActionButton add;
@@ -126,6 +126,8 @@ public class NeveraActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new OyenteNav());
 
         leerProductos();
+
+        lista_auxiliar = lista_productos;
 
         //Para que se visualize
         registerForContextMenu(recyclerView);
@@ -185,6 +187,7 @@ public class NeveraActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 filter(s.toString());
+                lista_productos = lista_auxiliar;
             }
         });
 
@@ -197,7 +200,8 @@ public class NeveraActivity extends AppCompatActivity {
                 filteredList.add(producto);
             }
         }
-
+        lista_productos = filteredList;
+        adapterEliminar.notifyDataSetChanged();
         adapterEliminar.filterList(filteredList);
     }
 
@@ -376,6 +380,8 @@ public class NeveraActivity extends AppCompatActivity {
                 constraintSet.clone(LayoutPadre);
                 constraintSet.connect(R.id.linearLayout2, ConstraintSet.BOTTOM, R.id.toolbar, ConstraintSet.BOTTOM, 0);
                 constraintSet.applyTo(LayoutPadre);*/
+                leerProductos();
+                //adapterEliminar.notifyAll();
                 if (buscar.getVisibility() == View.INVISIBLE)
                     buscar.setVisibility(View.VISIBLE);
                 else {

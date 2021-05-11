@@ -9,6 +9,7 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -112,6 +113,7 @@ public class AddEditProductActivity extends AppCompatActivity{
         Edit_O_Add(producto, bundle);
 
 
+
         //Este es el boton de guardar
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,8 +133,12 @@ public class AddEditProductActivity extends AppCompatActivity{
                         changeActivity();
 
                     //En caso de que el usuario quiera añadir el evento de calendario
-                    if (switchCalendario.isChecked())
+                    if (switchCalendario.isChecked() && (!(calendario.getText().toString().equals(""))))
                         CrearEvento();
+
+                    if (switchCalendario.isChecked() && calendario.getText().toString().equals(""))
+                        Toast.makeText(AddEditProductActivity.this, "No se puede crear el evento sin fecha de caducidad.", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });

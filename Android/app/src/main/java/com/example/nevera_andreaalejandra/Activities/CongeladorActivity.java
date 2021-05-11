@@ -72,27 +72,19 @@ public class CongeladorActivity extends AppCompatActivity {
     private String UbicacionProducto;
     private Double PrecioProducto;
     private int CantidadProducto;
-    private Date FechaProducto = new Date();
     private String DateProducto;
     private String UID_usuario;
-
-    //Notificaciones
-    private NotificationHandler notificationHandler;
-    private int counter = 0;
-    private boolean isHighImportance = true;
-
-    private Bundle extras;
-    //Variable para detectar en que parte de la app está
-    private int fragment_actual = 0;
 
     //El boton para añadir
     private FloatingActionButton add;
     private ConstraintLayout MensajeSinProductos;
     private EditText buscar;
-    private ImageView imageView;
 
     //Creamos la lista para los productos de Nevera
     private List<ProductoModelo> lista_productos;
+    private List<ProductoModelo> lista_auxiliar;
+
+
     //Creamos el adapter
     public AdapterProducto adapterEliminar;
     //Para el list view
@@ -115,7 +107,6 @@ public class CongeladorActivity extends AppCompatActivity {
         //Relacionamos con el xml
         add = findViewById(R.id.FABAddList);
         MensajeSinProductos = (ConstraintLayout) findViewById(R.id.MensajeSinProductos);
-        imageView = (ImageView) findViewById(R.id.imageView);
         buscar = (EditText) findViewById(R.id.buscar);
 
 
@@ -125,7 +116,6 @@ public class CongeladorActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.item_product_congelador);
         mLayoutManager = new LinearLayoutManager(this);
-        notificationHandler = new NotificationHandler(this);
 
 
         lista_productos = new ArrayList<ProductoModelo>();
@@ -134,6 +124,8 @@ public class CongeladorActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new OyenteNav());
 
         leerProductos();
+
+        lista_auxiliar = lista_productos;
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,6 +179,7 @@ public class CongeladorActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 filter(s.toString());
+                lista_productos = lista_auxiliar;
             }
         });
 
@@ -199,7 +192,8 @@ public class CongeladorActivity extends AppCompatActivity {
                 filteredList.add(producto);
             }
         }
-
+        lista_productos = filteredList;
+        adapterEliminar.notifyDataSetChanged();
         adapterEliminar.filterList(filteredList);
     }
 
@@ -388,6 +382,7 @@ public class CongeladorActivity extends AppCompatActivity {
                 constraintSet.clone(LayoutPadre);
                 constraintSet.connect(R.id.linearLayout2, ConstraintSet.BOTTOM, R.id.toolbar, ConstraintSet.BOTTOM, 0);
                 constraintSet.applyTo(LayoutPadre);*/
+                leerProductos();
                 if (buscar.getVisibility() == View.INVISIBLE)
                     buscar.setVisibility(View.VISIBLE);
                 else {
