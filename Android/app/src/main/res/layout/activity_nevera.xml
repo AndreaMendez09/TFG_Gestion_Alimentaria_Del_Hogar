@@ -109,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_margin="20dp"
-                android:text="Puedes añadir productos, que esto esta muy vacio"
+                android:text="Puedes añadir productos, que esto está muy vacío"
                 android:textAlignment="center"
                 android:textColor="#FCFCFC"
                 android:textSize="26sp"

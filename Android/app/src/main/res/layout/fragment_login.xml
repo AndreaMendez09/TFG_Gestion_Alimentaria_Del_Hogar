@@ -63,7 +63,8 @@
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp" />
+                android:paddingRight="15dp"
+                android:hint="Introduce tu correo"/>
         </LinearLayout>
 
         <LinearLayout
@@ -107,7 +108,8 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp" />
+                android:paddingRight="15dp"
+                android:hint="Introduce tu contraseña"/>
 
         </LinearLayout>
         <Switch
