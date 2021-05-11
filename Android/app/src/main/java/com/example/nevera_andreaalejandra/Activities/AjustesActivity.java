@@ -65,7 +65,7 @@ public class AjustesActivity extends AppCompatActivity {
         //Enlazamos con el xml
         nombre = (TextView) findViewById(R.id.nombreUsuario);
         correo = (TextView) findViewById(R.id.correoUsuario);
-        switchNotificaciones = (Switch) findViewById(R.id.switchNotificaciones);
+      //  switchNotificaciones = (Switch) findViewById(R.id.switchNotificaciones);
         sugerencia =  (TextView) findViewById(R.id.sugerencia);
         enviar = (Button) findViewById(R.id.buttonEnviarSugerencia);
 

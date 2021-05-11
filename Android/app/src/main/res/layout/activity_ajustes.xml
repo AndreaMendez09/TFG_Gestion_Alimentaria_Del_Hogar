@@ -33,7 +33,7 @@
             android:fontFamily="sans-serif-light"
             android:text="Ajustes"
             android:textColor="#FCFCFC"
-            android:textSize="36sp" />
+            android:textSize="40sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                     android:layout_gravity="center"
                     android:text="Perfil"
                     android:textColor="#FCFCFC"
-                    android:textSize="10pt" />
+                    android:textSize="15pt" />
             </LinearLayout>
 
             <LinearLayout
@@ -71,12 +71,14 @@
                     android:paddingLeft="20pt"
                     android:paddingRight="5pt"
                     android:text="Nombre:"
+                    android:textColor="#FCFCFC"
                     android:textSize="8pt" />
 
                 <TextView
                     android:id="@+id/nombreUsuario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="#FCFCFC"
                     android:text="usuario"
                     android:textSize="8pt" />
 
@@ -92,6 +94,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="20pt"
                     android:paddingRight="5pt"
+                    android:textColor="#FCFCFC"
                     android:text="Correo:"
                     android:textSize="8pt" />
 
@@ -100,6 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="3pt"
+                    android:textColor="#FCFCFC"
                     android:text=" correo@zzz.com"
                     android:textSize="8pt" />
 
@@ -113,34 +117,6 @@
             android:layout_marginTop="2pt"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5pt"
-                    android:src="@drawable/ic_baseline_notifications_active_24" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Notificaciones"
-                    android:textColor="#FCFCFC"
-                    android:textSize="10pt" />
-
-                <Switch
-                    android:id="@+id/switchNotificaciones"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="20pt"
-                    android:text="@string/switch_notifications_off">
-
-                </Switch>
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -209,6 +185,7 @@
 
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/logout"
             android:layout_width="wrap_content"
