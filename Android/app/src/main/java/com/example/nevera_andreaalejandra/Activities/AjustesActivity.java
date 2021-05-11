@@ -31,8 +31,11 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AjustesActivity extends AppCompatActivity {
     //Valores de la BBDD
-    private TextView nombre;
-    private TextView correo;
+
+    private EditText nombreedit;
+    private EditText correoEdit;
+    private EditText apellidosEdit;
+
     private TextView sugerencia;
     private UsuarioModelo usuario;
     private String NombreUsuario;
@@ -40,7 +43,8 @@ public class AjustesActivity extends AppCompatActivity {
     private String CorreoUsuario;
     private String IdUsuario;
     private Button enviar;
-
+    private Button editarUsuario;
+    private Button editarContraseña;
     //Notificaciones
     private NotificationHandler notificationHandler;
     private int counter = 0;
@@ -63,12 +67,14 @@ public class AjustesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ajustes);
 
         //Enlazamos con el xml
-        nombre = (TextView) findViewById(R.id.nombreUsuario);
-        correo = (TextView) findViewById(R.id.correoUsuario);
-      //  switchNotificaciones = (Switch) findViewById(R.id.switchNotificaciones);
+
         sugerencia =  (TextView) findViewById(R.id.sugerencia);
         enviar = (Button) findViewById(R.id.buttonEnviarSugerencia);
-
+        editarUsuario = (Button) findViewById(R.id.buttonEditarPerfil);
+        editarContraseña = (Button) findViewById(R.id.buttonCambiarContraseña);
+        nombreedit = (EditText) findViewById(R.id.nombreUsuario);
+        correoEdit = (EditText) findViewById(R.id.correoUsuario);
+        apellidosEdit = (EditText) findViewById(R.id.apellidosUsuario);
         logout = (LinearLayout) findViewById(R.id.logout);
         setToolbar();
 
@@ -103,6 +109,22 @@ public class AjustesActivity extends AppCompatActivity {
 
             }
         });
+        editarUsuario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editarUsuario(usuario);
+                Toast.makeText(AjustesActivity.this, "Se ha editado el Usuario", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        editarContraseña.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(AjustesActivity.this, "Se ha pulsado en contraseña", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
     private void DatosUsuario() {
         mDataBase.child("Usuario").addValueEventListener(new ValueEventListener() {
@@ -122,8 +144,9 @@ public class AjustesActivity extends AppCompatActivity {
                         if (IdUsuario.equals(id)) {
                           usuario = new UsuarioModelo(IdUsuario, NombreUsuario, ApellidoUsuario, CorreoUsuario);
 
-                            nombre.setText(usuario.getNombre() + " " + usuario.getApellido());
-                            correo.setText(usuario.getCorreo());
+                            nombreedit.setText(usuario.getNombre());
+                            correoEdit.setText(usuario.getCorreo());
+                            apellidosEdit.setText(usuario.getApellido());
                         }
 
                     }
@@ -175,5 +198,38 @@ public class AjustesActivity extends AppCompatActivity {
             Toast.makeText(AjustesActivity.this, "No hay ningun cliente de correo instalado.", Toast.LENGTH_SHORT).show();
         }
     }
+    private void editarUsuario(UsuarioModelo usuario_eliminar){
+        //Obtenemos los datos del edit text
+        String nombreUsuario = nombreedit.getText().toString().trim();
+        String correoUsuario = correoEdit.getText().toString().trim();
+        String apellidoUsuario = apellidosEdit.getText().toString();
+
+        //Creamos un usuario nuevo
+        UsuarioModelo usuario = new UsuarioModelo(nombreUsuario,apellidoUsuario, correoUsuario);
+
+        boolean Vacio = true;
+        if(nombreUsuario.isEmpty()){
+            nombreedit.setError("El nombre es obligatorio");
+            Vacio = false;
+        }
+        if(correoUsuario.isEmpty()){
+            correoEdit.setError("El correo es obligatorio");
+            Vacio = false;
+        }
+        if(nombreUsuario.isEmpty()){
+            apellidosEdit.setError("El apellido es obligatorio");
+            Vacio = false;
+        }
+        //Si todos los campos estan rellenos, procedemos a editar en la BBDD
+        if(Vacio){
+            mDataBase.child(usuario_eliminar.getId_usuario()).child("nombre").setValue(usuario.getNombre());
+            mDataBase.child(usuario_eliminar.getId_usuario()).child("apellido").setValue(usuario.getApellido());
+            mDataBase.child(usuario_eliminar.getId_usuario()).child("correo").setValue(usuario.getCorreo());
+        }else {//Informamos al usuario que debe rellenar todos los campos
+            Toast.makeText(AjustesActivity.this, "Rellena los campos necesarios", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
 
 }

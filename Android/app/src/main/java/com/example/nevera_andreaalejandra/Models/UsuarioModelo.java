@@ -16,6 +16,12 @@ public class UsuarioModelo {
         this.apellidos = apellidos;
         this.correo = correo;
     }
+    public UsuarioModelo(String nombre, String apellidos,String correo){
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.correo = correo;
+
+    }
 
 
 

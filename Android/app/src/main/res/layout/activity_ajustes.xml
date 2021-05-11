@@ -78,7 +78,7 @@
                     android:id="@+id/nombreUsuario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nombre del producto"
+                    android:hint="Nombre del usuario"
                     android:textColor="#FCFCFC"
                     android:layout_below="@+id/TextView"
                     android:backgroundTint="@color/teal_200"/>
@@ -96,13 +96,36 @@
                     android:paddingLeft="20pt"
                     android:paddingRight="5pt"
                     android:textColor="#FCFCFC"
+                    android:text="Apellidos:"
+                    android:textSize="8pt" />
+                <EditText
+                    android:id="@+id/apellidosUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Apellido del usuario"
+                    android:textColor="#FCFCFC"
+                    android:layout_below="@+id/TextView"
+                    android:backgroundTint="@color/teal_200"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20pt"
+                    android:paddingRight="5pt"
+                    android:textColor="#FCFCFC"
                     android:text="Correo:"
                     android:textSize="8pt" />
                 <EditText
                     android:id="@+id/correoUsuario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nombre del producto"
+                    android:hint="Correo del usuario"
                     android:textColor="#FCFCFC"
                     android:layout_below="@+id/TextView"
                     android:backgroundTint="@color/teal_200"/>
@@ -125,7 +148,7 @@
             android:layout_margin="10dp">
 
             <Button
-                android:id="@+id/buttonRecuperarContraseña"
+                android:id="@+id/buttonCambiarContraseña"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:background="@drawable/button_style1"
