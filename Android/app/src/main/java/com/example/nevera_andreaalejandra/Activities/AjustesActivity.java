@@ -95,7 +95,6 @@ public class AjustesActivity extends AppCompatActivity {
                 startActivity(intent);//Iniciamos el intent
             }
         });
-
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,26 +103,7 @@ public class AjustesActivity extends AppCompatActivity {
 
             }
         });
-        //Oyentes
-        switchNotificaciones.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switchNotificaciones.setText((switchNotificaciones.isChecked()) ? switchTextOn : switchTextOff);
-                boolean activa;
-                if (switchNotificaciones.isChecked()) {
-                    activa = true;
-                    sendNotification(isHighImportance, activa);
-                    Toast.makeText(getApplicationContext(), "Activado", Toast.LENGTH_LONG).show();
-                }else {
-                    activa = false;
-                    sendNotification(isHighImportance, activa);
-                    Toast.makeText(getApplicationContext(), "Desactivado", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
     }
-
     private void DatosUsuario() {
         mDataBase.child("Usuario").addValueEventListener(new ValueEventListener() {
             @Override
@@ -165,28 +145,6 @@ public class AjustesActivity extends AppCompatActivity {
         //sendNotification(isHighImportance, act);
     }
 
-    private void sendNotification(boolean isHighImportance, boolean activa) {
-        Toast.makeText(getApplicationContext(), "notificacion", Toast.LENGTH_LONG).show();
-
-        String title = "Notificaciones";
-        String messageActivada = "Las notificaciones estan activadas";
-        String messageDesactivadas = "Las notificaciones estan Desactivadas";
-
-
-        if (activa==true) {
-            //TODO MIRAR ESTO
-            Notification.Builder nb = (Notification.Builder) notificationHandler.createNotification(title, messageActivada, isHighImportance,null);
-            notificationHandler.getManager().notify(++counter, nb.build());
-            notificationHandler.publishNotificationSummaryGroup(isHighImportance);
-
-
-        }if(activa==false) {
-            //TODO MIRAR ESTO
-            Notification.Builder nb = notificationHandler.createNotification(title, messageDesactivadas, isHighImportance, null);
-            notificationHandler.getManager().notify(++counter, nb.build());
-            notificationHandler.publishNotificationSummaryGroup(isHighImportance);
-        }
-    }
 
     //Para poner la imagen en el toolbar
     private void setToolbar() {

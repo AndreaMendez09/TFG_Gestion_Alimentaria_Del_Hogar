@@ -108,6 +108,30 @@
                     android:textSize="8pt" />
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20pt"
+                    android:paddingRight="5pt"
+                    android:textColor="#FCFCFC"
+                    android:text="Contraseña:"
+                    android:textSize="8pt" />
+
+                <TextView
+                    android:id="@+id/contraseñaUsuario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3pt"
+                    android:textColor="#FCFCFC"
+                    android:text="******"
+                    android:textSize="8pt" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -186,30 +210,32 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/logout"
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_margin="20dp"
-            android:clickable="true"
-            android:orientation="horizontal">
+            android:src="@drawable/ic_logout" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_logout" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Log out"
+            android:textColor="#FCFCFC"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Log out"
-                android:textColor="#FCFCFC"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
