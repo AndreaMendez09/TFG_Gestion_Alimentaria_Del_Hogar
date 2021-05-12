@@ -32,10 +32,6 @@
                 android:title="Comprar todos"
                 android:icon="@drawable/ic_shopping_cart"
                 />
-            <item
-                android:id="@+id/opciones_deseleccionar"
-                android:title="Deseleccionar todos"
-                />
         </menu>
 
     </item>

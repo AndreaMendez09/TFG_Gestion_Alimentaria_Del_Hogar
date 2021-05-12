@@ -206,9 +206,6 @@ public class TabActivity extends AppCompatActivity {
                     lista_congelador.comprar_todos();
                 }
                 break;
-            case R.id.opciones_deseleccionar:
-                Toast.makeText(TabActivity.this, "Has pulsado en deseleccionar", Toast.LENGTH_SHORT).show();
-                break;
         }
         return super.onOptionsItemSelected(item);
     }
