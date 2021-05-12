@@ -1,5 +1,6 @@
 package com.example.nevera_andreaalejandra.Activities;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,9 +18,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.nevera_andreaalejandra.Fragments.Login.HomeFragment;
 import com.example.nevera_andreaalejandra.Models.UsuarioModelo;
 import com.example.nevera_andreaalejandra.R;
 import com.example.nevera_andreaalejandra.Util.NotificationHandler;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,13 +33,14 @@ import com.google.firebase.database.ValueEventListener;
 
 
 
+
 public class AjustesActivity extends AppCompatActivity {
     //Valores de la BBDD
 
     private EditText nombreedit;
-    private EditText correoEdit;
+    private TextView correoEdit;
     private EditText apellidosEdit;
-
+    private EditText textSugerencia;
     private TextView sugerencia;
     private UsuarioModelo usuario;
     private String NombreUsuario;
@@ -54,7 +59,7 @@ public class AjustesActivity extends AppCompatActivity {
     private boolean isHighImportance = true;
 
     private LinearLayout logout;
-
+    private AlertDialog.Builder builder;
 
     //Para realizar la conexon con la firebase
     private DatabaseReference mDataBase;
@@ -68,12 +73,13 @@ public class AjustesActivity extends AppCompatActivity {
 
         //Enlazamos con el xml
 
-        sugerencia =  (TextView) findViewById(R.id.sugerencia);
+
         enviar = (Button) findViewById(R.id.buttonEnviarSugerencia);
         editarUsuario = (Button) findViewById(R.id.buttonEditarPerfil);
         editarContraseña = (Button) findViewById(R.id.buttonCambiarContraseña);
+        textSugerencia = (EditText) findViewById(R.id.textsugerencia);
         nombreedit = (EditText) findViewById(R.id.nombreUsuario);
-        correoEdit = (EditText) findViewById(R.id.correoUsuario);
+        correoEdit = (TextView) findViewById(R.id.correoUsuario);
         apellidosEdit = (EditText) findViewById(R.id.apellidosUsuario);
         logout = (LinearLayout) findViewById(R.id.logout);
         setToolbar();
@@ -83,7 +89,7 @@ public class AjustesActivity extends AppCompatActivity {
 
         //1.Las referencias de auntenticacion de la base de datos
         //leeemos la lista
-        mDataBase = FirebaseDatabase.getInstance().getReference();
+        mDataBase = FirebaseDatabase.getInstance().getReference().child("Usuario");
         //Para inicializar la instancia de autenticación
         mAuth = FirebaseAuth.getInstance();
 
@@ -120,14 +126,14 @@ public class AjustesActivity extends AppCompatActivity {
         editarContraseña.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(AjustesActivity.this, "Se ha pulsado en contraseña", Toast.LENGTH_SHORT).show();
+                enviarEmailRecuperar();
+                //Toast.makeText(AjustesActivity.this, "Se ha pulsado en contraseña", Toast.LENGTH_SHORT).show();
 
             }
         });
     }
     private void DatosUsuario() {
-        mDataBase.child("Usuario").addValueEventListener(new ValueEventListener() {
+        mDataBase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -188,9 +194,9 @@ public class AjustesActivity extends AppCompatActivity {
         // Aqui definimos un titulo para el Email
         emailIntent.putExtra(android.content.Intent.EXTRA_TITLE, "Sugerencias");
         // Aqui definimos un Asunto para el Email
-        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "El Asunto");
+        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Sugerencia de App Mi Nevera");
         // Aqui obtenemos la referencia al texto y lo pasamos al Email Intent
-        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.my_text));
+        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,textSugerencia.getText().toString());
         try {
             //Enviamos el Correo iniciando una nueva Activity con el emailIntent.
             startActivity(Intent.createChooser(emailIntent, "Enviar Correo..."));
@@ -229,6 +235,33 @@ public class AjustesActivity extends AppCompatActivity {
             Toast.makeText(AjustesActivity.this, "Rellena los campos necesarios", Toast.LENGTH_SHORT).show();
         }
 
+    }
+    private void enviarEmailRecuperar() {
+        //Obtenemos el email que ha escrito el usuario
+        String email= correoEdit.getText().toString().trim();
+        if(TextUtils.isEmpty(email)){
+            Toast.makeText(this,"Debe escribir una dirección",Toast.LENGTH_SHORT).show();
+        }else{
+            //método que manda un email automático a la dirección proporcionada donde se
+            // escribe la nueva contraseña, siempre que exista una cuenta con dicha dirección
+            mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){//En caso exitoso, volvemos al activity principal
+                       // Toast.makeText(getApplicationContext(),"Se ha enviado un email a tu dirección",Toast.LENGTH_SHORT).show();
+                        builder = new AlertDialog.Builder(AjustesActivity.this); //Getcontext porque es un fragment
+                        builder.setTitle("INFORMACION");
+                        builder.setMessage("Informamos que se ha enviado un enlace a tu correo para cambiar la contraseña :)");
+                        //Añadimos un botón neutral
+                        builder.setNeutralButton("OK", null);
+                        builder.show(); //Mostramos el cuadro de dialogo
+                    }else{ //Si la dirección de la cuenta no existe
+                        Toast.makeText(getApplicationContext(),"Error: no hay ninguna cuenta registrada con la dirección proporcionada",Toast.LENGTH_SHORT).show();
+                        correoEdit.setError("Escriba una dirección registrada de email");
+                    }
+                }
+            });
+        }
     }
 
 

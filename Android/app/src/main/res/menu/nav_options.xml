@@ -15,8 +15,8 @@
             android:title="Lista de la compra" />
         <item
             android:id="@+id/menu_ajustes"
-            android:icon="@drawable/ic_baseline_settings_24"
-            android:title="Ajustes" />
+            android:icon="@drawable/ic_person"
+            android:title="Perfil" />
     </group>
 
 </menu>
