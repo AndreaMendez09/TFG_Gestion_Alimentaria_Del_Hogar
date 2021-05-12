@@ -25,19 +25,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLista.ViewHolderLista> {
+
+    //Creamos las variables necesarias para el constructos
     private OnItemClickListener itemClickListener;
     private OnButtonClickListener buttonClickListener;
     private OnCheckedChangeListener checkedChangeListener;
     private Context context;
+
+    //Variables para el producto
     private int layout;
     private String tipoproducto;
     public List<ProductoModelo> list;
-    SparseBooleanArray mSparseBooleanArray;
 
-    public AdapterProductoLista() {
-
-    }
-
+    //Creamos el constructor
     public AdapterProductoLista(Context context, List<ProductoModelo> list, int layout, OnItemClickListener itemListener, OnButtonClickListener btnListener, OnCheckedChangeListener checkedChangeListener) {
         super();
         this.layout = layout;
@@ -66,30 +66,6 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
         return list.size();
     }
 
-    public List<ProductoModelo> getList() {
-        return list;
-    }
-
-    public List<ProductoModelo> getCheckedItems() {
-        List<ProductoModelo> mTempArry = new ArrayList<ProductoModelo>(); //Instanciamos nuestra lista temporal
-        for(int i=0;i<list.size();i++) {
-            if(mSparseBooleanArray.get(i)) {
-                mTempArry.add(list.get(i));
-            }
-        }
-        return mTempArry;
-    }
-
-    /*public void checkAll(){
-        for(int x = 0; x < list.size(); x++){
-            list.get(x).setChecked(!alumno.get(x).isChecked());
-        }
-    }*/
-
-
-    public void DondeEstoy(String estoyEn) {
-        Toast.makeText(context, estoyEn , Toast.LENGTH_LONG).show();
-    }
 
     public class ViewHolderLista extends RecyclerView.ViewHolder {
 
@@ -102,20 +78,24 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
 
         public ViewHolderLista(@NonNull View itemView) {
             super(itemView);
+
+            //Vinculamos xml con las variables
             nombre = (TextView) itemView.findViewById(R.id.nameProduct);
             precio = (TextView) itemView.findViewById(R.id.priceProduct);
             cantidad = (TextView) itemView.findViewById(R.id.cantidadProduct);
             imagenItem = (ImageView) itemView.findViewById(R.id.imageProduct);
             btnDelete = (ImageButton) itemView.findViewById(R.id.imageDelete);
             check = (CheckBox) itemView.findViewById(R.id.checkbox_product);
-
         }
 
         public void bind(final ProductoModelo product, final OnItemClickListener itemListener, final OnButtonClickListener btnListener, final OnCheckedChangeListener checkListener) { //
+            //Ponemos los datos del producto
             nombre.setText(product.getNombre());
             tipoproducto = product.getTipo();
             precio.setText("Precio: " + product.getPrecio() + "€");
             cantidad.setText("Cantidad : "+ product.getCantidad() + "");
+
+            //Dependiendo del tipo de producto, establecemos una foto y u otra
             switch (tipoproducto){
                 case "Vegetales":
                     imagenItem.setImageResource(R.drawable.ic_carrot_solid);
@@ -154,7 +134,7 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
                     System.out.println("No se encuentra");
             }
 
-
+            //Creamos los listeners
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -179,26 +159,4 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
         }
 
     }
-
-
 }
-/*
-    public void seleccionarTodo(final ProductoModelo product,final AdapterProductoLista.OnCheckedChangeListener checkListener){
-
-        for (int i=0; list.size()==i; i++){
-
-            if(list.get(i).getUbicacion().equals("nevera")){
-                list.setItemChecked(i,true);
-            }if(list.get(i).getUbicacion().equals("congelador")){
-
-            }
-        }
-                /*
-        Query queryCheckAllNevera = FirebaseDatabase.getInstance().getReference("Producto")
-                .orderByChild("ubicacion")
-                .equalTo("nevera");
-        Query queryCheckAllCongelador = FirebaseDatabase.getInstance().getReference("Producto")
-                .orderByChild("ubicacion")
-                .equalTo("congelador");
-
-    }*/

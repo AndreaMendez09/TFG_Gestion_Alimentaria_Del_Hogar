@@ -52,7 +52,7 @@ public class ProductoModelo implements Serializable {
         this.fecha = fecha;
     }
 
-    //Métodos para ordenar los productos
+    //***Métodos para ordenar los productos***
     public static Comparator<ProductoModelo> ProductoAZ = new Comparator<ProductoModelo>() {
         @Override
         public int compare(ProductoModelo p1, ProductoModelo p2) {

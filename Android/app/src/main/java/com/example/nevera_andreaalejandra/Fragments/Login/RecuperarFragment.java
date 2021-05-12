@@ -37,7 +37,6 @@ public class RecuperarFragment extends Fragment {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +55,9 @@ public class RecuperarFragment extends Fragment {
 
         //Para inicializar la instancia de autenticación
         mAuth=FirebaseAuth.getInstance();
-        
+
+
+        //**** Creamos los listeners necesarios ***
         ButtonEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +77,7 @@ public class RecuperarFragment extends Fragment {
         return view;
     }
 
+    //Método para enviar el email para recuperar la contraseña
     private void enviarEmail() {
         //Obtenemos el email que ha escrito el usuario
         String email= mail_recuperar.getText().toString().trim();

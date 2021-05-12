@@ -20,19 +20,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHolder> {
+    //Creamos las variables necesarias para el constructos
     private OnItemClickListener itemClickListener;
     private OnButtonClickListener buttonClickListener;
-    private Context context;
     private int layout;
+
+    //Variables para el producto
     private String tipoproducto;
     private List<ProductoModelo> list;
 
-    public AdapterProducto(Context context, int layout, List<ProductoModelo> list) {
-        super();
-        this.context = context;
-        this.layout = layout;
-        this.list = list;
-    }
+
+    //Creamos el constructos con los listeners
     public AdapterProducto(List<ProductoModelo> list, int layout,OnItemClickListener itemListener, OnButtonClickListener btnListener ) {
         super();
         this.layout = layout;
@@ -45,7 +43,6 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
-        context = parent.getContext();
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -55,15 +52,19 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
         holder.bind(list.get(position), itemClickListener, buttonClickListener);
     }
 
+    //Método para obtener la cantidad de la lista
     @Override
     public int getItemCount() {
         return list.size();
     }
 
+    //Método para cambiar la lista
     public void setList(List<ProductoModelo> list) {
         this.list = list;
     }
 
+
+    //Método para filtrar en nevera y congelador
     public void filterList(ArrayList<ProductoModelo> filteredList) {
         setList(filteredList);
         notifyDataSetChanged();
@@ -79,6 +80,7 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            //Vinculamos xml con las variables
             nombre = (TextView) itemView.findViewById(R.id.nameProduct);
             fecha = (TextView) itemView.findViewById(R.id.dateProduct);
             cantidad = (TextView) itemView.findViewById(R.id.cantidadProduct);
@@ -88,10 +90,13 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
         }
 
         public void bind(final ProductoModelo product, final OnItemClickListener itemListener, final OnButtonClickListener btnListener) {
+            //Ponemos los datos del producto
             nombre.setText(product.getNombre());
             tipoproducto = product.getTipo();
             fecha.setText("Caducidad: " + product.getFecha());
             cantidad.setText("Cantidad : "+ product.getCantidad() + "");
+
+            //Dependiendo del tipo de producto, establecemos una foto y u otra
             switch (tipoproducto){
                 case "Vegetales":
                     imagenItem.setImageResource(R.drawable.ic_carrot_solid);
@@ -130,7 +135,7 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
                     System.out.println("No se encuentra");
             }
 
-
+            //Creamos los listeners
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

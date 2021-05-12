@@ -1,11 +1,6 @@
 package com.example.nevera_andreaalejandra.Fragments.Login;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nevera_andreaalejandra.Activities.AddEditProductActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.nevera_andreaalejandra.Models.UsuarioModelo;
 import com.example.nevera_andreaalejandra.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -83,8 +80,9 @@ public class RegisterFragment extends Fragment {
         mDataBase = FirebaseDatabase.getInstance().getReference();
         mStorage = FirebaseStorage.getInstance().getReference();
 
+
+        //***** Listeners necesarios ****
         btnregister.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Boton", Toast.LENGTH_SHORT).show();
             addUser();
         });
 
@@ -102,6 +100,7 @@ public class RegisterFragment extends Fragment {
         return view;
     }
 
+    //Método para establecer las animaciones
     private void movimiento() {
         texto_register.setTranslationY(300);
         caja_nombre.setTranslationY(300);
@@ -155,7 +154,6 @@ public class RegisterFragment extends Fragment {
             if (task.isSuccessful()) {
                 //GUARDAMOS LA ID DEL USUARIO CREADO
                 String id = mAuth.getCurrentUser().getUid();
-                //Toast.makeText(getContext(), "Usuario:" + id, Toast.LENGTH_SHORT).show();
 
                 //Creamos un usario
                 UsuarioModelo user = new UsuarioModelo(id, nombre, apellido, mail);
@@ -163,6 +161,7 @@ public class RegisterFragment extends Fragment {
                 mDataBase.child("Usuario").child(id).setValue(user).addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()) {
                         Toast.makeText(getContext(), "Usuario registrado", Toast.LENGTH_SHORT).show();
+
                         //Nos movemos al fragment de login
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         ft.replace(R.id.content_frame_login, new LoginFragment(), "NewFragmentTag");

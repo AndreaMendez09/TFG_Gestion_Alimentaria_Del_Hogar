@@ -42,7 +42,6 @@ import java.util.List;
 public class SplashActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     private FirebaseAuth mAuth;
-    private DatabaseReference mDataBase;
 
 
     //Notificaciones
@@ -68,37 +67,22 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
-        mDataBase = FirebaseDatabase.getInstance().getReference();
 
 
 
         prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         notificationHandler = new NotificationHandler(this);
         lista_productos = new ArrayList<ProductoModelo>();
-        //lista_productos.clear();
 
         Intent intentLogin = new Intent(this, LoginActivity.class);
 
         if (!TextUtils.isEmpty(LoginUtil.getUserMailPrefs(prefs)) && !TextUtils.isEmpty(LoginUtil.getUserPassPrefs(prefs))) {
             login();
-            //Toast.makeText(this, "user" + idUsuario, Toast.LENGTH_SHORT).show();
         } else {
             startActivity(intentLogin);
         }
 
         leerProductos();
-
-        /*if (!TextUtils.isEmpty(LoginUtil.getUserMailPrefs(prefs)) && !TextUtils.isEmpty(LoginUtil.getUserPassPrefs(prefs))) {
-            for (ProductoModelo item : lista_productos) {
-                Toast.makeText(this, "hola", Toast.LENGTH_SHORT).show();
-                if (item.getCantidad() < 4) {
-                    sendNotificationProductos(item.getNombre(), isHighImportance);
-                }
-            }
-        }*/
-
-
-
     }
 
     private void leerProductos() {
@@ -117,7 +101,6 @@ public class SplashActivity extends AppCompatActivity {
                             PrecioProducto = Double.valueOf(ds.child("precio").getValue().toString());
                             CantidadProducto = Integer.parseInt(ds.child("cantidad").getValue().toString());
                             UID_usuario = ds.child("uid_usuario").getValue().toString();
-                            //Toast.makeText(SplashActivity.this, "product" + NombreProducto, Toast.LENGTH_SHORT).show();
 
                             try {
                                 DateProducto = ds.child("fecha").getValue().toString();
@@ -169,8 +152,6 @@ public class SplashActivity extends AppCompatActivity {
                 });
     }
     private void sendNotificationProductos(String nombreProducto, String ubicacionProducto, boolean isHighImportance) {
-        // Toast.makeText(getApplicationContext(), "notificacion", Toast.LENGTH_LONG).show();
-
         String title = "Quedan pocos productos" ;
         String message = "Añade a tu lista de compra "+ nombreProducto + " que quedan pocas unidades, se encuentra en " + ubicacionProducto;
 

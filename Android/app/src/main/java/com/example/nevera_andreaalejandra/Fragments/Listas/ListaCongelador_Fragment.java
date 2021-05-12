@@ -4,14 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +11,13 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nevera_andreaalejandra.Activities.AddEditProductActivity;
 import com.example.nevera_andreaalejandra.Adapters.AdapterProductoLista;
@@ -39,10 +38,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 public class ListaCongelador_Fragment extends Fragment {
+
     //Creamos los campos necesarios para vincularlos con el xml
     private FloatingActionButton add;
     private Button comprar;
@@ -118,8 +117,6 @@ public class ListaCongelador_Fragment extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Toast.makeText(getContext(), "Es necesario un nuevo nombre para el tablero", Toast.LENGTH_LONG).show();
-                showAlertForCreatingBoard("Añadir nuevo producto", "Escribir el nombre del producto");*/
                 //Con intent pasamos informacion al otro activity que vayamos a cambiar
                 Intent intent = new Intent(getActivity(), AddEditProductActivity.class);//Establecemos primero donde estamos y luego donde vamos
 
@@ -141,7 +138,6 @@ public class ListaCongelador_Fragment extends Fragment {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
                 if(lista_productos.size()<=2)
                     add.show();
                 if (dy > 0)
@@ -155,6 +151,7 @@ public class ListaCongelador_Fragment extends Fragment {
         return view;
     }
 
+    //*** Metodos para ordenar las listas ***
     public void UpdateAZ () {
         Collections.sort(lista_productos, ProductoModelo.ProductoAZ);
         adapterProducto.notifyDataSetChanged();
@@ -175,6 +172,7 @@ public class ListaCongelador_Fragment extends Fragment {
         adapterProducto.notifyDataSetChanged();
     }
 
+    //Metodo para leer los productos
     private void leerProductos() {
         mDataBase.child("Producto").addValueEventListener(new ValueEventListener() {
             @Override
@@ -193,25 +191,6 @@ public class ListaCongelador_Fragment extends Fragment {
                         } catch (NullPointerException e) {
                             DateProducto = "--/--/----";
                         }
-                        //Creamos la fecha
-                        /*String date = ds.child("fecha").child("date").getValue().toString();
-                        String month = ds.child("fecha").child("month").getValue().toString();
-                        int monthInt = Integer.parseInt(month)+1;
-                        String year = ds.child("fecha").child("year").getValue().toString();
-                        int yearInt = (Integer.parseInt(year)+1900);
-                        String fecha=null;
-                        if(Integer.parseInt(month)<10){
-                            fecha=date+"/0"+monthInt+"/"+yearInt;
-                        }else{
-                            fecha=date+"/"+monthInt+"/"+yearInt;
-
-                        }
-                        FechaProducto = null;
-                        try {
-                            FechaProducto=new SimpleDateFormat("dd/MM/yyyy").parse(fecha);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }*/
 
                         //Vinculamos el id
                         IdProducto = ds.getKey();
@@ -228,21 +207,11 @@ public class ListaCongelador_Fragment extends Fragment {
                     }
                     adapterProducto = getAdapter();
 
-                    /*                    if (check.isChecked()) {
-                        Toast.makeText(context, "Seleccionado", Toast.LENGTH_LONG).show();
-                    }else {
-                        Toast.makeText(context, "deseleccionado", Toast.LENGTH_LONG).show();
-                    }*/
-
-
                 }
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setAdapter(adapterProducto);
 
-                /*DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
-                dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
-                recyclerView.addItemDecoration(dividerItemDecoration);*/
 
                 //Ponemos la animacion
                 Context context = recyclerView.getContext();
@@ -251,11 +220,10 @@ public class ListaCongelador_Fragment extends Fragment {
                 recyclerView.getAdapter().notifyDataSetChanged();
                 recyclerView.scheduleLayoutAnimation();
 
+                //En caso de que no haya productos se mostrará un mensaje
                 if (adapterProducto.getItemCount() > 0 ) {
-                    //Toast.makeText(getContext(), "Hay productos", Toast.LENGTH_SHORT).show();
                     MensajeSinProductos.setVisibility(View.INVISIBLE);
                 }else {
-                    //Toast.makeText(getContext(), "No hay productos", Toast.LENGTH_SHORT).show();
                     MensajeSinProductos.setVisibility(View.VISIBLE);
                 }
             }
@@ -266,6 +234,7 @@ public class ListaCongelador_Fragment extends Fragment {
             }
         });
     }
+
 
     public AdapterProductoLista getAdapter() {
         adapterProducto = new AdapterProductoLista(getContext(), lista_productos, R.layout.item_product, new OnItemClickListener() {
@@ -293,10 +262,8 @@ public class ListaCongelador_Fragment extends Fragment {
             @Override
             public void onButtonClick(ProductoModelo productoModelo, int position, boolean isChecked) {
                 if (isChecked) {
-                    //Toast.makeText(getContext(), "Seleccionado " + productoModelo.getNombre(), Toast.LENGTH_LONG).show();
                     lista_productos_seleccionados.add(productoModelo);
                 }else {
-                    //Toast.makeText(getContext(), "deseleccionado", Toast.LENGTH_LONG).show();
                     lista_productos_seleccionados.remove(productoModelo);
                 }
             }
@@ -306,7 +273,6 @@ public class ListaCongelador_Fragment extends Fragment {
     }
 
     private void deleteProduct(final ProductoModelo productoModelo) {
-
         //creamos el alertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage("¿Seguro que quiere eliminar?")//es como la partesita de arriba
@@ -331,9 +297,8 @@ public class ListaCongelador_Fragment extends Fragment {
                     }
                 });
         builder.setNegativeButton("Cancelar", null).show();
-
-
     }
+
     public void comprar_todos() {
         lista_productos_seleccionados.clear();
 
@@ -349,10 +314,11 @@ public class ListaCongelador_Fragment extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()) {
-                        Toast.makeText(getContext(), "Productos comprados, ya tienes que comer :)", Toast.LENGTH_SHORT).show();
+
                     }
                 }
             });
         }
+        Toast.makeText(getContext(), "Productos comprados, ya tienes que comer :)", Toast.LENGTH_SHORT).show();
     }
 }

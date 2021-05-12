@@ -75,15 +75,15 @@ public class LoginFragment extends Fragment {
         caja_abajo = (LinearLayout) view.findViewById(R.id.caja_abajo);
         texto_login = (TextView) view.findViewById(R.id.texto_login);
         remember = (Switch) view.findViewById(R.id.switchRecordar) ;
+
         //Para inicializar la instancia de autenticación
         mAuth = FirebaseAuth.getInstance();
 
-        //Eventos on click
+        //******Eventos on click******
         login_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LoginUser();
-                //Toast.makeText(getActivity(),"Text!",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -114,6 +114,7 @@ public class LoginFragment extends Fragment {
 
     }
 
+    //Método para añadir las animaciones a los elementos
     private void movimiento() {
         texto_login.setTranslationY(300);
         caja_mail.setTranslationY(300);
@@ -134,6 +135,7 @@ public class LoginFragment extends Fragment {
         remember.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(1000).start();
     }
 
+    //Método para cambiar de activity
     private void changeToActivity() {
         Intent intent = new Intent(getActivity(), NeveraActivity.class);
         startActivity(intent);
@@ -146,6 +148,7 @@ public class LoginFragment extends Fragment {
         ft.commit();
     }
 
+    //Método para loguear el usuario
     private void LoginUser() {
         //Obtenemos lo que ha escrito el usuario
         String email = correo_login.getText().toString();
@@ -156,7 +159,6 @@ public class LoginFragment extends Fragment {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) { //Si el usuario y contraseña son correctos, se carga el UserActivity.
                         String id = mAuth.getCurrentUser().getUid();
-                        Toast.makeText(getContext(), "Bienvenido" + id, Toast.LENGTH_SHORT).show();
                         saveOnPreferences(correo_login.getText().toString().trim(),pass_login.getText().toString().trim());
                         changeToActivity();
                     } else {
@@ -167,6 +169,7 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    //Método para comprobar que el email y contraseña sean válidos
     private boolean login(String email, String password) {
         if (!isValidEmail(email)) {
             Toast.makeText(getContext(), "Email no válido,", Toast.LENGTH_LONG).show();
@@ -180,6 +183,8 @@ public class LoginFragment extends Fragment {
             return true;
         }
     }
+
+    //Métodos para comprobar el formato tanto de email como de contraseña
     private boolean isValidEmail(String email) {
         return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
@@ -188,7 +193,7 @@ public class LoginFragment extends Fragment {
         return password.length() >= 4;
     }
 
-    //método que guarda el email y contraseña introducidos
+    //Método que guarda el email y contraseña introducidos
     private void saveOnPreferences(String email, String password) {
         if (remember.isChecked()) {
             SharedPreferences.Editor editor = preferences.edit();
@@ -200,7 +205,8 @@ public class LoginFragment extends Fragment {
             LoginUtil.removeSharedPreferences(preferences);
         }
     }
-    //método que fija el email y contraseña que se hayan guardado
+
+    //Método que fija el email y contraseña que se hayan guardado
     private void setCredentialsIfExist() {
         String email = LoginUtil.getUserMailPrefs(preferences);
         String password = LoginUtil.getUserPassPrefs(preferences);
