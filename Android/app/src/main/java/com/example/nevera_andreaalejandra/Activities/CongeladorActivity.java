@@ -381,7 +381,7 @@ public class CongeladorActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             //Obtenemos la posicion del menu
             Activity activity = null;
-
+            //Se usa un switch para hacer mas eficiente el codigo
             switch (item.getItemId()) {
                 case R.id.menu_nevera:
                     activity = new NeveraActivity();
@@ -399,7 +399,6 @@ public class CongeladorActivity extends AppCompatActivity {
                     activity = new AjustesActivity();
                     cambiarActivity(activity);
                     break;
-
             }
             return true;
         }

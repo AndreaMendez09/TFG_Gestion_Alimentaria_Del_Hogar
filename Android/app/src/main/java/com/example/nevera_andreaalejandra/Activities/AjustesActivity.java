@@ -183,7 +183,6 @@ public class AjustesActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     private void enviarEmail(){
-
         //Instanciamos un Intent del tipo ACTION_SEND
         Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
         //Aqui definimos la tipologia de datos del contenido dle Email en este caso text/html

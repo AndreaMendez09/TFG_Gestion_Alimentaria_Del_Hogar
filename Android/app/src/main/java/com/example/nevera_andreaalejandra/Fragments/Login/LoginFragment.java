@@ -153,6 +153,7 @@ public class LoginFragment extends Fragment {
         //Obtenemos lo que ha escrito el usuario
         String email = correo_login.getText().toString();
         String pass = pass_login.getText().toString();
+
         if(login(email,pass)) {
             mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(getActivity(),new OnCompleteListener<AuthResult>() {
                 @Override
@@ -171,7 +172,9 @@ public class LoginFragment extends Fragment {
 
     //Método para comprobar que el email y contraseña sean válidos
     private boolean login(String email, String password) {
+        //Comprobamos que el email es valido
         if (!isValidEmail(email)) {
+            //Informamos que el correo no es valido
             Toast.makeText(getContext(), "Email no válido,", Toast.LENGTH_LONG).show();
             correo_login.setError("El correo es incorrecto");
             return false;
