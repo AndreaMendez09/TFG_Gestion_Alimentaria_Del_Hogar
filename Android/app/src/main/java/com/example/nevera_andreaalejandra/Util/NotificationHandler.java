@@ -80,7 +80,7 @@ public class NotificationHandler extends ContextWrapper {
 
     private Notification.Builder createNotificationWithChannel(String title, String message, String channelId, PendingIntent pendingIntent) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Intent intent = new Intent(this, DetailActivity.class); //TODO cambiar esto
+            Intent intent = new Intent(this, DetailActivity.class);
             intent.putExtra("title", title);
             intent.putExtra("message", message);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -88,22 +88,12 @@ public class NotificationHandler extends ContextWrapper {
             //Para la funcionalidad de ir a la app al pulsar la notificacion
             PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-            //Para poner una imagen
-            Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_fridge);
-
-            Notification.Action action =
-                    new Notification.Action.Builder(Icon.createWithResource
-                            (this, android.R.drawable.ic_menu_send), "Ver detalles", pIntent).build();
-
-
             return new Notification.Builder(getApplicationContext(), channelId)
                     .setContentTitle(title)
                     .setContentText(message)
-                    //.setLargeIcon(icon)
                     .setStyle(new Notification.BigTextStyle()
                     .bigText(message)
                     .setBigContentTitle(title))
-                    // .addAction(action)
                     .setColor(getColor(R.color.teal_700))
                     .setSmallIcon(android.R.drawable.stat_notify_chat)
                     .setGroup(SUMMARY_GROUP_NAME)

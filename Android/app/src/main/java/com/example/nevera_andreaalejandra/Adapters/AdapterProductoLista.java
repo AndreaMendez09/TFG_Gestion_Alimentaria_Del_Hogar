@@ -103,7 +103,7 @@ public class AdapterProductoLista extends RecyclerView.Adapter<AdapterProductoLi
                 case "Pescado":
                     imagenItem.setImageResource(R.drawable.ic_fish_solid);
                     break;
-                case "Lacteos":
+                case "Lácteos":
                     imagenItem.setImageResource(R.drawable.ic_milk);
                     break;
                 case "Dulces":

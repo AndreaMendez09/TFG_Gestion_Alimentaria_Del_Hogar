@@ -197,8 +197,12 @@ public class CongeladorActivity extends AppCompatActivity {
         }
         //Actualizamos
         lista_productos = filteredList;
-        adapterEliminar.notifyDataSetChanged();
-        adapterEliminar.filterList(filteredList);
+        try {
+            adapterEliminar.notifyDataSetChanged();
+            adapterEliminar.filterList(filteredList);
+        } catch (NullPointerException e) {
+
+        }
     }
 
     //Método para leer los productos de la BBDD

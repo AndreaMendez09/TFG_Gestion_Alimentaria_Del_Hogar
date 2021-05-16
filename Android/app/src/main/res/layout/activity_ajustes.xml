@@ -196,12 +196,11 @@
                 android:background="@drawable/edittext_bg"
                 android:drawablePadding="10dp"
                 android:fontFamily="sans-serif-light"
-                android:inputType="textEmailAddress"
-                android:maxLines="4"
-                android:paddingLeft="50dp"
-                android:paddingRight="15dp"
-                android:text="@string/my_text"
-
+                android:inputType="textEmailAddress|textMultiLine"
+                android:lines="2"
+                android:maxLines="10"
+                android:paddingLeft="10dp"
+                android:hint="@string/my_text"
                 />
 
             <Button

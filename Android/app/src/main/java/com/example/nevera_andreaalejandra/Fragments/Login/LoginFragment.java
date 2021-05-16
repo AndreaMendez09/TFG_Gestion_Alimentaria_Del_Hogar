@@ -158,10 +158,9 @@ public class LoginFragment extends Fragment {
             mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(getActivity(),new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) { //Si el usuario y contraseña son correctos, se carga el UserActivity.
-                        String id = mAuth.getCurrentUser().getUid();
+                    if (task.isSuccessful()) {
                         saveOnPreferences(correo_login.getText().toString().trim(),pass_login.getText().toString().trim());
-                        changeToActivity();
+                        changeToActivity();//Si el usuario y contraseña son correctos, se carga el NeveraActivity.
                     } else {
                         Toast.makeText(getContext(), "Error, compruebe el usuario o contraseña", Toast.LENGTH_SHORT).show();
                     }

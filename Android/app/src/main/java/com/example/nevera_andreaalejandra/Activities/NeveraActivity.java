@@ -200,8 +200,12 @@ public class NeveraActivity extends AppCompatActivity {
         }
         //Actualizamos
         lista_productos = filteredList;
-        adapterEliminar.notifyDataSetChanged();
-        adapterEliminar.filterList(filteredList);
+        try {
+            adapterEliminar.notifyDataSetChanged();
+            adapterEliminar.filterList(filteredList);
+        } catch (NullPointerException e) {
+
+        }
     }
 
     //Método para establecer el toolbar
