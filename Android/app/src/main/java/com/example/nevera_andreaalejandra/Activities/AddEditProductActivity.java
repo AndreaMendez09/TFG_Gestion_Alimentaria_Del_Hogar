@@ -366,7 +366,6 @@ public class AddEditProductActivity extends AppCompatActivity{
             }catch (Exception e){
                 Toast.makeText(getApplicationContext(), "Fecha invalida", Toast.LENGTH_LONG).show();
             }
-        //}
     }
 
     //Para poner la imagen en el toolbar
