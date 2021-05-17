@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.Login.LoginFragment"
-    android:background="@drawable/fondo_login">
+    android:background="@drawable/gradiante1">
 
     <ImageButton
         android:id="@+id/irAtras"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="¿Problemas para iniciar sesion?"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="40dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
+            android:theme="@style/Button.White"
             android:layout_marginEnd="40dp"
             android:background="@drawable/button_style1"
             android:clickable="true"
@@ -66,6 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-light"
+            android:textColor="#FFFFFF"
             android:text="Ingrese su correo para enviar un link para la recuperacion de su contraseña"
             android:textSize="18dp" />
 

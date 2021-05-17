@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.Login.RegisterFragment"
-    android:background="@drawable/fondo_login">
+    android:background="@drawable/gradiante1">
 
     <ImageButton
         android:id="@+id/irAtras"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="¿Eres nuevo por aquí? Registrate"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="40dp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/irAtras" />
@@ -51,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
                 android:text="Nombre"
                 android:textSize="25dp" />
 
@@ -81,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
                 android:text="Apellido"
                 android:textSize="25dp" />
 
@@ -111,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
                 android:text="Correo"
                 android:textSize="25dp" />
 
@@ -141,6 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
                 android:text="Contraseña"
                 android:layout_marginTop="10dp"
                 android:textSize="25dp" />
@@ -168,6 +172,7 @@
         android:layout_height="50dp"
         android:layout_gravity="center|bottom"
         android:background="@drawable/button_style1"
+        android:theme="@style/Button.White"
         android:clickable="true"
         android:text="Registrarse"
         android:layout_margin="30dp"

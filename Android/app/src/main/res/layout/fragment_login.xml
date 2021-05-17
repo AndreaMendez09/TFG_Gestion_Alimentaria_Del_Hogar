@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.Login.LoginFragment"
-    android:background="@drawable/fondo_login">
+    android:background="@drawable/gradiante1">
 
     <ImageButton
         android:id="@+id/irAtras"
@@ -14,7 +14,8 @@
         android:background="#00FFFFFF"
         android:src="@drawable/ic_undo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:tint="@color/white"/>
 
     <TextView
         android:id="@+id/texto_login"
@@ -22,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="Bienvenido/a a la app de tu nevera"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="40dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
                 android:text="Correo"
                 android:textSize="25dp" />
 
@@ -78,6 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
+                android:textColor="#FFFFFF"
                 android:text="Contraseña"
                 android:textSize="25dp" />
 
@@ -116,6 +119,7 @@
             android:id="@+id/switchRecordar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:textColor="#FFFFFF"
             android:text="Recordarme "
             android:padding="5pt"
             android:checked="false"
@@ -151,7 +155,8 @@
             android:layout_marginEnd="40dp"
             android:background="@drawable/button_style1"
             android:clickable="true"
-            android:text="Log in" />
+            android:text="Log in"
+            android:theme="@style/Button.White"/>
 
 
     </LinearLayout>

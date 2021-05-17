@@ -19,4 +19,11 @@
         <item name="colorOnPrimary">@color/black</item>
     </style>
 
+    <style name="Button.Black" parent="ThemeOverlay.AppCompat">
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorPrimary">@color/black</item>
+    </style>
+
+
+
 </resources>
