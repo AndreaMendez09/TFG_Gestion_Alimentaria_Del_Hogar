@@ -37,7 +37,6 @@ public class RegisterFragment extends Fragment {
     //Para la BBDD
     private DatabaseReference mDataBase;
     private FirebaseAuth mAuth;
-    private StorageReference mStorage;
 
     //Creamos las variables para obtener los datos de los edit text
     private String nombre, apellido, mail, pass;
@@ -78,7 +77,6 @@ public class RegisterFragment extends Fragment {
         //Para inicializar la instancia de autenticación
         mAuth = FirebaseAuth.getInstance();
         mDataBase = FirebaseDatabase.getInstance().getReference();
-        mStorage = FirebaseStorage.getInstance().getReference();
 
 
         //***** Listeners necesarios ****

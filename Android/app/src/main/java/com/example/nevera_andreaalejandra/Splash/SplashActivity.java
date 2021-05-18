@@ -59,7 +59,6 @@ public class SplashActivity extends AppCompatActivity {
     private String UbicacionProducto;
     private Double PrecioProducto;
     private int CantidadProducto;
-    private Date FechaProducto = new Date();
     private String DateProducto;
     private String UID_usuario;
 
@@ -156,7 +155,6 @@ public class SplashActivity extends AppCompatActivity {
         String message = "Añade a tu lista de compra "+ nombreProducto + " que quedan pocas unidades, se encuentra en " + ubicacionProducto;
 
         if (isHighImportance==true) {
-            //TODO MIRAR ESTO
             Notification.Builder nb = notificationHandler.createNotification(title, message, isHighImportance, null);
             notificationHandler.getManager().notify(++counter, nb.build());
             notificationHandler.publishNotificationSummaryGroup(isHighImportance);
