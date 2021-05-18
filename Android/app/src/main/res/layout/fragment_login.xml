@@ -121,6 +121,7 @@
             android:layout_height="match_parent"
             android:textColor="#FFFFFF"
             android:text="Recordarme "
+            android:theme="@style/Button.Black"
             android:padding="5pt"
             android:checked="false"
             />

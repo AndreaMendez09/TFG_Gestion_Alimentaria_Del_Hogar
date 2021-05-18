@@ -13,6 +13,7 @@
         android:layout_height="30pt"
         android:background="#00FFFFFF"
         android:src="@drawable/ic_undo"
+        android:tint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,7 +21,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¿Problemas para iniciar sesion?"
+        android:text="¿Problemas para iniciar sesión?"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="40dp"
@@ -68,7 +69,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-light"
             android:textColor="#FFFFFF"
-            android:text="Ingrese su correo para enviar un link para la recuperacion de su contraseña"
+            android:text="Ingrese su correo para enviar un link para la recuperación de su contraseña"
             android:textSize="18dp" />
 
         <EditText
