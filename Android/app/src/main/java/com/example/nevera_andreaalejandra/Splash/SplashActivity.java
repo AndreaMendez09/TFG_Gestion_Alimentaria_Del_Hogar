@@ -1,14 +1,22 @@
 package com.example.nevera_andreaalejandra.Splash;
 
+import android.app.Dialog;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -65,23 +73,47 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
+        //Variables para comprobar si el usuario esta conectado a internet
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
+        //Comprobamos el estado de internet
+        if (networkInfo == null || !networkInfo.isConnected() || !networkInfo.isAvailable()) {//Entrará cuando no consiga acceder al internet
+            //Creamos un dialog para avisar al usuario de que necesita conectase a internet
+            Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.dialog_nointernet);
+            dialog.setCanceledOnTouchOutside(false);//No podrá salir al pulsar fuera
+            dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); //Para poner el fondo transparente, sino sale un recuadro gris
+            dialog.show(); //Mostramos el dialogo
 
-
-        prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
-        notificationHandler = new NotificationHandler(this);
-        lista_productos = new ArrayList<ProductoModelo>();
-
-        Intent intentLogin = new Intent(this, LoginActivity.class);
-
-        if (!TextUtils.isEmpty(LoginUtil.getUserMailPrefs(prefs)) && !TextUtils.isEmpty(LoginUtil.getUserPassPrefs(prefs))) {
-            login();
+            //Creamos el evento del boton
+            Button btnWifi = dialog.findViewById(R.id.btn_intentar);
+            btnWifi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    recreate(); //Volvemos a cargar
+                }
+            });
         } else {
-            startActivity(intentLogin);
-        }
 
-        leerProductos();
+            mAuth = FirebaseAuth.getInstance();
+
+
+            prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+            notificationHandler = new NotificationHandler(this);
+            lista_productos = new ArrayList<ProductoModelo>();
+
+            Intent intentLogin = new Intent(this, LoginActivity.class);
+
+            if (!TextUtils.isEmpty(LoginUtil.getUserMailPrefs(prefs)) && !TextUtils.isEmpty(LoginUtil.getUserPassPrefs(prefs))) {
+                login();
+            } else {
+                startActivity(intentLogin);
+            }
+
+            leerProductos();
+        }
     }
 
     private void leerProductos() {
