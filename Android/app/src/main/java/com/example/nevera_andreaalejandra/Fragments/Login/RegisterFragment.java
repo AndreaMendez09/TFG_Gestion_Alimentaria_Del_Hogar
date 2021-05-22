@@ -1,5 +1,8 @@
 package com.example.nevera_andreaalejandra.Fragments.Login;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,7 +84,15 @@ public class RegisterFragment extends Fragment {
 
         //***** Listeners necesarios ****
         btnregister.setOnClickListener(v -> {
-            addUser();
+            //Variables para comprobar si el usuario esta conectado a internet
+            ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+            //Comprobamos el estado de internet
+            if (networkInfo == null || !networkInfo.isConnected() || !networkInfo.isAvailable()) {//Entrará cuando no consiga acceder al internet
+            Toast.makeText(getContext(), "No se ha encontrado conexión a internet", Toast.LENGTH_LONG).show();
+            }else {
+                addUser();
+            }
         });
 
         irAtras.setOnClickListener(new View.OnClickListener() {

@@ -2,7 +2,10 @@ package com.example.nevera_andreaalejandra.Activities;
 
 import android.app.DatePickerDialog;
 import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.view.ActionMode;
@@ -117,12 +120,19 @@ public class AddEditProductActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 boolean cambiar = false;
+                //Variables para comprobar si el usuario esta conectado a internet
+                ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+                //Comprobamos el estado de internet
+                if (networkInfo == null || !networkInfo.isConnected() || !networkInfo.isAvailable()) {//Entrará cuando no consiga acceder al internet
+                    Toast.makeText(getApplicationContext(), "No se ha encontrado conexión a internet", Toast.LENGTH_LONG).show();
+                }else {
                 //Obtenemos el valor del intent, para detectar si es añadir o editar
                 if (bundle != null) { //Si ha encontrado algun dato
                     String tarea = bundle.getString("tarea"); //Obtenemos el dato
                     if (tarea.equals("añadir")) {
                         añadirProducto();
-                    }else if (tarea.equals("editar")){
+                    } else if (tarea.equals("editar")) {
                         cambiar = editProduct(producto);
                     }
 
@@ -136,7 +146,7 @@ public class AddEditProductActivity extends AppCompatActivity{
 
                     if (switchCalendario.isChecked() && calendario.getText().toString().equals(""))
                         Toast.makeText(AddEditProductActivity.this, "No se puede crear el evento sin fecha de caducidad.", Toast.LENGTH_SHORT).show();
-
+                }
                 }
             }
         });
@@ -306,20 +316,25 @@ public class AddEditProductActivity extends AppCompatActivity{
         Intent intent = null;
         extras = getIntent().getExtras();
 
-        if (extras != null) {
+        if (extras.getString("ubicacion") != null) {
             ubicacion = extras.getString("ubicacion");
-        }
-        //Aqui salta el error en la lista but idk
-        if(ubicacion.equals("nevera")) {
-            //Para volver al fragment donde nos encontramos
-            intent = new Intent(this, NeveraActivity.class);//Establecemos primero donde estamos y luego donde vamos
-        }
-        else{
-            intent = new Intent(this, CongeladorActivity.class);
-        }
-            intent.putExtra("fragment", ubicacion); //Para detectar en el AddEdit si es un añadir o un editar
 
-            startActivity(intent);//Iniciamos el intent
+            if(ubicacion.equals("nevera")) {
+                //Para volver al fragment donde nos encontramos
+                intent = new Intent(this, NeveraActivity.class);//Establecemos primero donde estamos y luego donde vamos
+            }
+            else{
+                intent = new Intent(this, CongeladorActivity.class);
+            }
+
+                intent.putExtra("fragment", ubicacion); //Para detectar en el AddEdit si es un añadir o un editar
+
+
+        }else { //Es lista de la compra,cualquiea de los dos tabs
+            intent = new Intent(this, TabActivity.class);
+        }
+
+        startActivity(intent);//Iniciamos el intent
 
     }
 

@@ -1,11 +1,19 @@
 package com.example.nevera_andreaalejandra.Activities;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -56,6 +64,17 @@ public class TabActivity extends AppCompatActivity {
         //Ponemos el toolbar
         setToolbar();
         getSupportActionBar().setTitle("Mis listas de la compra");
+
+        //Variables para comprobar si el usuario esta conectado a internet
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        //Comprobamos el estado de internet
+        if (networkInfo == null || !networkInfo.isConnected() || !networkInfo.isAvailable()) {//Entrará cuando no consiga acceder al internet
+            //Avisamos al usuario de que no hay internet
+            Toast.makeText(getApplicationContext(), "Necesitas conexion a internet, vuelve a intentarlo más tarde", Toast.LENGTH_LONG).show();
+        }
+
 
         //Relacionamos con el xml
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

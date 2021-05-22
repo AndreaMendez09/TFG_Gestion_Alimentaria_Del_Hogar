@@ -1,11 +1,18 @@
 package com.example.nevera_andreaalejandra.Activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -36,12 +43,10 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AjustesActivity extends AppCompatActivity {
     //Valores de la BBDD
-
     private EditText nombreedit;
     private TextView correoEdit;
     private EditText apellidosEdit;
     private EditText textSugerencia;
-    private TextView sugerencia;
     private UsuarioModelo usuario;
     private String NombreUsuario;
     private String ApellidoUsuario;
@@ -50,13 +55,6 @@ public class AjustesActivity extends AppCompatActivity {
     private Button enviar;
     private Button editarUsuario;
     private Button editarContraseña;
-    //Notificaciones
-    private NotificationHandler notificationHandler;
-    private int counter = 0;
-    private Switch switchNotificaciones;
-    private String switchTextOn = "Activado";
-    private String switchTextOff = "Desactivado";
-    private boolean isHighImportance = true;
 
     private LinearLayout logout;
     private AlertDialog.Builder builder;
@@ -85,13 +83,35 @@ public class AjustesActivity extends AppCompatActivity {
         setToolbar();
 
 
-        notificationHandler = new NotificationHandler(this);
-
         //1.Las referencias de auntenticacion de la base de datos
         //leeemos la lista
         mDataBase = FirebaseDatabase.getInstance().getReference().child("Usuario");
         //Para inicializar la instancia de autenticación
         mAuth = FirebaseAuth.getInstance();
+
+        //Variables para comprobar si el usuario esta conectado a internet
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        //Comprobamos el estado de internet
+        if (networkInfo == null || !networkInfo.isConnected() || !networkInfo.isAvailable()) {//Entrará cuando no consiga acceder al internet
+            //Creamos un dialog para avisar al usuario de que necesita conectase a internet
+            Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.dialog_nointernet);
+            dialog.setCanceledOnTouchOutside(false);//No podrá salir al pulsar fuera
+            dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); //Para poner el fondo transparente, sino sale un recuadro gris
+            dialog.show(); //Mostramos el dialogo
+
+            //Creamos el evento del boton
+            Button btnWifi = dialog.findViewById(R.id.btn_intentar);
+            btnWifi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    recreate(); //Volvemos a cargar
+                }
+            });
+        }
 
         //Visualizamos los datos del usuario
         DatosUsuario();
@@ -168,11 +188,6 @@ public class AjustesActivity extends AppCompatActivity {
         });
     }
 
-    public void change(CompoundButton buttonView, boolean isChecked) {
-        isHighImportance = isChecked;
-        switchNotificaciones.setText((isChecked) ? switchTextOn : switchTextOff);
-        //sendNotification(isHighImportance, act);
-    }
 
 
     //Para poner la imagen en el toolbar
