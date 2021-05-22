@@ -112,8 +112,6 @@ public class AddEditProductActivity extends AppCompatActivity{
         //Llamamos al metodo
         Edit_O_Add(producto, bundle);
 
-
-
         //Este es el boton de guardar
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,7 +185,7 @@ public class AddEditProductActivity extends AppCompatActivity{
         int productCantidadEdit = Integer.parseInt(cantidad.getText().toString().trim());
         double productPrecioEdit = -1;
         try {
-            productPrecioEdit = Double.parseDouble(precio.getText().toString().trim()); //TODO Esto da error, no se porque
+            productPrecioEdit = Double.parseDouble(precio.getText().toString().trim());
         } catch (NumberFormatException e) {
 
         }
@@ -307,13 +305,16 @@ public class AddEditProductActivity extends AppCompatActivity{
     private void changeActivity() {
         Intent intent = null;
         extras = getIntent().getExtras();
+
         if (extras != null) {
             ubicacion = extras.getString("ubicacion");
         }
+        //Aqui salta el error en la lista but idk
         if(ubicacion.equals("nevera")) {
             //Para volver al fragment donde nos encontramos
             intent = new Intent(this, NeveraActivity.class);//Establecemos primero donde estamos y luego donde vamos
-        }else{
+        }
+        else{
             intent = new Intent(this, CongeladorActivity.class);
         }
             intent.putExtra("fragment", ubicacion); //Para detectar en el AddEdit si es un añadir o un editar
