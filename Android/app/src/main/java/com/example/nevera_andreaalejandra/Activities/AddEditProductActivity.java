@@ -1,7 +1,6 @@
 package com.example.nevera_andreaalejandra.Activities;
 
 import android.app.DatePickerDialog;
-import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -25,7 +24,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.nevera_andreaalejandra.Models.ProductoModelo;
 import com.example.nevera_andreaalejandra.R;
-import com.example.nevera_andreaalejandra.Util.NotificationHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
