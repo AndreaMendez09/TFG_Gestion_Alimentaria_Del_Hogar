@@ -25,4 +25,13 @@ notificado a la aplicación que un producto se ha acabado, podrá decidir si añ
 compra o no. </p>
 
 ## Preview de la aplicación
+<img src="https://github.com/AndreaMendez09/TFG_Gestion_Alimentaria_Del_Hogar/blob/developer/Imagenes/Inicio.PNG" 
+     width="70%" 
+     height="70%"/>
+<img src="https://github.com/AndreaMendez09/TFG_Gestion_Alimentaria_Del_Hogar/blob/developer/Imagenes/Productos.PNG" 
+     width="70%" 
+     height="70%"/>
+<img src="https://github.com/AndreaMendez09/TFG_Gestion_Alimentaria_Del_Hogar/blob/developer/Imagenes/Funcionalidad.PNG" 
+     width="70%" 
+     height="70%"/>
 
