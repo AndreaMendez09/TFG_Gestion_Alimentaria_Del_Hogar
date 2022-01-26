@@ -1,6 +1,6 @@
 # Gestion Alimentaria del Hogar (AGAH) 🏠
 
-Este proyecto ha sido realizado por Andrea Méndez y Alejandra Cortés.
+Este proyecto ha sido realizado por Andrea Méndez y Alejandra Cortés. 🙋‍♀️🙋‍♀️
 
 ## Resumen
 
@@ -34,4 +34,9 @@ compra o no. </p>
 <img src="https://github.com/AndreaMendez09/TFG_Gestion_Alimentaria_Del_Hogar/blob/developer/Imagenes/Funcionalidad.PNG" 
      width="70%" 
      height="70%"/>
+
+## TFG Completo
+
+Si os ha interesado, podeis ver el desarrollo de la aplicación <a href="TFG-Memoria.pdf">aquí</a>.
+
 
